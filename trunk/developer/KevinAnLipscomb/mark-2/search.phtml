@@ -6,6 +6,7 @@ require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphotorandom.phtml");
 require_once("f_bodyopen.phtml");
+require_once("f_myphotolibhosturl.phtml");
 ?>
 <html>
 <head><title>Search template</title></head>
@@ -17,7 +18,7 @@ require_once("f_bodyopen.phtml");
 <h6><a href="<? echo MyHomePageUrl(); ?>">Kevin Andrew Lipscomb</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></h6>
 <h1>Database Search</h1>
 <? PutLibPhotoRandom("middle"); ?>Specify the search criteria using SQL where-clause syntax.<br clear=all>
-<form action="http://kalipso.phpwebhosting.com/search_result.phtml" method=post>
+<form action=<? echo MyPhotoLibHostUrl(); ?>/search_result.phtml method=post>
    <table border=1>
       <tr>
          <td align=right>DIV_SPEC</td>

@@ -3,6 +3,7 @@ require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
 require_once("f_bodyopen.phtml");
 require_once("f_password.phtml");
+require_once("f_myphotolibhosturl.phtml");
 ?>
 
 <html>
@@ -22,8 +23,8 @@ require_once("f_password.phtml");
       //
       // Connect to the database.
       //
-      $conn = mysql_connect(localhost,kalipso,Password());
-      mysql_select_db(kalipso);
+      $conn = mysql_connect("localhost","kalipso",Password());
+      mysql_select_db("kalipso");
       //
       // Create the SQL statement
       //
@@ -50,8 +51,8 @@ require_once("f_password.phtml");
                // This sets up the $div_spec and $frame_num variables.
                //
             $image_source_spec = "div/$div_spec/$frame_num-i.jpg";
-            echo "<a href=\"http://kalipso.phpwebhosting.com/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num\">\n";
-            $size = GetImageSize("$image_source_spec");
+            echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>\n";
+            $size = @GetImageSize("$image_source_spec");
             echo "   <img border=\"2\" src=\"$image_source_spec\" $size[3]>\n";
             echo "</a>\n";
             }

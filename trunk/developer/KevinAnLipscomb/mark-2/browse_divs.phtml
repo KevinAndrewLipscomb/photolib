@@ -6,6 +6,7 @@ require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
+require_once("f_myphotolibhosturl.phtml");
 ?>
 <html>
 <head><title>Digital Image Volumes</title></head>
@@ -21,7 +22,7 @@ while ($subdir = $d->read())
    {
    if (!strstr($subdir,"."))
       {
-      echo "<li><a href=http://kalipso.phpwebhosting.com/browse_frames.phtml?div_spec=$subdir>$subdir</a>";
+      echo "<li><a href=" . MyPhotoLibHostUrl() . "/browse_frames.phtml?div_spec=$subdir>$subdir</a>";
       }
    }
 echo "</ul>";

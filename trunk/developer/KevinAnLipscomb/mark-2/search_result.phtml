@@ -7,6 +7,7 @@ require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
 require_once("f_password.phtml");
+require_once("f_myphotolibhosturl.phtml");
 ?>
 <html>
 <head><title>Search result</title></head>
@@ -141,7 +142,7 @@ else
       extract($row);
       echo "<tr>";
       echo "<td><ul>";
-      echo "<li><a href=http://kalipso.phpwebhosting.com/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num><b>div/$div_spec/$frame_num</b></a>";
+      echo "<li><a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num><b>div/$div_spec/$frame_num</b></a>";
       echo "<br><small>$caption ... $tech_details</small><br><br>";
       echo "</ul></td>";
       if (!$hide_thumbnails)

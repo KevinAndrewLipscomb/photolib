@@ -15,6 +15,7 @@ require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
 require_once("f_password.phtml");
+require_once("f_myphotolibhosturl.phtml");
 ?>
 <html>
 <head><title>Keyword addition [div/<? echo $div_spec ?>/<? echo $frame_num ?>]</title></head>
@@ -37,7 +38,19 @@ require_once("f_password.phtml");
          //
          $sql = stripslashes("update photo_detail set keywords = concat_ws(\' \',keywords,\'$new_keywords\') where div_spec = \'$div_spec\' and frame_num = \'$frame_num\'");
          mysql_query($sql) or die("Sorry, the database query did not succeed.");
-         mail("kevin.lipscomb@kvrs.org","New photograph keywords",stripslashes("The \'Kevin Andrew Lipscomb - Photography - add-keywords.phtml\' script has processed the following operation:\n\n$sql\n\nSee <http://kalipso.phpwebhosting.com/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>."));
+         mail
+            (
+            "kevin.lipscomb@kvrs.org",
+            "New photograph keywords",
+            stripslashes
+               (
+               "The \'Kevin Andrew Lipscomb - Photography - add-keywords.phtml\' script has processed the following"
+                  .  " operation:\n\n"
+                  .  $sql
+                  .  "\n\n"
+                  .  "See <" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>."
+               )
+            );
          ?>
          <b>Thanks!</b></p>
          Searches on the keywords you supplied will now generate a hit on this photograph.  You can click on the thumbnail to the left to see that your keywords have indeed been added.
