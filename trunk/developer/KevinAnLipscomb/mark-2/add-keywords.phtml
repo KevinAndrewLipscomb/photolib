@@ -14,6 +14,7 @@ require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
+require_once("f_password.phtml");
 ?>
 <html>
 <head><title>Keyword addition [div/<? echo $div_spec ?>/<? echo $frame_num ?>]</title></head>
@@ -29,7 +30,7 @@ require_once("f_bodyopen.phtml");
          //
          // Connect to the database.
          //
-         mysql_connect(localhost,kalipso,fesface);
+         mysql_connect(localhost,kalipso,Password());
          mysql_select_db(kalipso);
          //
          // Create and execute the SQL statement to increment the hit count.

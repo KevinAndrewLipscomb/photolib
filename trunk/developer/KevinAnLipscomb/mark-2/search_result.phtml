@@ -6,6 +6,7 @@ require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
+require_once("f_password.phtml");
 ?>
 <html>
 <head><title>Search result</title></head>
@@ -15,7 +16,7 @@ require_once("f_bodyopen.phtml");
 <H1 ALIGN="CENTER">Search result</H1>
 <hr>
 <?
-mysql_connect(localhost,kalipso,fesface);
+mysql_connect(localhost,kalipso,Password());
 mysql_select_db(kalipso);
 //
 $sql_statement = "select distinct photo_detail.div_spec,photo_detail.frame_num,caption,tech_details from photo_detail left join photo_comment using (div_spec,frame_num) ";
