@@ -1,0 +1,123 @@
+<?
+//
+// $Id$
+//
+require_once("f_myhomepageurl.phtml");
+require_once("f_mymainphotopageurl.phtml");
+require_once("f_putlibphoto.phtml");
+require_once("f_bodyopen.phtml");
+//
+if ($remember_visitor)
+   {
+   //
+   // Drop a cookie containing the user's Site ID String.  The
+   // cookie expires 10 years from the current time.
+   //
+   setcookie("raw_visitor_id_cookie",$visitor,time()+315360000);
+   }
+else
+   {
+   //
+   // Instead of dropping a cookie, trigger the removal of any
+   // lingering cookie that we previously dropped.
+   //
+   setcookie("raw_visitor_id_cookie","",time()-3600);
+   }
+?>
+<html>
+<head><title>New Photographs</title></head>
+<? BodyOpen(); ?>
+<table align=center width="80%"><tr><td>
+<H6 ALIGN="CENTER"><a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></H6>
+<H1 ALIGN="CENTER">New Photographs</H1>
+<hr>
+<p><b>The following Digital Image Volumes have been added or updated since your last visit:</b></p>
+<?
+//
+// Get the time of the user's last visit.
+//
+mysql_connect(localhost,kalipso,fesface);
+mysql_select_db(kalipso);
+//
+// My "User Tracking" page promises the visitor that I quickly hash their
+// Site ID String.  I intended to use mhash() (below), but my web server
+// hasn't implemented it quite yet:
+//
+//    $visitor = bin2hex(mhash(MHASH_SHA1,$visitor));
+//
+// Instead, use the MySQL MD5 function.
+//
+$hash_result = mysql_query("select md5(\"$visitor\") as hash_string");
+$hash_row = mysql_fetch_object($hash_result);
+$visitor = $hash_row->hash_string;
+//
+$sql = "select time from visit where visitor = \"$visitor\"";
+$result = mysql_query($sql);
+$num_rows = mysql_num_rows($result);
+if ($num_rows == 0)
+   {
+   //
+   // If no such visitor was located, they are new to us.  Set the time of their
+   // last visit to zero.  Everything will be newer than that.
+   //
+   $time = 0;
+   }
+else
+   {
+   //
+   // Otherwise there can only be one row because visitors are unique in the visit table.
+   //
+   $row = mysql_fetch_object($result);
+   $time = $row->time;
+      //
+      // Sets up the $time variable.
+      //
+   }
+//
+// Walk through the DIV structure looking for folders or files added or modified since user's last visit.
+//
+echo "<ul>";
+$div_dir = dir("div");
+$found = 0;
+while ($subdir_entry = $div_dir->read())
+   {
+   if (!strstr($subdir_entry,"."))
+      {
+      $list_item = "<li><a href=http://kalipso.phpwebhosting.com/browse_frames.phtml?div_spec=$subdir_entry>$subdir_entry</a>";
+      if (filemtime("div/$subdir_entry") > $time)
+         {
+         echo "$list_item\n";
+         $found = 1;
+         }
+      else
+         {
+         $subdir = dir("div/$subdir_entry");
+         while ($jpg_entry = $subdir->read())
+            {
+            if (!strstr($jpg_entry,"."))
+               {
+               if (filemtime("div/$subdir_entry/$jpg_entry") > $time)
+                  {
+                  echo "$list_item\n";
+                  $found = 1;
+                  }
+               }
+            }
+         $subdir->close();
+         }
+      }
+   }
+if (!$found)
+   {
+   echo "<li>None\n";
+   }
+echo "</ul>";
+$div_dir->close();
+?>
+<form action=mark-visit.phtml method=post>
+   <input type=submit value="Mark above entries as OLD">
+   <input type=hidden name=visitor value="<? echo $visitor; ?>">
+</form>
+</td></tr></table>
+</body>
+</html>

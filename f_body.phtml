@@ -1,0 +1,18 @@
+<?
+//
+// $Id$
+//
+function Body
+   (
+   $content,
+   $text_color = "",
+   $link_color = "",
+   $visited_link_color = "",
+   $background_color = "#ffffff"
+   )
+   {
+   echo "<body text=\"$text_color\" link=\"$link_color\" vlink=\"$visited_link_color\" bgcolor=\"$background_color\">\n";
+   echo "$content\n";
+   echo "</body>\n";   
+   }
+?>

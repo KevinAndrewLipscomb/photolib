@@ -1,0 +1,123 @@
+<html>
+<head>
+<title>Photography</title>
+</head>
+<?
+require_once("f_myhomepageurl.phtml");
+require_once("f_putlibphotorandom.phtml");
+require_once("f_bodyopen.phtml");
+?>
+<? BodyOpen(); ?>
+<center>
+
+<table border="0" cellpadding="0" cellspacing="0" width="80%">
+   <tr>
+      <td>
+         <h5 align="center"><a href="<? echo MyHomePageUrl(); ?>">Kevin Andrew Lipscomb</a></h5>
+         <h1 align="center">Photography</h1>
+         <p align=center><small><i>An amateur photographer's database-backed archive</i></small></p>
+         <table align=center border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+               <td width="33%" style="border-top-style: solid; border-bottom-style: solid">
+                  <a href="photo-resume.phtml">My photo resume</a>
+               </td>
+               <td width="34%" style="border-top-style: solid; border-bottom-style: solid">
+                  <p align="center"><a href="http://www.photo.net">www.photo.net</a>
+               </td>
+               <td width="33%" style="border-top-style: solid; border-bottom-style: solid">
+                  <p align="right"><a href="methods.phtml">My methods</a>
+               </td>
+            </tr>
+         </table>
+         <p></p>
+         <table align=center cellspacing=7 width="100%"><tr>
+         <td valign=top width="20%">
+            <small>
+               <b>Articles:</b>
+               <table>
+                  <tr><td valign=top><li>&nbsp;</td><td valign=top><a href=high-altitude-honeymoon.phtml>High-Altitude Honeymoon</a></td></tr>
+                  <tr><td valign=top><li>&nbsp;</td><td valign=top><a href=indian-river-park.phtml>Indian River Park</a></td></tr>
+               </table>
+            </small>
+         </td>
+         <td valign=top width="80%">
+            <p align="center"><? PutLibPhotoRandom(); ?></p>
+            <b>Browsing options:</b>
+            <table cellpadding=4>
+            <tr>
+               <td valign=top><li>&nbsp;</td>
+               <td valign=top>
+               By topic:<br>
+               <a href="abstract.phtml">Abstract</a>
+               &nbsp|&nbsp
+               <a href="ems.phtml">EMS</a>
+               &nbsp|&nbsp
+               <a href="eye-candy.phtml">Eye&nbsp;candy</a>
+               &nbsp|&nbsp
+               <a href="family.phtml">Family</a>
+               &nbsp|&nbsp
+               <a href="friends.phtml">Friends</a>
+               &nbsp|&nbsp
+               <a href="gardens.phtml">Gardens</a>
+               &nbsp|&nbsp
+               <a href="hampton-roads.phtml">Hampton&nbsp;Roads</a>
+               &nbsp|&nbsp
+               <a href="pets.phtml">Pets</a>
+               &nbsp|&nbsp
+               <a href="wildlife.phtml">Wildlife</a>
+               <br><br>
+               </td>
+            </tr>
+            <tr>
+               <td valign=top><li>&nbsp;</td>
+               <td valign=top>
+               <form action=new-photos.phtml method=post>
+                  Check for photographs that are new or have been updated since your last visit.&nbsp Enter the string you've chosen to identify yourself to this site.<br>
+                  <input name=visitor type=text value="<? echo $raw_visitor_id_cookie; ?>">
+                  <input type=submit value="See what's new">
+                  <small>
+                     <input name=remember_visitor type=checkbox checked value=1>Remember me&nbsp&nbsp
+                     <a href=user-tracking.phtml>(Read details)</a>
+                  </small>
+               </form>
+               </td>
+            </tr>
+            <tr>
+               <td valign=top><li>&nbsp;</td>
+               <td valign=top>
+               <form action=search_result.phtml method=post>
+                  Search for text in captions, technical details, or keywords (or try <a href=search.phtml>advanced options here</a>).<br>
+                  <input name=basic_criteria type=text>
+                  <input name=search type=submit value="Search">
+                  <small><input name=hide_thumbnails type=checkbox value=1>Hide thumbnails in results</small>
+               </form>
+               </td>
+            </tr>
+            <tr>
+               <td valign=top><li>&nbsp;</td>
+               <td valign=top>
+               By era:<br>
+               <a href=era.phtml?era=1&subtitle=Junior%20High%20School>Jr.&nbsp;High&nbsp;School</a>
+               &nbsp|&nbsp
+               <a href=era.phtml?era=2&subtitle=High%20School>High&nbsp;School</a>
+               &nbsp|&nbsp
+               <a href=era.phtml?era=3&subtitle=College>College</a>
+               &nbsp|&nbsp
+               <a href=era.phtml?era=4&subtitle=1989%20-%202000>1989&nbsp;-&nbsp;2000</a>
+               &nbsp|&nbsp
+               <a href=era.phtml?era=5&subtitle=2001...>2001...</a>
+               <br><br>
+               </td>
+            </tr>
+            <tr><td valign=top><li>&nbsp;</td><td valign=top><a href=browse_divs.phtml>Look through raw Digital Image Volumes</a></td></tr>
+            </table>
+         </td>
+         </tr></table>
+         <p><small><i>Built with<a href="http://www.mysql.com"> MySQL </a>and<a href="http://www.php.net"> PHP </a>.</i></small></p>
+      </td>
+   </tr>
+</table>
+</center>
+<pre><small><small>$Id$</small></small></pre>
+</body>
+</html>

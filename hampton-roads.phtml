@@ -1,0 +1,27 @@
+<?
+require_once("f_myhomepageurl.phtml");
+require_once("f_mymainphotopageurl.phtml");
+require_once("f_putlibphotoplaced.phtml");
+require_once("f_bodyopen.phtml");
+?>
+
+<html>
+
+<head>
+<title>Photography - Hampton Roads</title>
+</head>
+
+<? BodyOpen(); ?>
+
+<table align=center border="0" cellpadding="0" cellspacing="0" width="80%">
+  <tr>
+    <td width="100%"><h5 align="center"><a href="<? echo MyHomePageUrl(); ?>">Kevin Andrew Lipscomb</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></h5>
+      <h1 align="center">Hampton Roads</h1>
+      <p align="center">
+      <? PutLibPhotoPlaced("hampton-roads"); ?>
+      </p>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

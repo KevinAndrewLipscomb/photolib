@@ -1,0 +1,41 @@
+<?
+//
+// $Id$
+//
+//
+// Validate parameters
+//
+if (sscanf($div_spec,"%1d%1d%1d%1d-%1d%1d%1d%s",&$d11,&$d12,&$d13,&$d14,&$d15,&$d16,&$d17,&$d18) != 7)
+   {
+   echo "Improperly-formatted request";
+   exit;
+   }
+//
+require_once("f_myhomepageurl.phtml");
+require_once("f_mymainphotopageurl.phtml");
+require_once("f_putlibphoto.phtml");
+require_once("f_bodyopen.phtml");
+?>
+<html>
+<head><title>Frames on DIV <? echo $div_spec; ?></title></head>
+<? BodyOpen(); ?>
+<table align=center width="80%"><tr><td>
+<H6 ALIGN="CENTER"><a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></H6>
+<H1 ALIGN="CENTER">Frames on DIV <? echo $div_spec; ?></H1>
+<hr>
+<center>
+<?
+$d = dir("div/$div_spec");
+while ($filename = $d->read())
+   {
+   if (strstr($filename,"-i.jpg"))
+      {
+      PutLibPhoto($div_spec,substr($filename,0,3));
+      echo " ";
+      }
+   }
+$d->close();
+?>
+</center></td></tr></table>
+</body>
+</html>
