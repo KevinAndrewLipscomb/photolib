@@ -210,7 +210,7 @@ system to run Bash scripts.</p>
 <pre>   &lt;? PutLibPhoto(&quot;2001-003&quot;,&quot;008&quot;,&quot;right&quot;); ?&gt;</pre>
 <p>When someone browses to article-2.phtml, the server sees from its 'phtml' extension that it contains PHP code, so the server invokes its PHP interpreter.&nbsp; The PHP interpreter reads in the function (that's what the 'require' statement does), then calls the function whenever it encounters the function call.&nbsp The function generates the following HTML:</p>
 <pre>
-   &lt;a href=http://kalipso.phpwebhosting.com/present-photo.phtml?div_spec=2001-003&amp;frame_num=008&gt;
+   &lt;a href=http://kalipso.phpwebhosting.com/photolib/present-photo.phtml?div_spec=2001-003&amp;frame_num=008&gt;
    &lt;img border=2 src=div/2001-003/008-i.jpg align=right width=288 height=192&gt;
    &lt;/a&gt;
 </pre>
@@ -221,7 +221,7 @@ system to run Bash scripts.</p>
    function PutLibPhoto($div_spec,$frame_num,$alignment = &quot;&quot;)
       {
       $image_source_spec = &quot;div/$div_spec/$frame_num-i.jpg&quot;;
-      echo &quot;&lt;a href=http://kalipso.phpwebhosting.com/present-photo.phtml?div_spec=
+      echo &quot;&lt;a href=http://kalipso.phpwebhosting.com/photolib/present-photo.phtml?div_spec=
          $div_spec&amp;frame_num=$frame_num&gt;&quot;;
       $size = GetImageSize(&quot;$image_source_spec&quot;);
       echo &quot;&lt;img border=2 src=$image_source_spec align=$alignment $size[3]&gt;&quot;;
@@ -266,7 +266,7 @@ system to run Bash scripts.</p>
          // in the row returned by mysql_fetch_row().
          //
          $image_source_spec = &quot;div/$field_array[0]/$field_array[1]-i.jpg&quot;;
-         echo &quot;&lt;a href=http://kalipso.phpwebhosting.com/present-photo.phtml?div_spec=
+         echo &quot;&lt;a href=http://kalipso.phpwebhosting.com/photolib/present-photo.phtml?div_spec=
             $field_array[0]&amp;frame_num=$field_array[1]&gt;&quot;;
          $size = GetImageSize(&quot;$image_source_spec&quot;);
          echo &quot;&lt;img border=2 src=$image_source_spec align=$alignment $size[3]&gt;&quot;;

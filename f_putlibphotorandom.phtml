@@ -3,14 +3,15 @@
 // $Id$
 //
 require_once("f_password.phtml");
+require_once("f_myphotolibhosturl.phtml");
 //
 function PutLibPhotoRandom($alignment = "")
    {
    //
    // Connect to the database.
    //
-   $conn = mysql_connect(localhost,kalipso,Password());
-   mysql_select_db(kalipso);
+   $conn = mysql_connect("localhost","kalipso",Password());
+   mysql_select_db("kalipso");
    //
    // Create the SQL statement
    //
@@ -38,8 +39,8 @@ function PutLibPhotoRandom($alignment = "")
          // This sets up the $div_spec and $frame_num variables.
          //
       $image_source_spec = "div/$div_spec/$frame_num-i.jpg";
-      echo "<a href=\"http://kalipso.phpwebhosting.com/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num\">";
-      $size = GetImageSize("$image_source_spec");
+      echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>";
+      $size = @GetImageSize("$image_source_spec");
       echo "<img border=\"2\" src=\"$image_source_spec\" align=\"$alignment\" $size[3]>";
       echo "</a>";
       }

@@ -7,6 +7,7 @@ require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
 require_once("f_password.phtml");
+require_once("f_myphotolibhosturl.phtml");
 //
 if ($remember_visitor)
    {
@@ -37,8 +38,8 @@ else
 //
 // Get the time of the user's last visit.
 //
-mysql_connect(localhost,kalipso,Password());
-mysql_select_db(kalipso);
+mysql_connect("localhost","kalipso",Password());
+mysql_select_db("kalipso");
 //
 // My "User Tracking" page promises the visitor that I quickly hash their
 // Site ID String.  I intended to use mhash() (below), but my web server
@@ -84,7 +85,7 @@ while ($subdir_entry = $div_dir->read())
    {
    if (!strstr($subdir_entry,"."))
       {
-      $list_item = "<li><a href=http://kalipso.phpwebhosting.com/browse_frames.phtml?div_spec=$subdir_entry>$subdir_entry</a>";
+      $list_item = "<li><a href=" . MyPhotoLibHostUrl() . "/browse_frames.phtml?div_spec=$subdir_entry>$subdir_entry</a>";
       if (filemtime("div/$subdir_entry") > $time)
          {
          echo "$list_item\n";

@@ -2,6 +2,8 @@
 //
 // $Id$
 //
+require_once("f_myphotolibhosturl.phtml");
+//
 function PutLibPhoto
    (
    $div_spec,
@@ -10,8 +12,8 @@ function PutLibPhoto
    )
    {
    $image_source_spec = "div/$div_spec/$frame_num-i.jpg";
-   echo "<a href=\"http://kalipso.phpwebhosting.com/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num\">";
-   $size = GetImageSize("$image_source_spec");
+   echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>";
+   $size = @GetImageSize("$image_source_spec");
    echo "<img border=\"2\" src=\"$image_source_spec\" align=\"$alignment\" $size[3]>";
    echo "</a>";
    }

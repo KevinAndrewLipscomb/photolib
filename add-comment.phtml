@@ -2,6 +2,12 @@
 //
 // $Id$
 //
+$mode="";
+   //
+   // Set mode to "" for production, "x_" for debug.
+   //
+if ($mode) error_reporting(E_ALL);
+//
 // Validate parameters
 //
 if ((sscanf($div_spec,"%1d%1d%1d%1d-%1d%1d%1d%s",&$d11,&$d12,&$d13,&$d14,&$d15,&$d16,&$d17,&$d18) != 7)
@@ -15,6 +21,7 @@ require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
 require_once("f_password.phtml");
+require_once("f_myphotolibhosturl.phtml");
 ?>
 <html>
 <head><title>Anecdote/comment addition [div/<? echo $div_spec ?>/<? echo $frame_num ?>]</title></head>
@@ -30,15 +37,27 @@ require_once("f_password.phtml");
          //
          // Connect to the database.
          //
-         mysql_connect(localhost,kalipso,Password());
-         mysql_select_db(kalipso);
+         mysql_connect("localhost","kalipso",Password());
+         mysql_select_db("kalipso");
          //
          // Create and execute the SQL statement to increment the hit count.
          //
          $text = addslashes($text);
          $sql = "insert into photo_comment set div_spec='$div_spec', frame_num='$frame_num', nickname='$nickname', email_address='$email_address', text='$text'";
          mysql_query($sql) or die("Sorry, the database query did not succeed.");
-         mail("kevin.lipscomb@kvrs.org","New photograph anecdote or comment",stripslashes("The \'Kevin Andrew Lipscomb - Photography - add-comment.phtml\' script has processed the following operation:\n\n$sql\n\nSee <http://kalipso.phpwebhosting.com/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>."));
+         mail
+            (
+            "kevin.lipscomb@kvrs.org",
+            "New photograph anecdote or comment",
+            stripslashes
+               (
+               "The \'Kevin Andrew Lipscomb - Photography - add-comment.phtml\' script has processed the following"
+                  .  " operation:\n\n"
+                  .  $sql
+                  .  "\n\n"
+                  .  "See <" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>."
+               )
+            );
          ?>
          <b>Thanks!</b></p>
          <p>Your anecdote or comment has been added to the presentation page for this photograph.  You can click on the thumbnail to the left to see that your submission has indeed been added.</p>
