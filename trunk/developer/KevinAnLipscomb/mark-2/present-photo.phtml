@@ -1,0 +1,149 @@
+<?
+//
+// $Id$
+//
+// Validate parameters
+//
+if ((sscanf($div_spec,"%1d%1d%1d%1d-%1d%1d%1d%s",&$d11,&$d12,&$d13,&$d14,&$d15,&$d16,&$d17,&$d18) != 7)
+   or (sscanf($frame_num,"%1d%1d%1d%s",&$d21,&$d22,&$d23,&$d24) != 3))
+   {
+   echo "Improperly-formatted request";
+   exit;
+   }
+require_once("f_myhomepageurl.phtml");
+require_once("f_bodyopen.phtml");
+?>
+<html>
+<head>
+<title>Photo Exhibit [div/<? echo $div_spec ?>/<? echo $frame_num ?>]</title>
+</head>
+
+<? BodyOpen(); ?>
+<table border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
+   <tr>
+      <td>
+<?
+//
+// Connect to the database.
+//
+mysql_connect(localhost,kalipso,fesface);
+mysql_select_db(kalipso);
+$comment_result_set = mysql_query("select nickname, email_address, text from photo_comment where div_spec=\"$div_spec\" and frame_num=\"$frame_num\"");
+$num_comments = mysql_num_rows($comment_result_set);
+echo "<p align=center>";
+if ($num_comments)
+   {
+   $size = GetImageSize("button.gif");
+   echo "<a href=#Comments><img border=0 align=top src=button.gif $size[3] alt=\"This exhibit has an anecdote or comment thread.\"></a>&nbsp;";
+   }
+$size = GetImageSize("div/$div_spec/$frame_num-3.jpg");
+echo "<img border=8 align=top src=div/$div_spec/$frame_num-3.jpg $size[3]>";
+echo "</p>\n";
+?>
+<table border="0" cellpadding="0" cellspacing="0" width="80%" align="center">
+   <tr>
+      <td>
+            <?
+            //
+            // Create and execute the SQL statement to increment the hit count.
+            //
+            $sql = "update low_priority photo_detail set hits = hits + 1 where div_spec = \"$div_spec\" and frame_num = \"$frame_num\"";
+            mysql_query($sql);
+            //
+            // Create the SQL statement to retrieve the row.
+            //
+            $sql = "select be_avail_as_huge, caption, tech_details, copyright_year, hits, keywords from photo_detail where div_spec = \"$div_spec\" and frame_num = \"$frame_num\"";
+            //
+            // Execute the statement
+            //
+            $result_set = mysql_query($sql);
+            //
+            // Check how many rows were returned
+            //
+            $rows = mysql_num_rows($result_set);
+            if ((!$result_set) || ($rows != 1))
+               {
+               //
+               // No connection or no rows returned.
+               //
+               $record_found = 0;
+               mysql_query("insert into photo_detail set div_spec=\"$div_spec\", frame_num=\"$frame_num\", be_avail_as_huge='Y', caption=\"Photograph DIV-$div_spec-$frame_num\", tech_details='No technical details recorded', hits=1");
+               }
+            else
+               {
+               //
+               // We know exactly one row matched.  Fetch it.
+               //
+               $record_found = 1;
+               $field_array = mysql_fetch_array($result_set);
+               extract($field_array);
+                  //
+                  // Sets up column-named variables:
+                  // $be_avail_as_huge, $caption, $tech_details,
+                  // $copyright_year, $hits, $keywords
+                  //
+               }
+            if ($record_found)
+               {
+               echo "<p align=center><i><b>$caption</b></i></p>\n";
+               echo "<p align=center>$tech_details</p>\n";
+               }
+            echo "<small><ul>";
+            if (!$record_found or ($be_avail_as_huge == "Y"))
+               {
+               echo "<li>Also available online as a <a href=\"div/$div_spec/$frame_num-4.jpg\">1.5 megapixel JPEG</a> (recommended for desktop wallpaper, screen-saver, or 5x7 inch <a href=methods.phtml#Printing>dye sub prints</a>).";
+               echo "<li><a href=\"mailto:kevin.lipscomb@kvrs.org\">Email me</a> about larger prints or digital resolutions up to 6 megapixels.";
+               }
+            if ($record_found)
+               {
+               if ($hits == 1)
+                  {
+                  echo "<li>Viewed 1 time.";
+                  }
+               else
+                  {
+                  echo "<li>Viewed $hits times.";
+                  }
+               }
+            else
+               {
+               echo "<li>No database record for this photograph existed, so a generic record has now been inserted.&nbsp; Please consider adding some keywords (below).";
+               }
+            echo "<li>This and <a href=\"index.phtml\">other photographs</a> copyright $copyright_year <a href=\"" . MyHomePageUrl() . "\">Kevin Andrew Lipscomb</a>";
+            echo "<li>To improve searchability, the following keywords are also associated with this photograph.&nbsp; Click on a word to perform a search on it.&nbsp; If you can think of other applicable words that aren't already in the caption or the technical details, please enter them in the field at the bottom of this page.<br><br>\n";
+            echo "<i>\n";
+            $keyword_array = split(" ",$keywords);
+            foreach($keyword_array as $keyword)
+               {
+               echo "<a href=search_result.phtml?basic_criteria=$keyword>$keyword</a>\n";
+               }
+            echo "</i><br><br>\n";
+            echo "<form action=add-keywords.phtml?div_spec=$div_spec&frame_num=$frame_num method=post>\n";
+            echo "   <input name=new_keywords type=text>\n";
+            echo "   <input type=submit value=\"Add keywords\">\n";
+            echo "</form>\n";
+            echo "</ul></small>\n";
+            echo "<hr>\n";
+            echo "<p align=center><a name=Comments></a><b>Anecdote and Comment Area</b></p>\n";
+            for ($comment_num = 1; $comment_num <= $num_comments; $comment_num++)
+               {
+               $comment_field_array = mysql_fetch_array($comment_result_set);
+               extract($comment_field_array);
+               if ($nickname == "") $nickname = $email_address;
+               echo "<p><tt>" . stripslashes($text) . "</tt>";
+               if ($nickname != "") 
+                  {
+                  echo "&nbsp; -- <i><a href=mailto:$email_address>$nickname</a></i>";
+                  }
+               echo "</p>\n";
+               }
+            echo"<p align=center><i><a href=collect-comment.phtml?div_spec=$div_spec&frame_num=$frame_num>Add an anecdote or comment</a></i></p>\n";
+            ?>
+      </td>
+   </tr>
+</table>
+      </td>
+   </tr>
+</table>
+</body>
+</html>

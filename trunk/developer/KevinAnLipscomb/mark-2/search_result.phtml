@@ -1,0 +1,168 @@
+<?
+//
+// $Id$
+//
+require_once("f_myhomepageurl.phtml");
+require_once("f_mymainphotopageurl.phtml");
+require_once("f_putlibphoto.phtml");
+require_once("f_bodyopen.phtml");
+?>
+<html>
+<head><title>Search result</title></head>
+<? BodyOpen(); ?>
+<table align=center width="80%"><tr><td>
+<H6 ALIGN="CENTER"><a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></H6>
+<H1 ALIGN="CENTER">Search result</H1>
+<hr>
+<?
+mysql_connect(localhost,kalipso,fesface);
+mysql_select_db(kalipso);
+//
+$sql_statement = "select distinct photo_detail.div_spec,photo_detail.frame_num,caption,tech_details from photo_detail left join photo_comment using (div_spec,frame_num) ";
+$where_clause = "";
+if ($basic_criteria != "")
+   {
+   $parsed_basic_criteria = strtolower(ereg_replace("[[:space:]]+", " ",$basic_criteria));
+   $parsed_basic_criteria = ereg_replace("\*"," ",$parsed_basic_criteria);
+   $parsed_basic_criteria = ereg_replace(" ",".*",$parsed_basic_criteria);
+      //
+      // If user submitted more than one word, the above operation
+      // replaces spaces and stars with the regexp wildcard characters.
+      //
+   $where_clause = "lower(caption) rlike \"$parsed_basic_criteria\" or lower(tech_details) rlike \"$parsed_basic_criteria\" or lower(keywords) rlike \"$parsed_basic_criteria\" or lower(text) rlike \"$parsed_basic_criteria\"";
+   }
+else
+   {
+   if ($div_spec_criteria != "")
+      {
+      $where_clause = $where_clause . "div_spec $div_spec_criteria ";
+      }
+   if ($frame_num_criteria != "")
+      {
+      if ($where_clause != "")
+         {
+         $where_clause = $where_clause . "and ";
+         }
+      $where_clause = $where_clause . "frame_num $frame_num_criteria ";
+      }
+   if ($be_avail_as_huge_criteria != "")
+      {
+      if ($where_clause != "")
+         {
+         $where_clause = $where_clause . "and ";
+         }
+      $where_clause = $where_clause . "be_avail_as_huge $be_avail_as_huge_criteria ";
+      }
+   if ($caption_criteria != "")
+      {
+      if ($where_clause != "")
+         {
+         $where_clause = $where_clause . "and ";
+         }
+      $where_clause = $where_clause . "caption $caption_criteria ";
+      }
+   if ($tech_details_criteria != "")
+      {
+      if ($where_clause != "")
+         {
+         $where_clause = $where_clause . "and ";
+         }
+      $where_clause = $where_clause . "tech_details $tech_details_criteria ";
+      }
+   if ($era_criteria != "")
+      {
+      if ($where_clause != "")
+         {
+         $where_clause = $where_clause . "and ";
+         }
+      $where_clause = $where_clause . "era $era_criteria ";
+      }
+   if ($copyright_year_criteria != "")
+      {
+      if ($where_clause != "")
+         {
+         $where_clause = $where_clause . "and ";
+         }
+      $where_clause = $where_clause . "copyright_year $copyright_year_criteria ";
+      }
+   if ($hits_criteria != "")
+      {
+      if ($where_clause != "")
+         {
+         $where_clause = $where_clause . "and ";
+         }
+      $where_clause = $where_clause . "hits $hits_criteria ";
+      }
+   if ($keywords_criteria != "")
+      {
+      if ($where_clause != "")
+         {
+         $where_clause = $where_clause . "and ";
+         }
+      $where_clause = $where_clause . "keywords $keywords_criteria ";
+      }
+   if ($placement_criteria != "")
+      {
+      if ($where_clause != "")
+         {
+         $where_clause = $where_clause . "and ";
+         }
+      $where_clause = $where_clause . "placement $placement_criteria ";
+      }
+   }
+//
+if ($where_clause == "")
+   {
+   echo "<p><b>Please enter one or more search terms.</b></p>\n";
+   }
+else
+   {
+   $sql_statement = stripslashes($sql_statement . "where " . $where_clause);
+   //
+   $result = mysql_query($sql_statement) or die("Invalid query");
+   $num_rows = mysql_num_rows($result);
+   echo "<table width=\"100%\"><tr>\n";
+   echo "<td align=left><b>Matches found:&nbsp; $num_rows</b></td>\n";
+   echo "<td align=right>\n";
+   if ($num_rows > 0)
+      {
+      echo "<form action=search_result.phtml method=post>\n";
+      echo "Refine your search (or try <a href=search.phtml>advanced options here</a>).<br>\n";
+      echo "   <input name=basic_criteria type=text value=\"$basic_criteria\">\n";
+      echo "   <input name=search type=submit value=\"Search\"><br>\n";
+      echo "   <small><input name=hide_thumbnails type=checkbox value=1>Hide thumbnails in results</small>\n";
+      echo "</form>\n";
+      }
+   echo "</td>\n";
+   echo "<table>";
+   while ($row = mysql_fetch_array($result))
+      {
+      extract($row);
+      echo "<tr>";
+      echo "<td><ul>";
+      echo "<li><a href=http://kalipso.phpwebhosting.com/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num><b>div/$div_spec/$frame_num</b></a>";
+      echo "<br><small>$caption ... $tech_details</small><br><br>";
+      echo "</ul></td>";
+      if (!$hide_thumbnails)
+         {
+         echo "<td>";
+         PutLibPhoto($div_spec,$frame_num);
+         echo "</td>";
+         }
+      echo "</tr>";
+      $div_spec = $frame_num = $caption = $tech_details = "";
+      }
+   echo "</table>";
+   }
+?>
+<center>
+   <form action=search_result.phtml method=post>
+   Refine your search (or try <a href=search.phtml>advanced options here</a>).<br>
+      <input name=basic_criteria type=text value="<? echo $basic_criteria ?>">
+      <input name=search type=submit value="Search"><br>
+      <small><input name=hide_thumbnails type=checkbox value=1>Hide thumbnails in results</small>
+   </form>
+</center>
+</td></tr></table>
+</body>
+</html>

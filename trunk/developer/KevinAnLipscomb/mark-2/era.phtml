@@ -1,0 +1,65 @@
+<?
+require_once("f_myhomepageurl.phtml");
+require_once("f_mymainphotopageurl.phtml");
+require_once("f_bodyopen.phtml");
+?>
+
+<html>
+
+<head>
+<title>Photography - <? echo "$subtitle"; ?></title>
+</head>
+
+<? BodyOpen(); ?>
+<center>
+<table border="0" cellpadding="0" cellspacing="0" width="80%">
+  <tr>
+    <td width="100%"><h5 align="center"><a href="<? echo MyHomePageUrl(); ?>">Kevin Andrew Lipscomb</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></h5>
+      <h1 align="center"><? echo "$subtitle"; ?></h1>
+      <p align="center">
+      <?
+      //
+      // Connect to the database.
+      //
+      $conn = mysql_connect(localhost,kalipso,fesface);
+      mysql_select_db(kalipso);
+      //
+      // Create the SQL statement
+      //
+      $sql = "select div_spec,frame_num from photo_detail where era = $era order by rand()";
+      //
+      // Execute the statement
+      //
+      $result_set = mysql_query($sql);
+      //
+      // Check how many rows were returned
+      //
+      $rows = mysql_num_rows($result_set);
+      if ((!$result_set) || ($rows == 0))
+         {
+         echo "<br><b>Could not find any such photographs.</b><br>";
+         }
+      else
+         {
+         //
+         while ($field_array = mysql_fetch_array($result_set))
+            {
+            extract($field_array);
+               //
+               // This sets up the $div_spec and $frame_num variables.
+               //
+            $image_source_spec = "div/$div_spec/$frame_num-i.jpg";
+            echo "<a href=\"http://kalipso.phpwebhosting.com/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num\">\n";
+            $size = GetImageSize("$image_source_spec");
+            echo "   <img border=\"2\" src=\"$image_source_spec\" $size[3]>\n";
+            echo "</a>\n";
+            }
+         }
+      ?>
+      </p>
+    </td>
+  </tr>
+</table>
+</center>
+</body>
+</html>

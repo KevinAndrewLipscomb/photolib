@@ -1,0 +1,49 @@
+<?
+//
+// $Id$
+//
+require_once("f_myhomepageurl.phtml");
+require_once("f_mymainphotopageurl.phtml");
+require_once("f_putlibphotorandom.phtml");
+require_once("f_bodyopen.phtml");
+?>
+<HTML>
+<HEAD>
+<TITLE>Details of User Tracking</TITLE>
+</HEAD>
+
+<? BodyOpen(); ?>
+<CENTER><TABLE CELLSPACING=0 BORDER=0 CELLPADDING=7 WIDTH="80%">
+<TR><TD VALIGN="TOP">
+<H6 ALIGN="CENTER"><a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></H6>
+<H1 ALIGN="CENTER">Details of User Tracking</H1>
+<hr>
+<p><? PutLibPhotoRandom("right"); ?>None of the code I'm using on this site performs any user tracking unless the user
+specifically opts to be tracked.&nbsp  (My hosting service, <a href=http://www.phpwebhosting.com>phpwebhosting.com</a>, may
+track your visit, however.&nbsp If you're concerned about that you should check their <a href=http://www.phpwebhosting.com/priv.html>Privacy
+Statement</a>.)</p>
+<p>The advantage to being tracked is that the site can tell which photographs have been added or updated since your last
+visit.</p>
+<h3>Your ID string</h3>
+<p>You can specify any text that you like as your Site ID String.&nbsp I recommend you use your full name or your email 
+address, both of which are (usually) easy to remember.&nbsp  Of course, you'll 
+have to enter the same Site ID String each time you use the tracking feature, otherwise you're defeating it's purpose.&nbsp
+For that reason, I've provided the "Remember me" feature.&nbsp  If "Remember me" is checked, the site will drop a cookie
+containing your Site ID String onto your machine.&nbsp (If you subsequently log on from a different machine, or the cookie
+can not otherwise be found, you will, of course, have to re-enter your Site ID String.)&nbsp If "Remember me" is not checked, the site will not drop such a
+cookie -- in fact, it will attempt to remove any cookie that it may have previously dropped onto your machine.</p>
+<p>Immediately after processing the "Remember me" feature, your Site ID String gets hashed (read on).&nbsp I
+only store the hashed version in the site's database.&nbsp If you use your email address as your Site ID String, I will
+not use it to send you email, nor will I release it to anyone else.</p>
+<h3>Hashing algorithm</h3>
+<p>Site ID Strings submitted to this site never actually get stored on the server.&nbsp Instead, a Site ID String such as "user@domain.com" immediately gets
+converted to something like "92d2ed12dcb2cce2cc92f0200200c04fe" before I store it anywhere.&nbsp I use a popular one-way hashing algorithm called "MD5" to accomplish such conversion.&nbsp; The algorithm is called "one-way" because, although the scrambling operation is quick and easy, the reciprocal operation (unscrambling) is believed to require tremendous amounts of time and computing power.</p>
+<p align=center><a href=http://greenspun.com/com/kalphotography/user-tracking.phtml><i>Add or view comments</i></a></p>
+</TD>
+</TR>
+</TABLE>
+</CENTER>
+<small><small><pre ALIGN="CENTER"><i>$Id$</font></i></pre></small></small>
+</BODY>
+</HTML>
+

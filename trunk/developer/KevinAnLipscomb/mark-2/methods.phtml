@@ -1,0 +1,450 @@
+<HTML>
+<HEAD>
+<TITLE>Methods</TITLE>
+</HEAD>
+
+<?
+require_once("f_myhomepageurl.phtml");
+require_once("f_mymainphotopageurl.phtml");
+require_once("f_putlibphoto.phtml");
+require_once("f_putlibphotorandom.phtml");
+require_once("f_bodyopen.phtml");
+BodyOpen();
+?>
+
+<CENTER><TABLE CELLSPACING=0 BORDER=0 CELLPADDING=7 WIDTH="80%">
+<TR><TD VALIGN="TOP">
+<H6 ALIGN="CENTER"><a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></H6>
+<H1 ALIGN="CENTER">Methods</H1>
+<hr>
+<h3><? PutLibPhotoRandom("right"); ?>Contents:</h3>
+<ul>
+  <li><a href="#FilmVersusDigital">Film versus Digital</a>
+  <li><a href="#FilmPreferences">Film Preferences</a>
+  <li><a href="#Processing">Processing</a>
+  <li><a href="#Scanning">Scanning</a>
+  <li><a href="#DigitalEditing">Digital editing</a>
+  <li><a href="#PreparingImagesForTheWeb">Preparing images for the web</a>
+  <li><a href="#PresentingImagesViaADatabaseBackedWebSite">Presenting images via
+    a database-backed web site</a>
+  <li><a href="#Printing">Printing</a>
+  <li><a href="#Framing">Framing</a>
+  <li><a href="#Storage">Storage</a>
+</ul>
+<br clear=both><hr>
+<h3><a name="FilmVersusDigital"></a>Film versus Digital</h3>
+<ul>
+<p>All of the photographs on this site had their origins on 35mm film unless otherwise noted.&nbsp; I own only one digital camera -- a Kodak PalmPix -- and I do not use it for serious photography.&nbsp; It's not that I have anything against digital cameras per se.&nbsp; I'm just willing to put up with the inconveniences of film photography until digital camera technology catches up to the wide range of options I already have available.&nbsp; Like many others, I've sunk a significant amount of time and money into acquiring a nice Nikon system.  I think digital imaging ought to grow into existing systems, rather than the converse.</p>
+</ul>
+<h3><a name="FilmPreferences"></a>Film preferences</h3>
+<ul>
+<p>I've based my current preferences on the recommendations of Phil Greenspun (creator of the
+<A HREF="http://www.photo.net/">Photo.net web site</A>), and on <a href=http://www.dl-c.com/Velvia%20vs%20Provia%20100F/Velvia%20vs%20Provia%20100F.html>a paper by Jonathan Sachs</a>.</P>
+<P>My interpretation of the recommendations of those authors is as follows:</P>
+
+<ul>
+<LI>There's little point in using ISO 200 film.
+<LI>For film speeds less than 200, use color slide film.
+<LI>For film speeds greater than 200, use color negative film.
+<LI>The differences between professional and consumer films are negligible.
+<LI>Because one can desaturate digitized color images in software, the utility of black &amp; white film is deprecated.
+<LI>Because one can digitize images, the value of the archival properties of Kodachrome and
+  black-and-white films is deprecated (except in very special circumstances).
+<li>Provia F digitizes better than Velvia.
+</ul>
+
+<P><? PutLibPhotoRandom("right"); ?>I have also factored in price.  This is what I've derived:</P>
+
+<ul>
+<LI>Fuji RDPIII100 (Provia F)
+<LI>Kodak RC400 (Royal Gold 400) [higher contrast]
+<LI>Fuji NPH400 [lower contrast]
+<LI>Fuji NHGII800
+</ul>
+
+<P><A HREF="http://www.bhphotovideo.com/">B&amp;H</A>, in general, has the best prices.</p>
+<p>Of course, I took lots of the photographs on this site before I had formed these preferences.</p>
+</ul>
+<h3><a name="Processing"></a>Processing</h3>
+<ul>
+<p>My preeminent concerns when it comes to processing are that the lab has good dust control throughout its process, and that my film doesn't get lost or damaged.&nbsp; I'm satisified that modern processing machinery provides very consistent results irrespective of which lab operates it.&nbsp; That said, I've picked my favorite processing lab on these bases:</p>
+<ul>
+<li>Recommendations from <a href=http://www.photo.net/photo/labs>Philip Greenspun's <i>Labs</i> article on Photo.net</a>
+<li>Other services available at processing time
+<li>Prices
+<li>Web presence (I like a company who anticipates my questions ahead of time and posts the answers where I can find them on the web.)
+</ul>
+<p>And the winner is:&nbsp; <b><a href=http://adiweb.com>Advanced Digital Imaging, Inc., Fort Collins, Colorado</a></b>
+</ul>
+<h3><a name="Scanning"></a>Scanning</h3>
+<ul>
+<p>I have <a href=http://adiweb.com>Advanced Digital Imaging</a> scan my photographs onto Kodak PhotoCDs.&nbsp; I typically have them scan entire rolls at processing time.&nbsp; This is not cheap (processing and scanning together run me between US$30 and US$54 per roll as of this writing), but I am so happy with the results and the time savings that I'm willing to eat the expense.&nbsp; The alternative -- what I'd done pretty much for two decades -- is to take nice photos and then forsake them when low-quality scans didn't live up to my expectations.</p>
+<p>I also send batches of older individual slides and negatives to ADI for scanning.</p>
+<p>For more information, see <a href=http://www.photo.net/philg/how-to-scan-photos>Phil Greenspun's <i>Scanning Photos for the Web</i> article on Photo.net</a> and the <a href=http://www.kodak.com/go/photocd>Kodak PhotoCD web page</a>.&nbsp; And take a quick look at this:</p>
+<table align=center width="80%">
+   <tr><td align=center><b>Seattle Filmworks / Filmworks.com scan</b></td><td align=center><b>Kodak PhotoCD scan</b></td></tr>
+   <tr>
+      <td align=center><a href=non-db/1998-001/018-3.jpg><img border="2" src="non-db/1998-001/018-i.jpg" align="" width="192" height="128"></a></td>
+      <td align=center><? PutLibPhoto("2001-005","019"); ?></td>
+   </tr>
+</table>
+<p>SFW's scanning system has a low <i>dynamic range</i>, or ability to differentiate brightness levels, so the image on the left is very contrasty.&nbsp; Kodak's scanning system (called the Picture Imaging Workstation or PIW) has a higher dynamic range (3.2), so the contrast of the PhotoCD image is much truer to life.&nbsp; Also, the maximum resolution of an SFW digital image is <a href=non-db/1998-001/018-3.jpg>384 kilopixels</a>.&nbsp; The maximum resolution of a Kodak PhotoCD image is 6 megapixels, although the largest I supply online is <a href=div/2001-005/019-4.jpg>1.5 megapixels</a>.</p>
+<p>So you get what you pay for.</p>
+</ul>
+<h3><a name="DigitalEditing"></a>Digital editing</h3>
+<ul>
+<p><? PutLibPhotoRandom("right"); ?>The de facto tool of choice for most digital imaging needs in the commercial world is Adobe Photoshop.&nbsp; I've shied away from PhotoShop, however, because:</p>
+<ul>
+<li>It's geared primarily toward graphic artists rather than photographers.
+<li>It's too damn expensive.
+</ul>
+<p>Instead, I am very happy with <b><a href=http://www.dl-c.com>Picture Windows Pro from Digital Light & Color</a></b>, which is advertised as <i>Serious Software for Serious Photographers</i>.&nbsp Digital Light & Color was founded by Jonathan Sachs -- the programmer who created the first version of Lotus 1-2-3 back in 1982.&nbsp; My favorite example of PWP's approach to digital image editing is that PWP allows you to express color balancing operations in terms of Kodak Wratten filter designations.&nbsp As of this writing, PWP goes for about US$90.</p>
+<p>My modus operandi with PWP is as follows:</p>
+<ul>
+<li>Open the 2048x3072 (6 megapixel or "Base*16") resolution version of an image straight from the PhotoCD.
+<li>If the image is in black & white, choose Transformation / Convert..., then choose 16-bit Black and White.&nbsp; This transformation will reduce the size of your TIFF file (below) from 18Mb to 12Mb.
+<li>Normalize the gray brightness curve (this applies to both color and b&w images):
+   <ul>
+   <li>Choose Transformation / Gray / Brightness Curve...
+   <li>Click the Show Histograms button on the right-hand side of the Brightness
+    Curve control window.&nbsp; (The button looks like a psychiatrist's
+    Rorschach inkblot test.)
+   <li>Often, you will want to change the Color Space value to HSL.
+   <li>Slide the right arrow at the bottom of the uppermost histogram to the left until it reaches actual highlight data points.&nbsp If you overdo this, and the histogram starts taking on a notable stair-step appearance, the image will exhibit posterization.
+   <li>Click OK.
+   </ul>
+<li>Lighten the image further (often, but not always, necessary, for both color & b&w):
+   <ul>
+   <li>Choose Transformation / Gray / Brightness....
+   <li>Choose Preserve: Black and White.
+   <li>Often, you will want to change the Color Space value to HSL.
+   <li>Slide the scale to the right to lighten the image as desired.
+   <li>Click OK.
+   </ul>
+<li>For color images, perform a color balancing step:
+   <ul>
+   <li>Choose Transformation / Color / Balance...
+   <li>The Preview window will show you the result of PWP's automatic highlight-based color
+    balance transformation.  This is often satisfactory and you can just click OK at this point.  Sometimes, though, it's necessary to balance based on midtones rather than highlights.&nbsp; If required, change the
+    Probe to midtone and click on a midtone area in the source image (not the
+    Preview image).&nbsp; Ideally, you'd pick a part of the source image that approximates a standard 18% gray card.&nbsp; For portraits or tricky color temperature situations you might even want to anticipate the performance of this step by shooting a test frame that includes an actual gray card.
+   <li>Click OK.
+   </ul>
+<li>Perform perspective correction or other transformations on the image.
+<li>Zoom out to 2:1.&nbsp; Choose Tools / Miscellaneous.&nbsp; Choose Tool: Speck Removal and touch up any dust, hair, or scratch marks.
+<li>Save the result as a TIFF file.&nbsp; Why TIFF?  Because TIFF is lossless.&nbsp; You'll be basing all of your web conversions and digital prints on this TIFF file, so don't just treat it as a temporary file.&nbsp; If the PhotoCD holds the master scanning results, the TIFF file holds the master edit results.&nbsp; I treat my TIFF files as prime archive material.
+</ul>
+</ul>
+<h3><a name="PreparingImagesForTheWeb"></a>Preparing images for the web</h3>
+<ul>
+<p><? PutLibPhotoRandom("right"); ?>This section deals with resizing, sharpening, and format conversion.&nbsp; You can perform all of these operations from within PWP, but in the long run it's simpler and faster to use a script-driven command-line utility instead (especially since you can get the scripts free on web pages like this one).</p>
+<p>First, the objectives:</p>
+<ol>
+<li>Along the lines of <a href=http://www.arsdigita.com/books/panda/images>Philip Greenspun's recommendations</a>, I want to provide a thumbnail image.&nbsp; Greenspun bases his thumbnails on the smallest of the five resolutions available on a PhotoCD (which Kodak refers to as Base/16).&nbsp; For 35mm images, Base/16 amounts to 24 kilopixels.&nbsp; That seemed reasonable to me until I noticed that my eye was much more drawn to his medium-format thumbnails, which are between 36 and 64 kilopixels.&nbsp; I eventually settled on using 54 kilopixels, which would be Base/8 (if PhotoCD imagepacs were to include such a resolution, which they don't).&nbsp; It doesn't matter, because I derive my "Base/8" 35mm thumbnails from the 6 megapixel TIFF files (PhotoCD Base*16 resolution) that I create during the digital editing phase.
+<li>The thumbnail image should link to a medium-size image.&nbsp; It just so happens that the PhotoCD Base resolution (384 kilopixels) fills most modern monitors reasonably well.
+<li>A huge version of the image (with enough resolution to produce a 5x7 print on a Kodak Picture Maker) should also be available online.&nbsp; I offer Base*4 (1.5 megapixels) as my "huge" resolution.
+<li>I want to perform a sharpening operation on all of these images, because scanning inherently introduces some artificial softness into images.
+<li>I want all of these images to be in a format that people's browsers can understand, ie, JPEG.
+</ol>
+<p>I want to be able to meet these objectives systematically, without the drudgery of repetitive GUI manipulations.&nbsp; <a href=http://www.simplesystems.org/ImageMagick><b>ImageMagick</b></a> to the rescue.  ImageMagick is an open-source software suite that includes a command-line utility called <b>convert</b>.&nbsp; The following three invocations of <b>convert</b> will achieve all the above objectives:</p>
+<pre>
+   convert -geometry &quot;9.375%&quot; -sharpen &quot;&quot; <i>source-image</i>.tif <i>target-image</i>-i.jpg
+   convert -geometry &quot;25%&quot; -sharpen &quot;&quot; <i>source-image</i>.tif <i>target-image</i>-3.jpg
+   convert -geometry &quot;50%&quot; -sharpen &quot;&quot; <i>source-image</i>.tif <i>target-image</i>-4.jpg
+</pre>
+<p>The suffixes <i>-i</i>, <i>-3</i>, and <i>-4</i> are my way of indicating the size of the target image.&nbsp; For reasons too involved to go into, my size "i" corresponds to the resolution I've chosen for my thumbnails; my size 3 corresponds to the PhotoCD Base resolution; and my size 4 corresponds to the PhotoCD Base*4 resolution.&nbsp; It won't hurt my feelings if you choose a different
+naming convention for your image library.</p>
+<p>Of course, I also don't want to go through the drudgery of typing the convert
+commands in over and over, so I put them all in a script and parameterize the
+filenames.&nbsp; Because I don't want to be constrained to the limitations of
+DOS scripting, I use <a href="http://www.cygwin.com">Cygwin</a> on my Win98
+system to run Bash scripts.</p>
+<p>Once the conversions are completed, I FTP the JPEGs to my web site.</p>
+</ul>
+<h3><a name="PresentingImagesViaADatabaseBackedWebSite"></a>Presenting images via a database-backed web site</h3>
+<ul>
+<p><? PutLibPhotoRandom("right"); ?>Just as Philip Greenspun does, I present the medium-sized version of each of my photographs on a page that includes several other elements:</p>
+<ul>
+<li>A caption
+<li>Technical details
+<li>A link to a huge version of the image
+<li>My email address, in case anyone wants the image at an even higher resolution
+<li>A copyright notice
+<li>A list of keywords associated with the photograph, and a form that the user can use to add their own keywords
+</ul>
+<p>Before I arranged to keep my photographs on a database-backed web site, I maintained one simple HTML page for each medium-sized photo presentation.&nbsp; That became very tiresome once I had more than about seven photos to display.&nbsp; Each time I wanted to make some sort of consistent improvement to the medium-sized presentation pages, I had to edit each of those HTML files.&nbsp; I needed the ability to specify an algorithm for creating the medium-sized presentation pages.&nbsp; Then I needed a server that would execute the algorithm on demand to actually generate the medium-sized presentation pages.&nbsp That way, improvements made to the algorithm would immediate affect the way the server generates all such pages.</p>
+<p>Part of any such algorithm would have to be an operation to find the caption and other attributes for the particular photograph being presented.&nbsp; To me, this problem begs for a solution involving a relational database management system, or RDBMS.</p>
+<p>Like Mr. Greenspun, I envisioned maintaining a database table, each record of which would contain a photograph's unique ID and its associated attributes (ie, the elements that I place on the medium-sized presentation pages).&nbsp; The SQL statement to create such a table is as follows:</p>
+<pre>
+   CREATE TABLE <i>mytablename</i>
+      (
+      cd_id               varchar(8) NOT NULL,
+      frame               tinyint(3) unsigned zerofill DEFAULT '000' NOT NULL,
+      huge                char(1) NOT NULL,
+      descriptive_text    varchar(255),
+      technical_text      varchar(255),
+      year_of_copyright   year(4),
+      num_times_seen      int(10) unsigned DEFAULT '0',
+      associated_keywords mediumtext,
+      PRIMARY KEY (cd_id, frame)
+      );
+</pre>
+<p>I'd need a server that would host this database table, and that would perform database queries on demand.</p>
+<p>So for review, I needed to find a web server that:</p>
+<ul>
+<li>Executes algorithms on demand for the sake of presenting dynamic web pages (this capability is referred to as "server-side scripting" in WWW lingo)
+<li>Provides RDBMS services
+</ul>
+<p>It turns out that this is a very common combination of requirements.&nbsp; Although I could not find any free providers of such solutions, there are gobs of dotcoms that will take your money in exchange for such services.&nbsp; For my purposes, all such sites exist at some point in a continuum described by the following three dimensions:</p>
+<ul>
+<li>The server-side scripting solution that they provide (Microsoft Active Server Pages [ASP], or open-source, including Perl, PHP, and perhaps others)
+<li>The RDBMS solution that they provide (Microsoft, Oracle, or open-source, including mSQL, MySQL, and perhaps others)
+<li>The raw storage space that they provide (a little, like 5 megabytes, or a lot, like 125 megabytes)
+</ul>
+<p>I scoped out the corner of this continuum that exists at the region described by <a href=http://www.php.net>PHP</a>, <a href=http://www.mysql.com>MySQL</a>, and a lot (125 Mb) of storage space, and the winner was:&nbsp; <b><a href=http://www.phpwebhosting.com>PHPWebHosting.com</a></b>.&nbsp; They now get about US$10 of my money per month.</p>
+<p><? PutLibPhotoRandom("right"); ?><a href=http://www.php.net>PHP</a> originally stood for Personal Home Page, but now stands for PHP Hypertext Preprocessor.&nbsp; It's a far simpler language than Perl.  It has extremely convenient provisions for performing database queries.&nbsp; PHP and MySQL functionality both reside on the server -- there's nothing to install, build, or configure on your end.&nbsp; You just need to be able to FTP your JPEGs and your web pages to the server end.</p>
+<p>It didn't take long for me to develop web pages that contained standard HTML along with embedded PHP statements that performed MySQL queries.&nbsp; That's what each of the '.phtml' files on this site are.&nbsp;</p>
+<p>You can also define functions in PHP.&nbsp; Functions are encapsulations of algorithms that you would otherwise find yourself repeating from web page to web page.&nbsp; On my site, I make heavy use of two functions that I wrote.&nbsp; The first is <i>PutLibPhoto()</i>.&nbsp; Say I want to drop frame number 008 from Digital Image Volume 2001-003 into a web page named 'article-2.phtml', and I want the photograph to be aligned along the right margin.&nbsp; I do this by embedding this PHP code at the beginning of article-2.phtml...</p>
+<pre>   &lt;? require(&quot;f_putlibphoto.phtml&quot;); ?&gt;</pre>
+<p>...and this PHP statement wherever I want to put the photograph:</p>
+<pre>   &lt;? PutLibPhoto(&quot;2001-003&quot;,&quot;008&quot;,&quot;right&quot;); ?&gt;</pre>
+<p>When someone browses to article-2.phtml, the server sees from its 'phtml' extension that it contains PHP code, so the server invokes its PHP interpreter.&nbsp; The PHP interpreter reads in the function (that's what the 'require' statement does), then calls the function whenever it encounters the function call.&nbsp The function generates the following HTML:</p>
+<pre>
+   &lt;a href=http://kalipso.phpwebhosting.com/present-photo.phtml?div_spec=2001-003&amp;frame_num=008&gt;
+   &lt;img border=2 src=div/2001-003/008-i.jpg align=right width=288 height=192&gt;
+   &lt;/a&gt;
+</pre>
+<p>The above tags place the thumbnail image in the page and surround it with a hyperlink to the script that generates the associated medium-sized presentation page for that photograph.&nbsp; If you view the source of the page you are reading right now, you will see that it is peppered with such tag sequences.&nbsp; They were all generated by PHP function calls.</p>
+<p>Here's the source to function PutLibPhoto():</p>
+<pre>
+   &lt;?
+   function PutLibPhoto($div_spec,$frame_num,$alignment = &quot;&quot;)
+      {
+      $image_source_spec = &quot;div/$div_spec/$frame_num-i.jpg&quot;;
+      echo &quot;&lt;a href=http://kalipso.phpwebhosting.com/present-photo.phtml?div_spec=
+         $div_spec&amp;frame_num=$frame_num&gt;&quot;;
+      $size = GetImageSize(&quot;$image_source_spec&quot;);
+      echo &quot;&lt;img border=2 src=$image_source_spec align=$alignment $size[3]&gt;&quot;;
+      echo &quot;&lt;/a&gt;&quot;;
+      }
+   ?&gt;
+</pre>
+<p>I mentioned that I made heavy use of <i>two</i> PHP functions.  The second one is <i>PutLibPhotoRandom()</i>:</p>
+<pre>
+   &lt;?
+   function PutLibPhotoRandom($alignment = &quot;&quot;)
+      {
+      //
+      // Connect to the database.
+      //
+      $conn = mysql_connect(localhost,<i>myusername</i>,<i>mypassword</i>);
+      mysql_select_db(<i>mydatabasename</i>);
+      //
+      // Create the SQL statement
+      //
+      $sql = &quot;select * from <i>mytablename</i> order by rand() limit 1&quot;;
+      //
+      // Execute the statement
+      //
+      $result_set = mysql_query($sql);
+      //
+      // Check how many rows were returned
+      //
+      $rows = mysql_num_rows($result_set);
+      if ((!$result_set) || ($rows != 1))
+         {
+         echo &quot;&lt;br&gt;&lt;b&gt;Random photo retrieval failed.&lt;/b&gt;&lt;br&gt;&quot;;
+         }
+      else
+         {
+         //
+         // We know exactly one row matched.  Fetch it.
+         //
+         $field_array = mysql_fetch_row($result_set);
+         //
+         // The elements of $field_array contain the fields
+         // in the row returned by mysql_fetch_row().
+         //
+         $image_source_spec = &quot;div/$field_array[0]/$field_array[1]-i.jpg&quot;;
+         echo &quot;&lt;a href=http://kalipso.phpwebhosting.com/present-photo.phtml?div_spec=
+            $field_array[0]&amp;frame_num=$field_array[1]&gt;&quot;;
+         $size = GetImageSize(&quot;$image_source_spec&quot;);
+         echo &quot;&lt;img border=2 src=$image_source_spec align=$alignment $size[3]&gt;&quot;;
+         echo &quot;&lt;/a&gt;&quot;;
+         }
+      }
+   ?&gt;
+</pre>
+<p>Here's the result of a call to PutLibPhotoRandom().&nbsp; It will probably be different each time you reload this page.&nbsp; I can't tell you which of my photographs will appear here, because the script chooses them at random.&nbsp; Get it?</p>
+<p align=center><? PutLibPhotoRandom(); ?>
+<p>If you hover your cursor over any of the thumbnails on this site, you'll see a reference to a PHP script called <i>present-photo.phtml</i> in your browser's status bar.&nbsp; The reference includes a list of parameters (the part after the question mark) that identifies the particular photograph that you're pointing to.&nbsp The <i>present-photo.phtml</i> script generates the "medium-sized presentation pages" that I've been talking about.&nbsp; I can change the medium-sized presentation of all photographs on this site just by changing this one script.&nbsp; Here's its source code:</p>
+<pre>
+   &lt;?
+   //
+   // Validate parameters.  This is an anti-hacker effort.
+   //
+   if ((sscanf($div_spec,&quot;%1d%1d%1d%1d-%1d%1d%1d%s&quot;,&amp;$d11,&amp;$d12,&amp;$d13,&amp;$d14,
+         &amp;$d15,&amp;$d16,&amp;$d17,&amp;$d18) != 7)
+      or (sscanf($frame_num,&quot;%1d%1d%1d%s&quot;,&amp;$d21,&amp;$d22,&amp;$d23,&amp;$d24) != 3))
+      {
+      echo &quot;Improperly-formatted request&quot;;
+      exit;
+      }
+   require_once(&quot;f_myhomepageurl.phtml&quot;);
+   ?&gt;
+   &lt;html&gt;
+   &lt;head&gt;
+   &lt;title&gt;Photo Exhibit [div/&lt;? echo $div_spec ?&gt;/
+      &lt;? echo $frame_num ?&gt;]&lt;/title&gt;
+   &lt;/head&gt;
+
+   &lt;body&gt;
+   &lt;?
+   $size = GetImageSize(&quot;div/$div_spec/$frame_num-3.jpg&quot;);
+   echo &quot;&lt;p align=\&quot;center\&quot;&gt;&lt;img border=\&quot;8\&quot; src=\&quot;div/$div_spec/
+      $frame_num-3.jpg\&quot; $size[3]&gt;&lt;/p&gt;&quot;;
+   ?&gt;
+   &lt;table border=&quot;0&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; width=&quot;80%&quot; align=&quot;center&quot;&gt;
+      &lt;tr&gt;
+         &lt;td&gt;
+            &lt;?
+            //
+            // Connect to the database.
+            //
+            mysql_connect(localhost,<i>myusername</i>,<i>mypassword</i>);
+            mysql_select_db(<i>mydatabasename</i>);
+            //
+            // Create and execute the SQL statement to increment the hit count.
+            //
+            $sql = &quot;update low_priority <i>mytablename</i>
+               set num_times_seen = num_times_seen + 1
+               where cd_id = \&quot;$div_spec\&quot; and frame = \&quot;$frame_num\&quot;&quot;;
+            mysql_query($sql);
+            //
+            // Create the SQL statement to retrieve the row.
+            //
+            $sql = &quot;select huge, descriptive_text, technical_text, year_of_copyright,
+               num_times_seen, associated_keywords from <i>mytablename</i>
+               where cd_id = \&quot;$div_spec\&quot; and frame = \&quot;$frame_num\&quot;&quot;;
+            //
+            // Execute the statement
+            //
+            $result_set = mysql_query($sql);
+            //
+            // Check how many rows were returned
+            //
+            $rows = mysql_num_rows($result_set);
+            if ((!$result_set) || ($rows != 1))
+               {
+               //
+               // No connection or no rows returned, so print an error
+               //
+               echo &quot;&lt;p&gt;Could not find a unique set of details for photograph
+                  div/$div_spec/$frame_num.&lt;/p&gt;&quot;;
+               echo &quot;&lt;p&gt;&lt;a href=\&quot;&quot; . MyHomePageUrl() . &quot;\&quot;&gt;Kevin Andrew
+                  Lipscomb &lt;/a&gt; - &lt;a href=\&quot;index.phtml\&quot;&gt;Photographs&lt;/a&gt;
+                  &lt;/p&gt;&quot;;
+               }
+            else
+               {
+               //
+               // We know exactly one row matched.  Fetch it.
+               //
+               $field_array = mysql_fetch_array($result_set);
+               extract($field_array);
+                  //
+                  // Sets up column-named variables:
+                  // $huge, $descriptive_text, $technical_text,
+                  // $year_of_copyright, $num_times_seen, $associated_keywords
+                  //
+               echo &quot;&lt;p align=center&gt;&lt;i&gt;&lt;b&gt;$descriptive_text&lt;/b&gt;
+                  &lt;/i&gt;&lt;/p&gt;&quot;;
+               echo &quot;&lt;p align=center&gt;$technical_text&lt;/p&gt;&quot;;
+               echo &quot;&lt;small&gt;&lt;ul&gt;&quot;;
+               if ($huge == &quot;Y&quot;)
+                  {
+                  echo &quot;&lt;li&gt;Also available online as a &lt;a href=\&quot;div/$div_spec/
+                     $frame_num-4.jpg\&quot;&gt;1.5 megapixel JPEG&lt;/a&gt; (recommended for
+                     desktop wallpaper or screen-saver use).&quot;;
+                  echo &quot;&lt;li&gt;&lt;a href=\&quot;mailto:kevin.lipscomb@kvrs.org\&quot;&gt;Email
+                     me&lt;/a&gt; about conventional prints or digital resolutions up to
+                     6 megapixels.&quot;;
+                  }
+               if ($num_times_seen == 1)
+                  {
+                  echo &quot;&lt;li&gt;Viewed 1 time.&quot;;
+                  }
+               else
+                  {
+                  echo &quot;&lt;li&gt;Viewed $num_times_seen times.&quot;;
+                  }
+               echo &quot;&lt;li&gt;This and &lt;a href=\&quot;index.phtml\&quot;&gt;other
+                  photographs&lt;/a&gt; copyright $year_of_copyright &lt;a href=\&quot;&quot;
+                  . MyHomePageUrl() . &quot;\&quot;&gt;Kevin Andrew Lipscomb&lt;/a&gt;&quot;;
+               echo &quot;&lt;li&gt;To improve searchability, the following keywords are also
+                  associated with this photograph.  If you can think of other applicable
+                  words that aren't already in the caption or the technical details,
+                  please enter them in the field at the bottom of this page.&lt;br&gt;&lt;br&gt;&quot;;
+               echo &quot;&lt;i&gt;$associated_keywords&lt;/i&gt;&lt;br&gt;&lt;br&gt;&quot;;
+               echo &quot;&lt;form action=add-keywords.phtml?div_spec=$cd_id&amp;frame_num=$frame method=post&gt;\n&quot;;
+               echo &quot;   &lt;input name=more_keywords type=text&gt;\n&quot;;
+               echo &quot;   &lt;input type=submit value=\&quot;Add keywords\&quot;&gt;\n&quot;;
+               echo &quot;&lt;/form&gt;\n&quot;;
+               echo &quot;&lt;/ul&gt;&lt;/small&gt;&quot;;
+               }
+            ?&gt;
+         &lt;/td&gt;
+      &lt;/tr&gt;
+   &lt;/table&gt;
+   &lt;/body&gt;
+   &lt;/html&gt;
+</pre>
+<p>Note how the source code switches back and forth between regular HTML and PHP code.&nbsp; You can think of PHP as a language that allows you to create custom HTML tags.</p>
+</ul>
+<h3><a name="Printing"></a>Printing</h3>
+<ul>
+<p><? PutLibPhotoRandom("right"); ?>I am no longer the guy to give advice when it comes to conventional (darkroom) printing.&nbsp; In the early 80's, I did my own black & white darkroom work, but no longer.&nbsp; Then again, who does?&nbsp; I'm not a fountain of knowledge about digital printing, either, but here goes...</p>
+<p>Halftone (ie, dot-matrix, ink jet, laser) printers are not "continuous tone" rendering devices like your monitor is.&nbsp; They can not vary the intensity of the dots they print.&nbsp; Dye sublimation printers <i>are</i> continuous tone rendering devices (they <i>can</i> vary the intensity of the pixels they print, like your monitor), and their output can rival that of conventional darkrooms.&nbsp; "Dye sub" prints were once considered to have poor archival qualities, but Kodak in particular claims to have licked that problem.</p>
+<p>Consumer dye sub printers are just starting to scoot in under the US$1000 mark, but that's still plenty expensive to most folks.&nbsp; Until you can afford a dye sub printer of your own, consider using one of the <a href=http://www.kodak.com/global/en/consumer/consDigital/pictureMaker/index.shtml>Kodak Picture Maker</a> kiosks at your local photo store, Kmart, or Wal-Mart.&nbsp; That's what I do, to the tune of about US$10 per 8"x12" sheet of photo paper.&nbsp; The system has a flatbed scanner, a CD drive, a floppy drive, a slide scanner, and a digital media card reader as its input devices; it has a <a href=http://www.kodak.com/global/en/professional/products/printers/dyeSub/thermalPrinters.shtml>Kodak 86xx dye sub printer</a> as its output device; and it has consumer-oriented photo editing software.&nbsp; It understands JPEG, Kodak PhotoCD, and Flash Pix CD formats.</p>
+<p>Follow the steps above to transform your photographs into high-resolution JPEG files.&nbsp; Then copy your JPEGs onto floppy or compact disks and carry those disks to the Kodak Picture Maker.&nbsp; When proceeding in this manner, avoid using the Picture Maker's digital editing features -- such changes are better done during the <a href=#DigitalEditing>"master edit" phase<a> described above</a>.</p>
+<p>The 1.5 megapixel versions of the photographs on my site are suitable for enlargments up to 5x7 inches on the Kodak Picture Maker.&nbsp; To make 8x10s or 8x12s, you'll need a 6 megapixel JPEG.&nbsp; Reasonable file sizes for 6 megapixel JPEGs range from about 500 kilobytes (at JPEG quality factor 75) to 18 megabytes (at JPEG quality factor 100).&nbsp; I've had superb results at JPEG quality factor 92, which gives you a file that will fit (just barely) on a 1.44Mb floppy disk.&nbsp Using the "master edit" TIFF file <a href=#DigitalEditing>derived previously</a>, the following command will fill an empty floppy to the brim so that you can carry it to the Picture Maker for a beautiful 8x10 or 8x12 print:</p>
+<pre>   convert -quality "92%" -sharpen "" <i>source-file</i>.tif <i>target-file</i>.jpg</pre>
+<p>The Picture Maker software will still complain that you should not be printing the image any larger than 5x7 inches, but don't believe it.&nbsp; Just press "Continue" when you see that warning.&nbsp; You'll be glad you did.</p>
+<p>Read <a href=http://www.photo.net/photo/labs>Philip Greenspun's <i>Labs</i> article</a> if you are interested in finding good darkroom labs.</p>
+</ul>
+<h3><a name="Framing"></a>Framing</h3>
+<ul>
+<p><? PutLibPhotoRandom("right"); ?>First, read <a href=http://www.photo.net/photo/framing>Phil Greenspun's <i>Framing Suggestions</i></a>.</p>
+<p>My habit, which I've found to be economic and consistent, is to order OneStep Frame Kits from <a href=http://www.lightimpressionsdirect.com>Light Impressions</a>.&nbsp; Each kit includes everything you need but the print itself, and all of the materials are of archival quality.&nbsp For an 11x14 inch Formal Florentine Black frame kit (to display an 8x10 inch print), I shell out US$29.95.&nbsp; The catalog number is 10306.</p>
+</ul>
+<h3><a name="Storage"></a>Storage</h3>
+<ul>
+<p>I made my choices after reading <a href=http://www.photo.net/photo/storage>Phil Greenspun's article on <i>Storing Slides, Negatives, and Photos</i></a>.</p>
+<p>I order plastic Pendaflex Ironside hanging folders from <a href=http://www.bcop.com>Boise Cascade Office Products</a> (catalog # F572525, 25/box, US$21.80).&nbsp I get other supplies from <a href=http://www.lightimpressionsdirect.com>Light Impressions</a>, including:</p>
+   <ul>
+   <li>Propylene box with 1" O-ring, catalog # 9443, US$12.95
+   <li>PhotoGuard pages, catalog #s 9705, 7713, US$11.95
+   <li>Laser Labels, catalog # 9332, US$12.95
+   <li>Polyethylene Slide Preserver pages, 50/package, catalog # 2599, US$19.95
+   <li>HD PolyChron Negative and Film Storage Pages, 50/package, catalog # 7577, US$21.95
+   <li>FoldLock Sleeves for Film and Negatives, 50/package, catalog # 5650, US$4.45
+   </ul>
+<p>When you have film scanned at processing time, you (had better) always receive the results of such scans on some form of digital media (CD, floppy disk, email attachments, etc).&nbsp; I use the term Digital Image Volume (DIV) to refer to such media.&nbsp; In such cases, I store the processed film, the DIV, and the index prints in the same hanging file.</p>
+<p><? PutLibPhoto("2001-006","012","right"); ?>To track the particular rolls of film that I shoot, I try to include a "take card" image on each roll.&nbsp; My home-made take card is a small dry-erase board with an 18% gray card on the back.&nbsp; I used a Sharpie permanent marker to draw a template on the take card with the following fields:</p>
+   <ul>
+   <li>Roll number
+   <li>Initial load date
+   <li>Type of film
+   <li>Film speed
+   <li>Number of frames on roll
+   </ul>
+<p>I fill the fields in with an erasable marker, then I take a picture of the card.&nbsp; This way, I can positively associate a particular exposure note with a particular frame on a particular roll of film.&nbsp; If I have that roll scanned at processing time, then the image of the take card positively associates the roll with a particular Digital Image Volume.&nbsp When I load an image on my web site, I can track back to the roll, frame, and exposure note that correspond to that image.&nbsp; I enter the exposure note in the caption and technical detail fields in my database table, and voila -- people browsing my images get fully annotated descriptions.</p>
+</ul>
+<p align=center><a href=http://greenspun.com/com/kalphotography/methods.phtml><i>Add or view comments</i></a></p>
+</TD>
+</TR>
+</TABLE>
+</CENTER>
+<pre><i><small>$Id$</small></i></pre>
+</HTML>
+

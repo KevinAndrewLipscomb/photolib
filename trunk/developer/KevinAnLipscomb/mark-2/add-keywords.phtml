@@ -1,0 +1,47 @@
+<?
+//
+// $Id$
+//
+// Validate parameters
+//
+if ((sscanf($div_spec,"%1d%1d%1d%1d-%1d%1d%1d%s",&$d11,&$d12,&$d13,&$d14,&$d15,&$d16,&$d17,&$d18) != 7)
+   or (sscanf($frame_num,"%1d%1d%1d%s",&$d21,&$d22,&$d23,&$d24) != 3))
+   {
+   echo "Improperly-formatted request";
+   exit;
+   }
+require_once("f_myhomepageurl.phtml");
+require_once("f_mymainphotopageurl.phtml");
+require_once("f_putlibphoto.phtml");
+require_once("f_bodyopen.phtml");
+?>
+<html>
+<head><title>Keyword addition [div/<? echo $div_spec ?>/<? echo $frame_num ?>]</title></head>
+<? BodyOpen(); ?>
+<table border="0" cellpadding="0" cellspacing="0" width="80%" align="center">
+   <tr>
+      <td>
+         <H6 ALIGN="CENTER"><a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></H6>
+         <H1 ALIGN="CENTER">Keyword addition</H1>
+         <hr>
+         <?
+         PutLibPhoto($div_spec,$frame_num,"left");
+         //
+         // Connect to the database.
+         //
+         mysql_connect(localhost,kalipso,fesface);
+         mysql_select_db(kalipso);
+         //
+         // Create and execute the SQL statement to increment the hit count.
+         //
+         $sql = stripslashes("update photo_detail set keywords = concat_ws(\' \',keywords,\'$new_keywords\') where div_spec = \'$div_spec\' and frame_num = \'$frame_num\'");
+         mysql_query($sql) or die("Sorry, the database query did not succeed.");
+         mail("kevin.lipscomb@kvrs.org","New photograph keywords",stripslashes("The \'Kevin Andrew Lipscomb - Photography - add-keywords.phtml\' script has processed the following operation:\n\n$sql\n\nSee <http://kalipso.phpwebhosting.com/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>."));
+         ?>
+         <b>Thanks!</b></p>
+         Searches on the keywords you supplied will now generate a hit on this photograph.  You can click on the thumbnail to the left to see that your keywords have indeed been added.
+      </td>
+   </tr>
+</table>
+</body>
+</html>

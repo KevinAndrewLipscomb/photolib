@@ -1,0 +1,27 @@
+<?
+//
+// $Id$
+//
+require_once("f_myhomepageurl.phtml");
+require_once("f_mymainphotopageurl.phtml");
+require_once("f_putlibphoto.phtml");
+require_once("f_bodyopen.phtml");
+?>
+<html>
+<head><title>Mark Visit</title></head>
+<? BodyOpen(); ?>
+<table align=center width="80%"><tr><td>
+<H6 ALIGN="CENTER"><a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></H6>
+<H1 ALIGN="CENTER">Mark Visit</H1>
+<hr>
+<?
+mysql_connect(localhost,kalipso,fesface);
+mysql_select_db(kalipso);
+$time = time();
+$sql = "replace visit (visitor,time) values (\"$visitor\",$time)";
+mysql_query($sql) or die("Sorry, the database update failed.");
+?>
+<p><b>Your current visit has been recorded and your list of new or updated Digital Image Volumes has been reset.</b></p>
+</td></tr></table>
+</body>
+</html>

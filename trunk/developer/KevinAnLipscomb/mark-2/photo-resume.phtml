@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+<TITLE>Photo Resume</TITLE>
+</HEAD>
+
+<?
+require_once("f_myhomepageurl.phtml");
+require_once("f_mymainphotopageurl.phtml");
+require_once("f_putlibphotorandom.phtml");
+require_once("f_bodyopen.phtml");
+BodyOpen();
+?>
+
+<P ALIGN="CENTER"><CENTER><TABLE CELLSPACING=0 BORDER=0 CELLPADDING=7 WIDTH="80%">
+<TR><TD VALIGN="TOP">
+<H6 ALIGN="CENTER"><a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></H6>
+<H1 ALIGN="CENTER">Photo Resume</H1>
+<hr>
+<p><? PutLibPhotoRandom("left"); ?>My photographs have been
+published as follows:</p>
+<table><tr><td>
+  <ul>
+  <li>In <i>Dynamic Designs</i>, ISBN 0-7951-5083-0, published by <a href=http://www.picture.com>The International Library of Photography</a>, 2001.</li>
+  <li>On the <a href="http://www.kvrs.org">Kempsville Volunteer Rescue Squad</a>'s
+    web site;</li>
+  <li>In Kempsville Volunteer Rescue Squad public relations material;</li>
+  <li>In my junior high school and high school yearbooks.</li>
+  </ul>
+</td></tr></table>
+<p clear=both align=center><a href=http://greenspun.com/com/kalphotography/photo-resume.phtml><i>Add or view comments</i></a></p>
+  </TD>
+</TR>
+</TABLE>
+</CENTER>
+
+<pre><small><small><i>$Id$</i></small></small></pre>
+</HTML>
+

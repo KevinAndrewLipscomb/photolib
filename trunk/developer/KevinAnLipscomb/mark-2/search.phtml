@@ -1,0 +1,106 @@
+<?
+//
+// $Id$
+//
+require_once("f_myhomepageurl.phtml");
+require_once("f_mymainphotopageurl.phtml");
+require_once("f_putlibphotorandom.phtml");
+require_once("f_bodyopen.phtml");
+?>
+<html>
+<head><title>Search template</title></head>
+<? BodyOpen(); ?>
+<table align=center width="80%">
+<tr>
+<td>
+<center>
+<h6><a href="<? echo MyHomePageUrl(); ?>">Kevin Andrew Lipscomb</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></h6>
+<h1>Database Search</h1>
+<? PutLibPhotoRandom("middle"); ?>Specify the search criteria using SQL where-clause syntax.<br clear=all>
+<form action="http://kalipso.phpwebhosting.com/search_result.phtml" method=post>
+   <table border=1>
+      <tr>
+         <td align=right>DIV_SPEC</td>
+         <td><input name=div_spec_criteria type=text></td>
+         <td>
+            The identifier that Kevin has assigned to the Digital Image Volume (compact disk, floppy
+            disk, etc) on which the archived digital image is stored.  A valid DIV_SPEC has the format
+            <i>yyyy-###</i>, where <i>yyyy</i> is a 4-digit year number and <i>###</i> is a 3-digit,
+            zero-padded sequence number.  Example: 2001-004
+         </td>
+      </tr>
+      <tr>
+         <td align=right>FRAME_NUM</td>
+         <td><input name=frame_num_criteria type=text></td>
+         <td>
+            The image's frame number on the associated Digital Image Volume.
+         </td>
+      </tr>
+      <tr>
+         <td align=right>BE_AVAIL_AS_HUGE</td>
+         <td><input name=be_avail_as_huge_criteria type=text></td>
+         <td>
+            <tt><b>Y</b></tt> if the image is available online at huge resolution, <tt><b>N</b></tt> if not.
+         </td>
+      </tr>
+      <tr>
+         <td align=right>CAPTION</td>
+         <td><input name=caption_criteria type=text></td>
+         <td>
+            The free-form caption that Kevin assigned to the image.
+         </td>
+      </tr>
+      <tr>
+         <td align=right>TECH_DETAILS</td>
+         <td><input name=tech_details_criteria type=text></td>
+         <td>
+            The free-form technical details that Kevin provided for the image.
+         </td>
+      </tr>
+      <tr>
+         <td align=right>ERA</td>
+         <td><input name=era_criteria type=text></td>
+         <td>
+            The era number that Kevin assigned to the image.
+         </td>
+      </tr>
+      <tr>
+         <td align=right>COPYRIGHT_YEAR</td>
+         <td><input name=copyright_year_criteria type=text></td>
+         <td>
+            The 4-digit year in which Kevin copyrighted the image.
+         </td>
+      </tr>
+      <tr>
+         <td align=right>HITS</td>
+         <td><input name=hits_criteria type=text></td>
+         <td>
+            The number of times this image has been clicked.
+         </td>
+      </tr>
+      <tr>
+         <td align=right>KEYWORDS</td>
+         <td><input name=keywords_criteria type=text></td>
+         <td>
+            Keywords associated with the image.
+         </td>
+      </tr>
+      <tr>
+         <td align=right>PLACEMENT</td>
+         <td><input name=placement_criteria type=text></td>
+         <td>
+            The placement designator that Kevin specified for the image.
+         </td>
+      </tr>
+   </table>
+   <p>
+      <small><input name=hide_thumbnails type=checkbox value=1>Hide thumbnails in results</small><br>
+      <input type=submit>
+   </p>
+</form>
+</center>
+</td>
+</tr>
+</table>
+</body>
+</html>
