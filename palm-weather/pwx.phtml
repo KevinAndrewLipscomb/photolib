@@ -9,19 +9,19 @@
 
   import_request_variables('PG','_');
 
-  $startx = 160; # X offset into radar image
-  $starty = 160; # Y offset into radar image
-  $grabsize = 140; # Width AND Height to grap
-  $outsize = 140; # Size output image should be
+  $xoff = $_xoff; # X offset into radar image
+  $yoff = $_yoff; # Y offset into radar image
+  $grabsize = 260; # Width AND Height to grap
+  $outsize = 260; # Size output image should be
   $station = $_station; # Station ID
   $lat = 40.273; # Enter latitude of where you are
   $lon = -79.551; # Enter longitude of where you are
-  $scale = 1; # 1 = 100 %, fraction = Zoom
+  $scale = $_scale; # 1 = 100 %, fraction = Zoom
   $type = 'N0R'; # N0R | N0V - 'ZERO' NOT the letter O!!!
   $storms = 0; # 0 = NO, 1 = YES
 
 #  $address = 'http://radblast.wunderground.com/cgi-bin/radar/WUNIDS?station='.$station.'&num=1&delay=0&type='.$type.'&frame=0&scale='.$scale.'&noclutter=0&lat='.$lat.'&lon='.$lon.'&showstorms='.$storms;
-  $address = 'http://radblast.wunderground.com/cgi-bin/radar/WUNIDS?station='.$station.'&showstorms=5';
+  $address = "http://radblast.wunderground.com/cgi-bin/radar/WUNIDS?showstorms=5&station=$station&scale=$scale";
   $source = 'current.gif';
   $target = 'radar';
 
@@ -38,7 +38,7 @@
       
   $src_img=imagecreatefromgif($source);
   $thumb_img=imagecreate($outsize, $outsize);
-  imagecopyresampled($thumb_img, $src_img, 0, 0, 170+$startx, 10+$starty, $outsize,$outsize, $grabsize, $grabsize);
+  imagecopyresampled($thumb_img, $src_img, 0, 0, 270+$xoff, 110+$yoff, $outsize,$outsize, $grabsize, $grabsize);
   if (function_exists("imagegif"))
      {
      $target = $target.'.gif';
