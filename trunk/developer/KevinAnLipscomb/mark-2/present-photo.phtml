@@ -34,8 +34,8 @@ $num_comments = mysql_num_rows($comment_result_set);
 echo "<p align=center>";
 if ($num_comments)
    {
-   $size = GetImageSize("button.gif");
-   echo "<a href=#Comments><img border=0 align=top src=button.gif $size[3] alt=\"This exhibit has an anecdote or comment thread.\"></a>&nbsp;";
+   $size = GetImageSize("arrow.gif");
+   echo "<a href=#Comments><img border=0 align=top src=arrow.gif $size[3] alt=\"This exhibit has an anecdote or comment thread.\"></a>&nbsp;";
    }
 $size = GetImageSize("div/$div_spec/$frame_num-3.jpg");
 echo "<img border=8 align=top src=div/$div_spec/$frame_num-3.jpg $size[3]>";
