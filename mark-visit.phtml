@@ -6,6 +6,7 @@ require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
+require_once("f_password.phtml");
 ?>
 <html>
 <head><title>Mark Visit</title></head>
@@ -15,7 +16,7 @@ require_once("f_bodyopen.phtml");
 <H1 ALIGN="CENTER">Mark Visit</H1>
 <hr>
 <?
-mysql_connect(localhost,kalipso,fesface);
+mysql_connect(localhost,kalipso,Password());
 mysql_select_db(kalipso);
 $time = time();
 $sql = "replace visit (visitor,time) values (\"$visitor\",$time)";

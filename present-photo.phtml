@@ -12,6 +12,7 @@ if ((sscanf($div_spec,"%1d%1d%1d%1d-%1d%1d%1d%s",&$d11,&$d12,&$d13,&$d14,&$d15,&
    }
 require_once("f_myhomepageurl.phtml");
 require_once("f_bodyopen.phtml");
+require_once("f_password.phtml");
 ?>
 <html>
 <head>
@@ -26,7 +27,7 @@ require_once("f_bodyopen.phtml");
 //
 // Connect to the database.
 //
-mysql_connect(localhost,kalipso,fesface);
+mysql_connect(localhost,kalipso,Password());
 mysql_select_db(kalipso);
 $comment_result_set = mysql_query("select nickname, email_address, text from photo_comment where div_spec=\"$div_spec\" and frame_num=\"$frame_num\"");
 $num_comments = mysql_num_rows($comment_result_set);

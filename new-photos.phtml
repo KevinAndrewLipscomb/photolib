@@ -6,6 +6,7 @@ require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
+require_once("f_password.phtml");
 //
 if ($remember_visitor)
    {
@@ -36,7 +37,7 @@ else
 //
 // Get the time of the user's last visit.
 //
-mysql_connect(localhost,kalipso,fesface);
+mysql_connect(localhost,kalipso,Password());
 mysql_select_db(kalipso);
 //
 // My "User Tracking" page promises the visitor that I quickly hash their
