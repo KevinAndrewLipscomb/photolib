@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>Weather</title>
+</head>
+<body>
+
+<center>
+<?php
+
+  import_request_variables('PG','_');
+
+  $startx = 160; # X offset into radar image
+  $starty = 160; # Y offset into radar image
+  $grabsize = 140; # Width AND Height to grap
+  $outsize = 140; # Size output image should be
+  $station = $_station; # Station ID
+  $lat = 40.273; # Enter latitude of where you are
+  $lon = -79.551; # Enter longitude of where you are
+  $scale = 1; # 1 = 100 %, fraction = Zoom
+  $type = 'N0R'; # N0R | N0V - 'ZERO' NOT the letter O!!!
+  $storms = 0; # 0 = NO, 1 = YES
+
+#  $address = 'http://radblast.wunderground.com/cgi-bin/radar/WUNIDS?station='.$station.'&num=1&delay=0&type='.$type.'&frame=0&scale='.$scale.'&noclutter=0&lat='.$lat.'&lon='.$lon.'&showstorms='.$storms;
+  $address = 'http://radblast.wunderground.com/cgi-bin/radar/WUNIDS?station='.$station.'&showstorms=5';
+  $source = 'current.gif';
+  $target = 'radar';
+
+  #print $address;
+
+  $out = fopen($source,'wb');
+  ob_start();
+  readfile($address);
+  $body = ob_get_contents();
+  ob_end_clean();
+  fputs($out, $body);
+  fclose($out);
+   
+      
+  $src_img=imagecreatefromgif($source);
+  $thumb_img=imagecreate($outsize, $outsize);
+  imagecopyresampled($thumb_img, $src_img, 0, 0, 170+$startx, 10+$starty, $outsize,$outsize, $grabsize, $grabsize);
+  if (function_exists("imagegif"))
+     {
+     $target = $target.'.gif';
+     imagegif($thumb_img,$target);
+     }
+  elseif (function_exists("imagepng"))
+     {
+     $target = $target.'.png';
+     imagejpeg($thumb_img,$target);
+     }
+  elseif (function_exists("imagejpeg"))
+     {
+     $target = $target.'.jpg';
+     imagepng($thumb_img,$target,0.5);
+     }
+  elseif (function_exists("imagewbmp"))
+     {
+     $target = $target.'.bmp';
+     imagewbmp($thumb_img,$target);
+     }
+  else
+     {
+     die("No image support in this PHP server");
+     }
+
+  print '<img src="'.$target.'" align="center">';
+
+?>
+</center>
+</body>
+</html>
