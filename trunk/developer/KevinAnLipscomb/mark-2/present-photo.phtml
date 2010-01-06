@@ -110,13 +110,8 @@ $num_comments = mysql_num_rows($comment_result_set);
                extract(mysql_fetch_array(mysql_query("select max(id) as max_id from photo_detail")));
                if ($id < $max_id)
                   {
-                  $next_result_set = mysql_query("select div_spec as next_frame_div_spec, frame_num as next_frame_frame_num from photo_detail where id = $id + 1");
-                  $next_rows = mysql_num_rows($next_result_set);
-                  if ($next_result_set && ($next_rows == 1))
-                     {
-                     extract(mysql_fetch_array($next_result_set));
-                     echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$next_frame_div_spec&frame_num=$next_frame_frame_num>Next<br>div/frame</a>";
-                     }
+                  extract(mysql_fetch_array(mysql_query("select div_spec as next_frame_div_spec, frame_num as next_frame_frame_num from photo_detail where id = $id + 1")));
+                  echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$next_frame_div_spec&frame_num=$next_frame_frame_num>Next<br>div/frame</a>";
                   }
                //
                // Next-match link goes here
