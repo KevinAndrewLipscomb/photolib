@@ -11,6 +11,7 @@ if (sscanf($div_spec,"%1d%1d%1d%1d-%1d%1d%s",&$d11,&$d12,&$d13,&$d14,&$d15,&$d16
    }
 require_once("f_bodyopen.phtml");
 require_once("f_myhomepageurl.phtml");
+require_once("f_mymainphotopageurl.phtml");
 require_once("f_myphotolibhosturl.phtml");
 require_once("f_password.phtml");
 //
@@ -36,14 +37,24 @@ if ((!$result_set) || ($rows != 1))
    // No connection or no rows returned.
    //
    $record_found = 0;
-   mysql_query("insert into photo_detail set div_spec=\"$div_spec\", frame_num=\"$frame_num\", be_avail_as_huge='Y', caption=\"Photograph DIV-$div_spec/$frame_num\", tech_details='No technical details recorded', hits=1, era=6");
+   mysql_query("alter table photo_detail drop column id");
+   mysql_query
+      (
+      "insert into photo_detail"
+      . " set div_spec=\"$div_spec\""
+      .   " , frame_num=\"$frame_num\""
+      .   " , be_avail_as_huge='Y'"
+      .   " , caption=\"Photograph DIV-$div_spec/$frame_num\""
+      .   " , tech_details='No technical details recorded'"
+      .   " , hits=1"
+      .   " , era=6"
+      );
+   mysql_query("alter table photo_detail order by div_spec,frame_num");
+   mysql_query("alter table photo_detail add column id serial first");
    $result_set = mysql_query("select id, be_avail_as_huge, caption, tech_details, copyright_year, hits, keywords from photo_detail where div_spec = \"$div_spec\" and frame_num = \"$frame_num\"");
    }
 else
    {
-   //
-   // We know exactly one row matched.
-   //
    $record_found = 1;
    }
 extract(mysql_fetch_array($result_set));
@@ -57,13 +68,13 @@ $num_comments = mysql_num_rows($comment_result_set);
    </head>
    <? BodyOpen(); ?>
       <H6 align="center">
-         <a href="http://kal.webhop.net">KEVIN ANDREW LIPSCOMB</a>
+         <a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a>
          -
-         <a href="http://kalipso.phpwebhosting.com/photolib/index.phtml">Photography</a>
+         <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a>
          -
-         <a href="http://kalipso.phpwebhosting.com/photolib/browse_divs.phtml">Digital Image Volumes</a>
+         <a href="<? echo MyPhotoLibHostUrl(); ?>/browse_divs.phtml">Digital Image Volumes</a>
          -
-         <a href="http://kalipso.phpwebhosting.com/photolib/browse_frames.phtml?div_spec=<? echo $div_spec ?>"><? echo $div_spec ?></a>
+         <a href="<? echo MyPhotoLibHostUrl(); ?>/browse_frames.phtml?div_spec=<? echo $div_spec ?>"><? echo $div_spec ?></a>
       </H6>
       <table border="0" cellpadding="10" cellspacing="0" width="100%" align="center">
          <tr>
@@ -96,7 +107,8 @@ $num_comments = mysql_num_rows($comment_result_set);
                <tt>
                <?
                echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>";
-               if ($record_found)
+               extract(mysql_fetch_array(mysql_query("select max(id) as max_id from photo_detail")));
+               if ($id < $max_id)
                   {
                   $next_result_set = mysql_query("select div_spec as next_frame_div_spec, frame_num as next_frame_frame_num from photo_detail where id = $id + 1");
                   $next_rows = mysql_num_rows($next_result_set);

@@ -3,6 +3,7 @@
 // $Id$
 //
 require_once("f_myphotolibhosturl.phtml");
+require_once("f_password.phtml");
 //
 function PutLibPhoto
    (
@@ -16,5 +17,30 @@ function PutLibPhoto
    $size = @GetImageSize("$image_source_spec");
    echo "<img border=\"2\" src=\"$image_source_spec\" align=\"$alignment\" $size[3]>";
    echo "</a>";
+   //
+   mysql_connect(localhost,kalipso,Password());
+   mysql_select_db(kalipso);
+   $result_set = mysql_query("select TRUE from photo_detail where div_spec = \"$div_spec\" and frame_num = \"$frame_num\"");
+   $rows = mysql_num_rows($result_set);
+   if ((!$result_set) || ($rows != 1))
+      {
+      //
+      // No connection or no rows returned.
+      //
+      mysql_query("alter table photo_detail drop column id");
+      mysql_query
+         (
+         "insert into photo_detail"
+         . " set div_spec=\"$div_spec\""
+         .   " , frame_num=\"$frame_num\""
+         .   " , be_avail_as_huge='Y'"
+         .   " , caption=\"Photograph DIV-$div_spec/$frame_num\""
+         .   " , tech_details='No technical details recorded'"
+         .   " , hits=1"
+         .   " , era=6"
+         );
+      mysql_query("alter table photo_detail order by div_spec,frame_num");
+      mysql_query("alter table photo_detail add column id serial first");
+      }
    }
 ?>

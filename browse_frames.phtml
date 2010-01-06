@@ -5,7 +5,7 @@
 //
 // Validate parameters
 //
-if (sscanf($div_spec,"%1d%1d%1d%1d-%1d%1d%s",&$d11,&$d12,&$d13,&$d14,&$d15,&$d16,&$d17) != 7)
+if (sscanf($div_spec,"%1d%1d%1d%1d-%1d%s",&$d11,&$d12,&$d13,&$d14,&$d15,&$d16) != 6)
    {
    echo "Improperly-formatted request";
    exit;
@@ -13,6 +13,7 @@ if (sscanf($div_spec,"%1d%1d%1d%1d-%1d%1d%s",&$d11,&$d12,&$d13,&$d14,&$d15,&$d16
 //
 require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
+require_once("f_myphotolibhosturl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
 ?>
@@ -20,7 +21,13 @@ require_once("f_bodyopen.phtml");
 <head><title>Frames on DIV <? echo $div_spec; ?></title></head>
 <? BodyOpen(); ?>
 <table align=center width="80%"><tr><td>
-<H6 ALIGN="CENTER"><a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></H6>
+<H6 ALIGN="CENTER">
+   <a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a>
+   -
+   <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a>
+   -
+   <a href="<? echo MyPhotoLibHostUrl(); ?>/browse_divs.phtml">Digital Image Volumes</a>
+</H6>
 <H1 ALIGN="CENTER">Frames on DIV <? echo $div_spec; ?></H1>
 <hr>
 <center>
