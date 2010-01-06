@@ -11,38 +11,75 @@ if (sscanf($div_spec,"%1d%1d%1d%1d-%1d%s",&$d11,&$d12,&$d13,&$d14,&$d15,&$d16) !
    exit;
    }
 //
+require_once("f_bodyopen.phtml");
 require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
 require_once("f_myphotolibhosturl.phtml");
 require_once("f_putlibphoto.phtml");
-require_once("f_bodyopen.phtml");
+require_once("f_password.phtml");
+//
+// Connect to the database.
+//
+mysql_connect(localhost,kalipso,Password());
+mysql_select_db(kalipso);
+extract(mysql_fetch_array(mysql_query("select min(id) as first_id_in_div, max(id) as last_id_in_div from photo_detail where div_spec = \"$div_spec\"")));
 ?>
 <html>
-<head><title>Frames on DIV <? echo $div_spec; ?></title></head>
-<? BodyOpen(); ?>
-<table align=center width="80%"><tr><td>
-<H6 ALIGN="CENTER">
-   <a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a>
-   -
-   <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a>
-   -
-   <a href="<? echo MyPhotoLibHostUrl(); ?>/browse_divs.phtml">Digital Image Volumes</a>
-</H6>
-<H1 ALIGN="CENTER">Frames on DIV <? echo $div_spec; ?></H1>
-<hr>
-<center>
-<?
-$d = dir("div/$div_spec");
-while ($filename = $d->read())
-   {
-   if (strstr($filename,"-i.jpg"))
-      {
-	PutLibPhoto($div_spec,substr($filename,0,(strlen($filename) - 6)));
-      echo " ";
-      }
-   }
-$d->close();
-?>
-</center></td></tr></table>
-</body>
+   <head><title>Frames on DIV <? echo $div_spec; ?></title></head>
+   <? BodyOpen(); ?>
+      <H6 ALIGN="CENTER">
+         <a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a>
+         -
+         <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a>
+         -
+         <a href="<? echo MyPhotoLibHostUrl(); ?>/browse_divs.phtml">Digital Image Volumes</a>
+      </H6>
+      <H1 ALIGN="CENTER">Frames on DIV <? echo $div_spec; ?></H1>
+      <hr>
+      <table align=center cellpadding="10" width="100%">
+         <tr>
+            <td align="right" valign="top" width="10%">
+               <tt>
+               <?
+               echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>";
+               if ($first_id_in_div > 1)
+                  {
+                  extract(mysql_fetch_array(mysql_query("select div_spec as prior_frame_div_spec from photo_detail where id = $first_id_in_div - 1")));
+                  echo "<a href=" . MyPhotoLibHostUrl() . "/browse_frames.phtml?div_spec=$prior_frame_div_spec>Prior<br>DIV</a>";
+                  }
+               ?>
+               </tt>
+            </td>
+            <td width="80%">
+               <center>
+                  <?
+                  $d = dir("div/$div_spec");
+                  while ($filename = $d->read())
+                     {
+                     if (strstr($filename,"-i.jpg"))
+                        {
+                          PutLibPhoto($div_spec,substr($filename,0,(strlen($filename) - 6)));
+                        echo " ";
+                        }
+                     }
+                  $d->close();
+                  ?>
+               </center>
+            </td>
+            <td align="left" valign="top" width="10%">
+               <tt>
+               <?
+               echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>";
+               extract(mysql_fetch_array(mysql_query("select max(id) as max_id from photo_detail")));
+               if ($last_id_in_div < $max_id)
+                  {
+                  extract(mysql_fetch_array(mysql_query("select div_spec as prior_frame_div_spec from photo_detail where id = $last_id_in_div + 1")));
+                  echo "<a href=" . MyPhotoLibHostUrl() . "/browse_frames.phtml?div_spec=$prior_frame_div_spec>Next<br>DIV</a>";
+                  }
+               ?>
+               </tt>
+            </td>
+         </tr>
+      </table>
+   </body>
 </html>
