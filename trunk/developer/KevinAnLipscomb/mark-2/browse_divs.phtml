@@ -9,25 +9,34 @@ require_once("f_bodyopen.phtml");
 require_once("f_myphotolibhosturl.phtml");
 ?>
 <html>
-<head><title>Digital Image Volumes</title></head>
-<? BodyOpen(); ?>
-<table align=center width="80%"><tr><td>
-<H6 ALIGN="CENTER"><a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></H6>
-<H1 ALIGN="CENTER">Digital Image Volumes</H1>
-<hr>
-<?
-echo "<ul>";
-$d = dir("div");
-while ($subdir = $d->read())
-   {
-   if (!strstr($subdir,"."))
-      {
-      echo "<li><a href=" . MyPhotoLibHostUrl() . "/browse_frames.phtml?div_spec=$subdir>$subdir</a>";
-      }
-   }
-echo "</ul>";
-$d->close();
-?>
-</td></tr></table>
-</body>
+   <head><title>Digital Image Volumes</title></head>
+   <? BodyOpen(); ?>
+      <table align=center width="80%">
+         <tr>
+            <td>
+               <H6 ALIGN="CENTER"><a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></H6>
+               <H1 ALIGN="CENTER">Digital Image Volumes</H1>
+               <hr>
+               <?
+               echo "<ul>";
+               $d = dir("div");
+               while ($entry = $d->read())
+                  {
+                  if (!strstr($entry,"."))
+                     {
+                     $subdir_array[] = $entry;
+                     }
+                  }
+               rsort($subdir_array);
+               foreach ($subdir_array as $subdir)
+                  {
+                  echo "<li><a href=" . MyPhotoLibHostUrl() . "/browse_frames.phtml?div_spec=$subdir>$subdir</a>";
+                  }
+               echo "</ul>";
+               $d->close();
+               ?>
+            </td>
+         </tr>
+      </table>
+   </body>
 </html>
