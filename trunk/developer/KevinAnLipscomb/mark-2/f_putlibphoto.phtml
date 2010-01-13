@@ -9,11 +9,14 @@ function PutLibPhoto
    (
    $div_spec,
    $frame_num,
-   $alignment = ""
+   $alignment = "",
+   $search_id = "",
+   $result_num = "",
+   $num_results = ""
    )
    {
    $image_source_spec = "div/$div_spec/$frame_num-i.jpg";
-   echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>";
+   echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num&search_id=$search_id&result_num=$result_num&num_results=$num_results>";
    $size = @GetImageSize("$image_source_spec");
    echo "<img border=\"2\" src=\"$image_source_spec\" align=\"$alignment\" $size[3]>";
    echo "</a>";
