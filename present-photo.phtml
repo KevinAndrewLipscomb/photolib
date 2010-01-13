@@ -87,9 +87,19 @@ $num_comments = mysql_num_rows($comment_result_set);
                   extract(mysql_fetch_array(mysql_query("select div_spec as prior_frame_div_spec, frame_num as prior_frame_frame_num from photo_detail where id = $id - 1")));
                   echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$prior_frame_div_spec&frame_num=$prior_frame_frame_num>Prior<br>div/frame</a>";
                   }
-               //
-               // Prior-match link goes here
-               //
+               else
+                  {
+                  echo "<p><br></p>";
+                  }
+               if ($result_num > 1)
+                  {
+                  extract(mysql_fetch_array(mysql_query("select div_spec as prior_frame_div_spec, frame_num as prior_frame_frame_num from search_result_$search_id where result_num = $result_num - 1")));
+                  echo "<p><a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$prior_frame_div_spec&frame_num=$prior_frame_frame_num&search_id=$search_id&result_num=" . ($result_num - 1) . "&num_results=$num_results>Prior<br>search<br>result</a></p>";
+                  }
+               else
+                  {
+                  echo "<p><br><br></p>";
+                  }
                if ($num_comments)
                   {
                   $arrow_size = GetImageSize("arrow.gif");
@@ -113,9 +123,15 @@ $num_comments = mysql_num_rows($comment_result_set);
                   extract(mysql_fetch_array(mysql_query("select div_spec as next_frame_div_spec, frame_num as next_frame_frame_num from photo_detail where id = $id + 1")));
                   echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$next_frame_div_spec&frame_num=$next_frame_frame_num>Next<br>div/frame</a>";
                   }
-               //
-               // Next-match link goes here
-               //
+               else
+                  {
+                  echo "<p><br></p>";
+                  }
+               if ($result_num < $num_results)
+                  {
+                  extract(mysql_fetch_array(mysql_query("select div_spec as next_frame_div_spec, frame_num as next_frame_frame_num from search_result_$search_id where result_num = $result_num + 1")));
+                  echo "<p><a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$next_frame_div_spec&frame_num=$next_frame_frame_num&search_id=$search_id&result_num=" . ($result_num + 1) . "&num_results=$num_results>Next<br>search<br>result</a></p>";
+                  }
                ?>
                </tt>
             </td>

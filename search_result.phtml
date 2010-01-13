@@ -20,7 +20,9 @@ require_once("f_myphotolibhosturl.phtml");
 mysql_connect(localhost,kalipso,Password());
 mysql_select_db(kalipso);
 //
-$sql_statement = "select distinct photo_detail.div_spec,photo_detail.frame_num,caption,tech_details from photo_detail left join photo_comment using (div_spec,frame_num) ";
+$search_id = str_replace(array("."," "),"",microtime());
+mysql_query("drop table if exists search_result_$search_id") or die("Failure dropping search_result_$search_id table");
+$sql_statement = "create table search_result_$search_id select distinct photo_detail.div_spec as div_spec,photo_detail.frame_num as frame_num,caption,tech_details from photo_detail left join photo_comment using (div_spec,frame_num) ";
 $where_clause = "";
 if ($basic_criteria != "")
    {
@@ -125,7 +127,9 @@ else
    {
    $sql_statement = stripslashes($sql_statement . "where " . $where_clause);
    //
-   $result = mysql_query($sql_statement) or die("Invalid query");
+   mysql_query($sql_statement) or die("Invalid search query");
+   mysql_query("alter table search_result_$search_id add result_num serial first") or die("Failure adding serial column to table search_result_$search_id");
+   $result = mysql_query("select result_num,div_spec,frame_num,caption,tech_details from search_result_$search_id") or die("Invalid result query");
    $num_rows = mysql_num_rows($result);
    echo "<table width=\"100%\"><tr>\n";
    echo "<td align=left><b>Matches found:&nbsp; $num_rows</b></td>\n";
@@ -146,13 +150,13 @@ else
       extract($row);
       echo "<tr>";
       echo "<td><ul>";
-      echo "<li><a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num><b>div/$div_spec/$frame_num</b></a>";
+      echo "<li><a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num&search_id=$search_id&result_num=$result_num&num_results=$num_rows><b>div/$div_spec/$frame_num</b></a>";
       echo "<br><small>$caption ... $tech_details</small><br><br>";
       echo "</ul></td>";
       if (!$hide_thumbnails)
          {
          echo "<td>";
-         PutLibPhoto($div_spec,$frame_num);
+         PutLibPhoto($div_spec,$frame_num,"",$search_id,$result_num,$num_rows);
          echo "</td>";
          }
       echo "</tr>";
