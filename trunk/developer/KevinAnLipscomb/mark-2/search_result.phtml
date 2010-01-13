@@ -31,7 +31,11 @@ if ($basic_criteria != "")
       // If user submitted more than one word, the above operation
       // replaces spaces and stars with the regexp wildcard characters.
       //
-   $where_clause = "lower(caption) rlike \"$parsed_basic_criteria\" or lower(tech_details) rlike \"$parsed_basic_criteria\" or lower(keywords) rlike \"$parsed_basic_criteria\" or lower(text) rlike \"$parsed_basic_criteria\"";
+   $where_clause = "lower(caption) rlike \"$parsed_basic_criteria\""
+   . " or lower(tech_details) rlike \"$parsed_basic_criteria\""
+   . " or lower(keywords) rlike \"$parsed_basic_criteria\""
+   . " or lower(text) rlike \"$parsed_basic_criteria\""
+   . " or lower(div_spec) rlike \"$parsed_basic_criteria\"";
    }
 else
    {
