@@ -30,24 +30,13 @@ $sql_statement = "create table search_result_$search_id"
 .   " , caption"
 .   " , tech_details"
 . " from photo_detail left join photo_comment using (div_spec,frame_num) ";
-$where_clause = "";
 if ($basic_criteria != "")
    {
-   $parsed_basic_criteria = strtolower(ereg_replace("[[:space:]]+", " ",$basic_criteria));
-   $parsed_basic_criteria = ereg_replace("\*"," ",$parsed_basic_criteria);
-   $parsed_basic_criteria = ereg_replace(" ",".*",$parsed_basic_criteria);
-      //
-      // If user submitted more than one word, the above operation
-      // replaces spaces and stars with the regexp wildcard characters.
-      //
-   $where_clause = "lower(caption) rlike \"$parsed_basic_criteria\""
-   . " or lower(tech_details) rlike \"$parsed_basic_criteria\""
-   . " or lower(keywords) rlike \"$parsed_basic_criteria\""
-   . " or lower(text) rlike \"$parsed_basic_criteria\""
-   . " or lower(div_spec) rlike \"$parsed_basic_criteria\"";
+   $where_clause = "match (div_spec,frame_num,caption,tech_details,keywords,placement) against ('$basic_criteria')";
    }
 else
    {
+   $where_clause = "";
    if ($div_spec_criteria != "")
       {
       $where_clause = $where_clause . "div_spec $div_spec_criteria ";
@@ -134,9 +123,9 @@ else
    {
    $sql_statement = stripslashes($sql_statement . "where " . $where_clause);
    //
-   if ($parsed_basic_criteria)
+   if ($basic_criteria)
       {
-      $criteria_log_entry = $parsed_basic_criteria;
+      $criteria_log_entry = $basic_criteria;
       }
    else
       {
