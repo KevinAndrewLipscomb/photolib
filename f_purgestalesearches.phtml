@@ -5,7 +5,7 @@ function PurgeStaleSearches()
    while ($stale_search = mysql_fetch_array($stale_searches))
       {
       extract($stale_search);
-      mysql_query("drop table search_result_$stale_search_id") or die("Failure dropping stale a search result");
+      mysql_query("drop table search_result_$stale_search_id");
       }
    mysql_query("delete from search_manifest where time_of_last_reference < subtime(now(),'01:00')") or die("Failure purging search manifest");
    }
