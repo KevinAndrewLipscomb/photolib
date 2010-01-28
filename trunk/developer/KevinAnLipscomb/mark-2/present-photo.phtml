@@ -15,6 +15,7 @@ require_once("f_mymainphotopageurl.phtml");
 require_once("f_myphotolibhosturl.phtml");
 require_once("f_password.phtml");
 require_once("f_purgestalesearches.phtml");
+require_once('f_putstdrecaptchablock.phtml');
 //
 // Connect to the database.
 //
@@ -175,7 +176,7 @@ if ($search_id)
                   echo "<li>No database record for this photograph existed, so a generic record has now been inserted.&nbsp; Please consider adding some keywords (below).";
                   }
                echo "<li>This and <a href=\"index.phtml\">other photographs</a> copyright $copyright_year <a href=\"" . MyHomePageUrl() . "\">Kevin Andrew Lipscomb</a>";
-               echo "<li>To improve searchability, the following keywords are also associated with this photograph.&nbsp; Click on a word to perform a search on it.&nbsp; If you can think of other applicable words that aren't already in the caption or the technical details, please enter them in the field at the bottom of this page.<br><br>\n";
+               echo "<li>To improve searchability, the following keywords are also associated with this photograph.&nbsp; Click on a word to perform a search on it.&nbsp; If you can think of other applicable words that aren't already in the caption or the technical details, please enter them in the field below.<br><br>\n";
                echo "<i>\n";
                $keyword_array = split(" ",$keywords);
                foreach($keyword_array as $keyword)
@@ -184,8 +185,15 @@ if ($search_id)
                   }
                echo "</i><br><br>\n";
                echo "<form action=add-keywords.phtml?div_spec=$div_spec&frame_num=$frame_num method=post>\n";
-               echo "   <input name=new_keywords type=text>\n";
-               echo "   <input type=submit value=\"Add keywords\">\n";
+               echo    "<table border=0 cellpadding=5 cellspacing=0>\n";
+               echo       "<tr>\n";
+               echo          "<td valign=top>New keyword(s): <input name=new_keywords type=text></td>\n";
+               echo          "<td valign=top>\n";
+               PutStdReCaptchaGetBlock();
+               echo          "</td>\n";
+               echo          "<td valign=top><input type=submit value=\"Submit\"></td>\n";
+               echo       "</tr>\n";
+               echo    "</table>\n";
                echo "</form>\n";
                echo "</ul></small>\n";
                echo "<hr>\n";

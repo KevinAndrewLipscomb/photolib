@@ -4,8 +4,7 @@
 //
 // Validate parameters
 //
-if ((sscanf($div_spec,"%1d%1d%1d%1d-%1d%1d%1d%s",&$d11,&$d12,&$d13,&$d14,&$d15,&$d16,&$d17,&$d18) != 7)
-   or (sscanf($frame_num,"%1d%1d%1d%s",&$d21,&$d22,&$d23,&$d24) != 3))
+if (sscanf($div_spec,"%1d%1d%1d%1d-%1d%s",&$d11,&$d12,&$d13,&$d14,&$d15,&$d16) != 6)
    {
    echo "Improperly-formatted request";
    exit;
@@ -13,6 +12,7 @@ if ((sscanf($div_spec,"%1d%1d%1d%1d-%1d%1d%1d%s",&$d11,&$d12,&$d13,&$d14,&$d15,&
 require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
+require_once('f_putstdrecaptchablock.phtml');
 require_once("f_bodyopen.phtml");
 ?>
 <html>
@@ -31,9 +31,11 @@ require_once("f_bodyopen.phtml");
          echo "<form action=add-comment.phtml method=post>\n";
          echo "<p>Your anecdote or comment:<br><textarea name=text rows=10 cols=65 wrap=soft></textarea></p>\n";
          echo "<p>Your name:<br><input name=nickname type=text size=40></p>\n";
-         echo "<p>Your email address:<br><input name=email_address type=text size=40><input type=submit value=Submit></p>\n";
+         echo "<p>Your email address:<br><input name=email_address type=text size=40></p>";
+         PutStdReCaptchaGetBlock();
          echo "<input name=div_spec value=$div_spec type=hidden>\n";
          echo "<input name=frame_num value=$frame_num type=hidden>\n";
+         echo "<p><input type=submit value=Submit></p>\n";
          echo "</form>\n";
          ?>
       </td>

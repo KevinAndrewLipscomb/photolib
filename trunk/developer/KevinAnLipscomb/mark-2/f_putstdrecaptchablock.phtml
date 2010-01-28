@@ -1,0 +1,9 @@
+<?php
+require_once('../../foundation/recaptchalib.php');
+function PutStdReCaptchaGetBlock()
+  {
+  echo "<table border=1 cellpadding=5 cellspacing=0><tr><td>Please prove that you're a human...";
+  echo recaptcha_get_html("6LfT0QoAAAAAABd26MPhrM0pQ_EH5L24p3zVOsCY");
+  echo "</td></tr></table>";
+  }
+?>
