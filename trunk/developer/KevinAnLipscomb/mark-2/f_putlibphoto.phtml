@@ -2,8 +2,8 @@
 //
 // $Id$
 //
+require_once("f_connectselectdbinstance.phtml");
 require_once("f_myphotolibhosturl.phtml");
-require_once("f_password.phtml");
 //
 function PutLibPhoto
    (
@@ -21,8 +21,7 @@ function PutLibPhoto
    echo "<img border=\"2\" src=\"$image_source_spec\" align=\"$alignment\" $size[3]>";
    echo "</a>";
    //
-   mysql_connect(localhost,kalipso,Password());
-   mysql_select_db(kalipso);
+   ConnectSelectDbInstance();
    $result_set = mysql_query("select TRUE from photo_detail where div_spec = \"$div_spec\" and frame_num = \"$frame_num\"");
    $rows = mysql_num_rows($result_set);
    if ((!$result_set) || ($rows != 1))

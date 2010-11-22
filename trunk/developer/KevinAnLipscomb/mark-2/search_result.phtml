@@ -3,10 +3,10 @@
 // $Id$
 //
 require_once("f_bodyopen.phtml");
+require_once("f_connectselectdbinstance.phtml");
 require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
 require_once("f_myphotolibhosturl.phtml");
-require_once("f_password.phtml");
 require_once("f_purgestalesearches.phtml");
 require_once("f_putlibphoto.phtml");
 ?>
@@ -18,8 +18,7 @@ require_once("f_putlibphoto.phtml");
 <H1 ALIGN="CENTER">Search result</H1>
 <hr>
 <?
-mysql_connect(localhost,kalipso,Password());
-mysql_select_db(kalipso);
+ConnectSelectDbInstance();
 //
 $microtime_elements = explode(" ",microtime()); // returns "0.{msec} {sec}"
 $search_id = str_replace("0.","",$microtime_elements[1] . $microtime_elements[0]);  // returns {sec}{msec}

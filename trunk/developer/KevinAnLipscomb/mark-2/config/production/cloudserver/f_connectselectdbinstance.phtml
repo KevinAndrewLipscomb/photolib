@@ -1,0 +1,16 @@
+<?
+//
+// $Id: f_connectselectdb.phtml 578 2002-03-11 19:53:12Z kevinanlipscomb $
+//
+function ConnectSelectDbInstance()
+   {
+   $saved_error_level = error_reporting(E_ALL);
+   $success = FALSE;
+   if (@mysql_connect("localhost","ki-app","steviont"))
+      {
+      $success = @mysql_select_db("kalipso");
+      }
+   error_reporting($saved_error_level);
+   return $success;
+   }
+?>
