@@ -2,11 +2,11 @@
 //
 // $Id$
 //
+require_once("f_connectselectdbinstance.phtml");
 require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
-require_once("f_password.phtml");
 ?>
 <html>
 <head><title>Mark Visit</title></head>
@@ -16,8 +16,7 @@ require_once("f_password.phtml");
 <H1 ALIGN="CENTER">Mark Visit</H1>
 <hr>
 <?
-mysql_connect(localhost,kalipso,Password());
-mysql_select_db(kalipso);
+ConnectSelectDbInstance();
 $time = time();
 $sql = "replace visit (visitor,time) values (\"$visitor\",$time)";
 mysql_query($sql) or die("Sorry, the database update failed.");

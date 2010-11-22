@@ -10,17 +10,16 @@ if (sscanf($div_spec,"%1d%1d%1d%1d-%1d%s",&$d11,&$d12,&$d13,&$d14,&$d15,&$d16) !
    exit;
    }
 require_once("f_bodyopen.phtml");
+require_once("f_connectselectdbinstance.phtml");
 require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
 require_once("f_myphotolibhosturl.phtml");
-require_once("f_password.phtml");
 require_once("f_purgestalesearches.phtml");
 require_once('f_putstdrecaptchablock.phtml');
 //
 // Connect to the database.
 //
-mysql_connect(localhost,kalipso,Password());
-mysql_select_db(kalipso);
+ConnectSelectDbInstance();
 //
 // Increment the hit count.
 //
