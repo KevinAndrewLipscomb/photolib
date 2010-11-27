@@ -237,8 +237,7 @@ system to run Bash scripts.</p>
       //
       // Connect to the database.
       //
-      $conn = mysql_connect(localhost,<i>myusername</i>,<i>mypassword</i>);
-      mysql_select_db(<i>mydatabasename</i>);
+      $db_link = mysqli_connect(localhost,<i>myusername</i>,<i>mypassword</i>,<i>mydatabasename</i>);
       //
       // Create the SQL statement
       //
@@ -246,11 +245,11 @@ system to run Bash scripts.</p>
       //
       // Execute the statement
       //
-      $result_set = mysql_query($sql);
+      $result_set = $db_link->query($sql);
       //
       // Check how many rows were returned
       //
-      $rows = mysql_num_rows($result_set);
+      $rows = mysqli_num_rows($result_set);
       if ((!$result_set) || ($rows != 1))
          {
          echo &quot;&lt;br&gt;&lt;b&gt;Random photo retrieval failed.&lt;/b&gt;&lt;br&gt;&quot;;
@@ -260,10 +259,10 @@ system to run Bash scripts.</p>
          //
          // We know exactly one row matched.  Fetch it.
          //
-         $field_array = mysql_fetch_row($result_set);
+         $field_array = mysqli_fetch_row($result_set);
          //
          // The elements of $field_array contain the fields
-         // in the row returned by mysql_fetch_row().
+         // in the row returned by mysqli_fetch_row().
          //
          $image_source_spec = &quot;div/$field_array[0]/$field_array[1]-i.jpg&quot;;
          echo &quot;&lt;a href=<? echo MyPhotoLibHostUrl(); ?>/present-photo.phtml?div_spec=
@@ -311,15 +310,14 @@ system to run Bash scripts.</p>
             //
             // Connect to the database.
             //
-            mysql_connect(localhost,<i>myusername</i>,<i>mypassword</i>);
-            mysql_select_db(<i>mydatabasename</i>);
+            $db_link = mysqli_connect(localhost,<i>myusername</i>,<i>mypassword</i>,<i>mydatabasename</i>);
             //
             // Create and execute the SQL statement to increment the hit count.
             //
             $sql = &quot;update low_priority <i>mytablename</i>
                set num_times_seen = num_times_seen + 1
                where cd_id = \&quot;$div_spec\&quot; and frame = \&quot;$frame_num\&quot;&quot;;
-            mysql_query($sql);
+            $db_link->query($sql);
             //
             // Create the SQL statement to retrieve the row.
             //
@@ -329,11 +327,11 @@ system to run Bash scripts.</p>
             //
             // Execute the statement
             //
-            $result_set = mysql_query($sql);
+            $result_set = $db_link->query($sql);
             //
             // Check how many rows were returned
             //
-            $rows = mysql_num_rows($result_set);
+            $rows = mysqli_num_rows($result_set);
             if ((!$result_set) || ($rows != 1))
                {
                //
@@ -350,7 +348,7 @@ system to run Bash scripts.</p>
                //
                // We know exactly one row matched.  Fetch it.
                //
-               $field_array = mysql_fetch_array($result_set);
+               $field_array = mysqli_fetch_array($result_set);
                extract($field_array);
                   //
                   // Sets up column-named variables:

@@ -3,7 +3,7 @@
 // $Id$
 //
 require_once("f_bodyopen.phtml");
-require_once("f_connectselectdbinstance.phtml");
+require_once("f_connectselectdbinstanceunpublished.phtml");
 require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
 require_once("f_myphotolibhosturl.phtml");
@@ -18,11 +18,11 @@ require_once("f_putlibphoto.phtml");
 <H1 ALIGN="CENTER">Search result</H1>
 <hr>
 <?
-ConnectSelectDbInstance();
+ConnectSelectDbInstanceUNPUBLISHED($db_link);
 //
 $microtime_elements = explode(" ",microtime()); // returns "0.{msec} {sec}"
 $search_id = str_replace("0.","",$microtime_elements[1] . $microtime_elements[0]);  // returns {sec}{msec}
-mysql_query("drop table if exists search_result_$search_id") or die("Failure dropping search_result_$search_id table");
+$db_link->query("drop table if exists search_result_$search_id") or die("Failure dropping search_result_$search_id table");
 $sql_statement = "create table search_result_$search_id"
 . " select distinct photo_detail.div_spec as div_spec"
 .   " , photo_detail.frame_num as frame_num"
@@ -130,7 +130,7 @@ else
       {
       $criteria_log_entry = "(detailed)";
       }
-   mysql_query
+   $db_link->query
       (
       "insert search_manifest"
       . " set id = '$search_id'"
@@ -140,10 +140,10 @@ else
       .   " , criteria = '" . $criteria_log_entry . "'"
       )
       or die("Failure inserting record into search_manifest");
-   mysql_query($sql_statement) or die("Invalid search query");
-   mysql_query("alter table search_result_$search_id add result_num serial first") or die("Failure adding serial column to table search_result_$search_id");
-   $result = mysql_query("select result_num,div_spec,frame_num,caption,tech_details from search_result_$search_id") or die("Invalid result query");
-   $num_rows = mysql_num_rows($result);
+   $db_link->query($sql_statement) or die("Invalid search query");
+   $db_link->query("alter table search_result_$search_id add result_num serial first") or die("Failure adding serial column to table search_result_$search_id");
+   $result = $db_link->query("select result_num,div_spec,frame_num,caption,tech_details from search_result_$search_id") or die("Invalid result query");
+   $num_rows = mysqli_num_rows($result);
    echo "<table width=\"100%\"><tr>\n";
    echo "<td align=left><b>Matches found:&nbsp; $num_rows</b></td>\n";
    echo "<td align=right>\n";
@@ -158,7 +158,7 @@ else
       }
    echo "</td>\n";
    echo "<table>";
-   while ($row = mysql_fetch_array($result))
+   while ($row = mysqli_fetch_array($result))
       {
       extract($row);
       echo "<tr>";
@@ -177,7 +177,7 @@ else
       }
    echo "</table>";
    }
-PurgeStaleSearches();
+PurgeStaleSearches($db_link);
 ?>
 <center>
    <form action=search_result.phtml method=post>

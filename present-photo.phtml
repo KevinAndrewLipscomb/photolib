@@ -10,7 +10,7 @@ if (sscanf($div_spec,"%1d%1d%1d%1d-%1d%s",&$d11,&$d12,&$d13,&$d14,&$d15,&$d16) !
    exit;
    }
 require_once("f_bodyopen.phtml");
-require_once("f_connectselectdbinstance.phtml");
+require_once("f_connectselectdbinstanceunpublished.phtml");
 require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
 require_once("f_myphotolibhosturl.phtml");
@@ -19,27 +19,27 @@ require_once('f_putstdrecaptchablock.phtml');
 //
 // Connect to the database.
 //
-ConnectSelectDbInstance();
+ConnectSelectDbInstanceUNPUBLISHED($db_link);
 //
 // Increment the hit count.
 //
-mysql_query("update low_priority photo_detail set hits = hits + 1 where div_spec = \"$div_spec\" and frame_num = \"$frame_num\"");
+$db_link->query("update low_priority photo_detail set hits = hits + 1 where div_spec = \"$div_spec\" and frame_num = \"$frame_num\"");
 //
 // Retrieve the photo_detail row.
 //
-$result_set = mysql_query("select id, be_avail_as_huge, caption, tech_details, copyright_year, hits, keywords from photo_detail where div_spec = \"$div_spec\" and frame_num = \"$frame_num\"");
+$result_set = $db_link->query("select id, be_avail_as_huge, caption, tech_details, copyright_year, hits, keywords from photo_detail where div_spec = \"$div_spec\" and frame_num = \"$frame_num\"");
 //
 // Check how many rows were returned
 //
-$rows = mysql_num_rows($result_set);
+$rows = mysqli_num_rows($result_set);
 if ((!$result_set) || ($rows != 1))
    {
    //
    // No connection or no rows returned.
    //
    $record_found = 0;
-   mysql_query("alter table photo_detail drop column id");
-   mysql_query
+   $db_link->query("alter table photo_detail drop column id");
+   $db_link->query
       (
       "insert into photo_detail"
       . " set div_spec=\"$div_spec\""
@@ -50,23 +50,23 @@ if ((!$result_set) || ($rows != 1))
       .   " , hits=1"
       .   " , era=6"
       );
-   mysql_query("alter table photo_detail order by div_spec,frame_num");
-   mysql_query("alter table photo_detail add column id serial first");
-   $result_set = mysql_query("select id, be_avail_as_huge, caption, tech_details, copyright_year, hits, keywords from photo_detail where div_spec = \"$div_spec\" and frame_num = \"$frame_num\"");
+   $db_link->query("alter table photo_detail order by div_spec,frame_num");
+   $db_link->query("alter table photo_detail add column id serial first");
+   $result_set = $db_link->query("select id, be_avail_as_huge, caption, tech_details, copyright_year, hits, keywords from photo_detail where div_spec = \"$div_spec\" and frame_num = \"$frame_num\"");
    }
 else
    {
    $record_found = 1;
    }
-extract(mysql_fetch_array($result_set));
+extract(mysqli_fetch_array($result_set));
 $photo_size = GetImageSize("div/$div_spec/$frame_num-3.jpg");
-$comment_result_set = mysql_query("select nickname, email_address, text from photo_comment where div_spec=\"$div_spec\" and frame_num=\"$frame_num\"");
-$num_comments = mysql_num_rows($comment_result_set);
+$comment_result_set = $db_link->query("select nickname, email_address, text from photo_comment where div_spec=\"$div_spec\" and frame_num=\"$frame_num\"");
+$num_comments = mysqli_num_rows($comment_result_set);
 //
 if ($search_id)
    {
-   mysql_query("update search_manifest set time_of_last_reference = now() where id = '$search_id'") or die("Failure updating search manifest");
-   PurgeStaleSearches();
+   $db_link->query("update search_manifest set time_of_last_reference = now() where id = '$search_id'") or die("Failure updating search manifest");
+   PurgeStaleSearches($db_link);
    }
 ?>
 <html>
@@ -91,7 +91,7 @@ if ($search_id)
                echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>";
                if ($id > 1)
                   {
-                  extract(mysql_fetch_array(mysql_query("select div_spec as prior_frame_div_spec, frame_num as prior_frame_frame_num from photo_detail where id = $id - 1")));
+                  extract(mysqli_fetch_array($db_link->query("select div_spec as prior_frame_div_spec, frame_num as prior_frame_frame_num from photo_detail where id = $id - 1")));
                   echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$prior_frame_div_spec&frame_num=$prior_frame_frame_num>Prior<br>div/frame</a>";
                   }
                else
@@ -100,7 +100,7 @@ if ($search_id)
                   }
                if ($result_num > 1)
                   {
-                  extract(mysql_fetch_array(mysql_query("select div_spec as prior_frame_div_spec, frame_num as prior_frame_frame_num from search_result_$search_id where result_num = $result_num - 1")));
+                  extract(mysqli_fetch_array($db_link->query("select div_spec as prior_frame_div_spec, frame_num as prior_frame_frame_num from search_result_$search_id where result_num = $result_num - 1")));
                   echo "<p><a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$prior_frame_div_spec&frame_num=$prior_frame_frame_num&search_id=$search_id&result_num=" . ($result_num - 1) . "&num_results=$num_results>Prior<br>search<br>result</a></p>";
                   }
                else
@@ -124,10 +124,10 @@ if ($search_id)
                <tt>
                <?
                echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>";
-               extract(mysql_fetch_array(mysql_query("select max(id) as max_id from photo_detail")));
+               extract(mysqli_fetch_array($db_link->query("select max(id) as max_id from photo_detail")));
                if ($id < $max_id)
                   {
-                  extract(mysql_fetch_array(mysql_query("select div_spec as next_frame_div_spec, frame_num as next_frame_frame_num from photo_detail where id = $id + 1")));
+                  extract(mysqli_fetch_array($db_link->query("select div_spec as next_frame_div_spec, frame_num as next_frame_frame_num from photo_detail where id = $id + 1")));
                   echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$next_frame_div_spec&frame_num=$next_frame_frame_num>Next<br>div/frame</a>";
                   }
                else
@@ -136,7 +136,7 @@ if ($search_id)
                   }
                if ($result_num < $num_results)
                   {
-                  extract(mysql_fetch_array(mysql_query("select div_spec as next_frame_div_spec, frame_num as next_frame_frame_num from search_result_$search_id where result_num = $result_num + 1")));
+                  extract(mysqli_fetch_array($db_link->query("select div_spec as next_frame_div_spec, frame_num as next_frame_frame_num from search_result_$search_id where result_num = $result_num + 1")));
                   echo "<p><a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$next_frame_div_spec&frame_num=$next_frame_frame_num&search_id=$search_id&result_num=" . ($result_num + 1) . "&num_results=$num_results>Next<br>search<br>result</a></p>";
                   }
                ?>
@@ -199,7 +199,7 @@ if ($search_id)
                echo "<p align=center><a name=Comments></a><b>Anecdote and Comment Area</b></p>\n";
                for ($comment_num = 1; $comment_num <= $num_comments; $comment_num++)
                   {
-                  $comment_field_array = mysql_fetch_array($comment_result_set);
+                  $comment_field_array = mysqli_fetch_array($comment_result_set);
                   extract($comment_field_array);
                   if ($nickname == "") $nickname = $email_address;
                   echo "<p><tt>" . stripslashes($text) . "</tt>";

@@ -38,13 +38,13 @@ require_once("f_myphotolibhosturl.phtml");
          //
          // Connect to the database.
          //
-         ConnectSelectDbInstance();
+         ConnectSelectDbInstanceUNPUBLISHED($db_link);
          //
          // Create and execute the SQL statement to increment the hit count.
          //
          $text = addslashes($text);
          $sql = "insert into photo_comment set div_spec='$div_spec', frame_num='$frame_num', nickname='$nickname', email_address='$email_address', text='$text'";
-         mysql_query($sql) or die("Sorry, the database query did not succeed.");
+         $db_link->query($sql) or die("Sorry, the database query did not succeed.");
          mail
             (
             "kevin.lipscomb@kvrs.org",

@@ -2,7 +2,7 @@
 //
 // $Id$
 //
-require_once("f_connectselectdbinstance.phtml");
+require_once("f_connectselectdbinstanceunpublished.phtml");
 require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
@@ -38,7 +38,7 @@ else
 //
 // Get the time of the user's last visit.
 //
-ConnectSelectDbInstance();
+ConnectSelectDbInstanceUNPUBLISHED($db_link);
 //
 // My "User Tracking" page promises the visitor that I quickly hash their
 // Site ID String.  I intended to use mhash() (below), but my web server
@@ -48,13 +48,13 @@ ConnectSelectDbInstance();
 //
 // Instead, use the MySQL MD5 function.
 //
-$hash_result = mysql_query("select md5(\"$visitor\") as hash_string");
-$hash_row = mysql_fetch_object($hash_result);
+$hash_result = $db_link->query("select md5(\"$visitor\") as hash_string");
+$hash_row = mysqli_fetch_object($hash_result);
 $visitor = $hash_row->hash_string;
 //
 $sql = "select time from visit where visitor = \"$visitor\"";
-$result = mysql_query($sql);
-$num_rows = mysql_num_rows($result);
+$result = $db_link->query($sql);
+$num_rows = mysqli_num_rows($result);
 if ($num_rows == 0)
    {
    //
@@ -68,7 +68,7 @@ else
    //
    // Otherwise there can only be one row because visitors are unique in the visit table.
    //
-   $row = mysql_fetch_object($result);
+   $row = mysqli_fetch_object($result);
    $time = $row->time;
       //
       // Sets up the $time variable.

@@ -12,7 +12,7 @@ if (sscanf($div_spec,"%1d%1d%1d%1d-%1d%s",&$d11,&$d12,&$d13,&$d14,&$d15,&$d16) !
    }
 //
 require_once("f_bodyopen.phtml");
-require_once("f_connectselectdbinstance.phtml");
+require_once("f_connectselectdbinstanceunpublished.phtml");
 require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
 require_once("f_myphotolibhosturl.phtml");
@@ -20,8 +20,8 @@ require_once("f_putlibphoto.phtml");
 //
 // Connect to the database.
 //
-ConnectSelectDbInstance();
-extract(mysql_fetch_array(mysql_query("select min(id) as first_id_in_div, max(id) as last_id_in_div from photo_detail where div_spec = \"$div_spec\"")));
+ConnectSelectDbInstanceUNPUBLISHED($db_link);
+extract(mysqli_fetch_array($db_link->query("select min(id) as first_id_in_div, max(id) as last_id_in_div from photo_detail where div_spec = \"$div_spec\"")));
 ?>
 <html>
    <head><title>Frames on DIV <? echo $div_spec; ?></title></head>
@@ -43,7 +43,7 @@ extract(mysql_fetch_array(mysql_query("select min(id) as first_id_in_div, max(id
                echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>";
                if ($first_id_in_div > 1)
                   {
-                  extract(mysql_fetch_array(mysql_query("select div_spec as prior_frame_div_spec from photo_detail where id = $first_id_in_div - 1")));
+                  extract(mysqli_fetch_array($db_link->query("select div_spec as prior_frame_div_spec from photo_detail where id = $first_id_in_div - 1")));
                   echo "<a href=" . MyPhotoLibHostUrl() . "/browse_frames.phtml?div_spec=$prior_frame_div_spec>Prior<br>DIV</a>";
                   }
                ?>
@@ -69,10 +69,10 @@ extract(mysql_fetch_array(mysql_query("select min(id) as first_id_in_div, max(id
                <tt>
                <?
                echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>";
-               extract(mysql_fetch_array(mysql_query("select max(id) as max_id from photo_detail")));
+               extract(mysqli_fetch_array($db_link->query("select max(id) as max_id from photo_detail")));
                if ($last_id_in_div < $max_id)
                   {
-                  extract(mysql_fetch_array(mysql_query("select div_spec as prior_frame_div_spec from photo_detail where id = $last_id_in_div + 1")));
+                  extract(mysqli_fetch_array($db_link->query("select div_spec as prior_frame_div_spec from photo_detail where id = $last_id_in_div + 1")));
                   echo "<a href=" . MyPhotoLibHostUrl() . "/browse_frames.phtml?div_spec=$prior_frame_div_spec>Next<br>DIV</a>";
                   }
                ?>
