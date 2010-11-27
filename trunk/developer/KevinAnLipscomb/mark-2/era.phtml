@@ -1,5 +1,5 @@
 <?
-require_once("f_connectselectdbinstancel.phtml");
+require_once("f_connectselectdbinstanceunpublished.phtml");
 require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
 require_once("f_bodyopen.phtml");
@@ -23,7 +23,7 @@ require_once("f_myphotolibhosturl.phtml");
       //
       // Connect to the database.
       //
-      $conn = ConnectSelectDbInstance();
+      $conn = ConnectSelectDbInstanceUNPUBLISHED($db_link);
       //
       // Create the SQL statement
       //
@@ -31,11 +31,11 @@ require_once("f_myphotolibhosturl.phtml");
       //
       // Execute the statement
       //
-      $result_set = mysql_query($sql);
+      $result_set = $db_link->query($sql);
       //
       // Check how many rows were returned
       //
-      $rows = mysql_num_rows($result_set);
+      $rows = mysqli_num_rows($result_set);
       if ((!$result_set) || ($rows == 0))
          {
          echo "<br><b>Could not find any such photographs.</b><br>";
@@ -43,7 +43,7 @@ require_once("f_myphotolibhosturl.phtml");
       else
          {
          //
-         while ($field_array = mysql_fetch_array($result_set))
+         while ($field_array = mysqli_fetch_array($result_set))
             {
             extract($field_array);
                //

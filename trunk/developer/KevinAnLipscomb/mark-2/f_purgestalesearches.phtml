@@ -1,12 +1,12 @@
 <?php
-function PurgeStaleSearches()
+function PurgeStaleSearches($db_link)
    {
-   $stale_searches = mysql_query("select id as stale_search_id from search_manifest where time_of_last_reference < subtime(now(),'01:00')") or die("Failure selecting stale searches");
-   while ($stale_search = mysql_fetch_array($stale_searches))
+   $stale_searches = $db_link->query("select id as stale_search_id from search_manifest where time_of_last_reference < subtime(now(),'01:00')") or die("Failure selecting stale searches");
+   while ($stale_search = mysqli_fetch_array($stale_searches))
       {
       extract($stale_search);
-      mysql_query("drop table search_result_$stale_search_id");
+      $db_link->query("drop table search_result_$stale_search_id");
       }
-   mysql_query("delete from search_manifest where time_of_last_reference < subtime(now(),'01:00')") or die("Failure purging search manifest");
+   $db_link->query("delete from search_manifest where time_of_last_reference < subtime(now(),'01:00')") or die("Failure purging search manifest");
    }
 ?>

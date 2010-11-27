@@ -2,7 +2,7 @@
 //
 // $Id$
 //
-require_once("f_connectselectdbinstance.phtml");
+require_once("f_connectselectdbinstanceunpublished.phtml");
 require_once("f_myphotolibhosturl.phtml");
 //
 function PutLibPhoto
@@ -21,16 +21,16 @@ function PutLibPhoto
    echo "<img border=\"2\" src=\"$image_source_spec\" align=\"$alignment\" $size[3]>";
    echo "</a>";
    //
-   ConnectSelectDbInstance();
-   $result_set = mysql_query("select TRUE from photo_detail where div_spec = \"$div_spec\" and frame_num = \"$frame_num\"");
-   $rows = mysql_num_rows($result_set);
+   ConnectSelectDbInstanceUNPUBLISHED($db_link);
+   $result_set = $db_link->query("select TRUE from photo_detail where div_spec = \"$div_spec\" and frame_num = \"$frame_num\"");
+   $rows = mysqli_num_rows($result_set);
    if ((!$result_set) || ($rows != 1))
       {
       //
       // No connection or no rows returned.
       //
-      mysql_query("alter table photo_detail drop column id");
-      mysql_query
+      $db_link->query("alter table photo_detail drop column id");
+      $db_link->query
          (
          "insert into photo_detail"
          . " set div_spec=\"$div_spec\""
@@ -41,8 +41,8 @@ function PutLibPhoto
          .   " , hits=1"
          .   " , era=6"
          );
-      mysql_query("alter table photo_detail order by div_spec,frame_num");
-      mysql_query("alter table photo_detail add column id serial first");
+      $db_link->query("alter table photo_detail order by div_spec,frame_num");
+      $db_link->query("alter table photo_detail add column id serial first");
       }
    }
 ?>
