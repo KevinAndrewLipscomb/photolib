@@ -1,0 +1,19 @@
+grant select
+ , insert
+ , update
+ , delete
+ , create
+ , alter
+ , drop
+  on kalipso_d.*
+  to 'ki-kalipso-d'@'localhost' identified by '~ki-kalipso-d-password~'
+;
+grant select
+ , insert
+ , update
+ , delete
+ , create
+ , alter
+ , drop
+  on kalipso_d.*
+  to 'ki-kalipso-d'@'70.84.138.98' identified by '~ki-kalipso-d-password~'
