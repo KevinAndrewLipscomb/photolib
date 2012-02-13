@@ -1,0 +1,84 @@
+<?
+//
+// $Id: browse_frames.phtml 3396 2010-11-27 17:39:45Z KevinAnLipscomb $
+//
+//
+// Validate parameters
+//
+if (sscanf($div_spec,"%1d%1d%1d%1d-%1d%s",&$d11,&$d12,&$d13,&$d14,&$d15,&$d16) != 6)
+   {
+   echo "Improperly-formatted request";
+   exit;
+   }
+//
+require_once("f_bodyopen.phtml");
+require_once("f_connectselectdbinstanceunpublished.phtml");
+require_once("f_myhomepageurl.phtml");
+require_once("f_mymainphotopageurl.phtml");
+require_once("f_myphotolibhosturl.phtml");
+require_once("f_putprotectedphoto.phtml");
+//
+// Connect to the database.
+//
+ConnectSelectDbInstanceUNPUBLISHED($db_link);
+extract(mysqli_fetch_array($db_link->query("select min(id) as first_id_in_div, max(id) as last_id_in_div from photo_detail where div_spec = \"$div_spec\"")));
+?>
+<html>
+   <head><title>Frames on PDIV <? echo $token; ?>/<? echo $div_spec; ?></title></head>
+   <? BodyOpen(); ?>
+      <H6 ALIGN="CENTER">
+         <a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a>
+         -
+         <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a>
+         -
+         <a href="<? echo MyPhotoLibHostUrl(); ?>/browse_protected_divs.phtml?token=$token">Your Protected Digital Image Volumes</a>
+      </H6>
+      <H1 ALIGN="CENTER">Frames on PDIV <? echo $token; ?>/<? echo $div_spec; ?></H1>
+      <hr>
+      <table align=center cellpadding="10" width="100%">
+         <tr>
+            <td align="right" valign="top" width="10%">
+               <tt>
+               <?
+               echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>";
+               //if ($first_id_in_div > 1)
+               //   {
+               //   extract(mysqli_fetch_array($db_link->query("select div_spec as prior_frame_div_spec from photo_detail where id = $first_id_in_div - 1")));
+               //   echo "<a href=" . MyPhotoLibHostUrl() . "/browse_frames.phtml?div_spec=$prior_frame_div_spec>Prior<br>DIV</a>";
+               //   }
+               ?>
+               </tt>
+            </td>
+            <td width="80%">
+               <center>
+                  <?
+                  $d = dir("protected/$token/$div_spec");
+                  while ($filename = $d->read())
+                     {
+                     if (strstr($filename,"-i.jpg"))
+                        {
+                          PutProtectedPhoto($token,$div_spec,substr($filename,0,(strlen($filename) - 6)));
+                        echo " ";
+                        }
+                     }
+                  $d->close();
+                  ?>
+               </center>
+            </td>
+            <td align="left" valign="top" width="10%">
+               <tt>
+               <?
+               echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>";
+               //extract(mysqli_fetch_array($db_link->query("select max(id) as max_id from photo_detail")));
+               //if ($last_id_in_div < $max_id)
+               //   {
+               //   extract(mysqli_fetch_array($db_link->query("select div_spec as prior_frame_div_spec from photo_detail where id = $last_id_in_div + 1")));
+               //   echo "<a href=" . MyPhotoLibHostUrl() . "/browse_frames.phtml?div_spec=$prior_frame_div_spec>Next<br>DIV</a>";
+               //   }
+               ?>
+               </tt>
+            </td>
+         </tr>
+      </table>
+   </body>
+</html>
