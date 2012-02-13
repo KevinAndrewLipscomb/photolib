@@ -1,0 +1,52 @@
+<?
+//
+// $Id: browse_divs.phtml 3038 2010-01-08 18:28:24Z KevinAnLipscomb $
+//
+//
+//
+// Validate parameters
+//
+if ($token == "")
+   {
+   echo "Improperly-formatted request";
+   exit;
+   }
+//
+require_once("f_myhomepageurl.phtml");
+require_once("f_mymainphotopageurl.phtml");
+require_once("f_putlibphoto.phtml");
+require_once("f_bodyopen.phtml");
+require_once("f_myphotolibhosturl.phtml");
+?>
+<html>
+   <head><title>Digital Image Volumes</title></head>
+   <? BodyOpen(); ?>
+      <table align=center width="80%">
+         <tr>
+            <td>
+               <H6 ALIGN="CENTER"><a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></H6>
+               <H1 ALIGN="CENTER">Your Protected Digital Image Volumes</H1>
+               <hr>
+               <?
+               echo "<ul>";
+               $d = dir("protected/$token");
+               while ($entry = $d->read())
+                  {
+                  if (!strstr($entry,"."))
+                     {
+                     $subdir_array[] = $entry;
+                     }
+                  }
+               rsort($subdir_array);
+               foreach ($subdir_array as $subdir)
+                  {
+                  echo "<li><a href=" . MyPhotoLibHostUrl() . "/browse_protected_frames.phtml?token=$token&div_spec=$subdir>$subdir</a>";
+                  }
+               echo "</ul>";
+               $d->close();
+               ?>
+            </td>
+         </tr>
+      </table>
+   </body>
+</html>
