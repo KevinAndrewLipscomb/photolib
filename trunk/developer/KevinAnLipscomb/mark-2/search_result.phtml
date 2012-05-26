@@ -155,7 +155,7 @@ else
       )
       or die("Failure inserting record into search_manifest");
    $db_link->query($sql_statement) or die("Invalid search query");
-   $db_link->query("alter table search_result_$search_id add result_num serial first") or die("Failure adding serial column to table search_result_$search_id");
+   $db_link->query("alter table search_result_$search_id add result_num serial first, add primary key (result_num)") or die("Failure adding serial column to table search_result_$search_id");
    $result = $db_link->query("select result_num,div_spec,frame_num,caption,tech_details from search_result_$search_id") or die("Invalid result query");
    $num_rows = mysqli_num_rows($result);
    echo "<table width=\"100%\"><tr>\n";
