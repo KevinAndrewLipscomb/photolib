@@ -16,32 +16,45 @@ function PutLibPhotoRandom($alignment = "")
    //
    $sql = "select div_spec,frame_num from photo_detail order by rand() limit 1";
    //
-   // Execute the statement
-   //
-   $result_set = $db_link->query($sql);
-   //
-   // Check how many rows were returned
-   //
-   $rows = mysqli_num_rows($result_set);
-   if ((!$result_set) || ($rows != 1))
-      {
-      echo "<br><b>Random photo retrieval failed.</b><br>";
-      }
-   else
+   $done = FALSE;
+   while (!$done)
       {
       //
-      // We know exactly one row matched.  Fetch it.
+      // Execute the statement
       //
-      $field_array = mysqli_fetch_array($result_set);
-      extract($field_array);
+      $result_set = $db_link->query($sql);
+      //
+      // Check how many rows were returned
+      //
+      $rows = mysqli_num_rows($result_set);
+      if ((!$result_set) || ($rows != 1))
+         {
+         echo "<br><b>Random photo retrieval failed.</b><br>";
+         }
+      else
+         {
          //
-         // This sets up the $div_spec and $frame_num variables.
+         // We know exactly one row matched.  Fetch it.
          //
-      $image_source_spec = "div/$div_spec/$frame_num-i.jpg";
-      echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>";
-      $size = @GetImageSize("$image_source_spec");
-      echo "<img border=\"2\" src=\"$image_source_spec\" align=\"$alignment\" $size[3]>";
-      echo "</a>";
+         $field_array = mysqli_fetch_array($result_set);
+         extract($field_array);
+            //
+            // This sets up the $div_spec and $frame_num variables.
+            //
+         $image_source_spec = "div/$div_spec/$frame_num-i.jpg";
+         $size = @GetImageSize("$image_source_spec");
+         if ($size)
+            {
+            echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>";
+            echo "<img border=\"2\" src=\"$image_source_spec\" align=\"$alignment\" $size[3]>";
+            echo "</a>";
+            $done = TRUE;
+            }
+         else
+            {
+            $db_link->query("delete from photo_detail where div_spec = '$div_spec' and frame_num = '$frame_num'");
+            }
+         }
       }
    }
 ?>
