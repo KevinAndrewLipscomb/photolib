@@ -47,12 +47,12 @@
   elseif (function_exists("imagepng"))
      {
      $target = $target.'.png';
-     imagejpeg($thumb_img,$target);
+     imagepng($thumb_img,$target,0.5);
      }
   elseif (function_exists("imagejpeg"))
      {
      $target = $target.'.jpg';
-     imagepng($thumb_img,$target,0.5);
+     imagejpeg($thumb_img,$target);
      }
   elseif (function_exists("imagewbmp"))
      {
