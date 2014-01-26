@@ -16,12 +16,6 @@ if (!ini_get('register_globals'))
     }
   }
 //
-$mode="";
-   //
-   // Set mode to "" for production, "x_" for debug.
-   //
-if (RunMode($PHP_SELF)) error_reporting(E_ALL);
-//
 // Validate parameters
 //
 if (sscanf($div_spec,"%1d%1d%1d%1d-%1d%s",&$d11,&$d12,&$d13,&$d14,&$d15,&$d16) != 6)
