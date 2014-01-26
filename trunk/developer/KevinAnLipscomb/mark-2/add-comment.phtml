@@ -20,7 +20,7 @@ $mode="";
    //
    // Set mode to "" for production, "x_" for debug.
    //
-if ($mode) error_reporting(E_ALL);
+if (RunMode($PHP_SELF)) error_reporting(E_ALL);
 //
 // Validate parameters
 //
