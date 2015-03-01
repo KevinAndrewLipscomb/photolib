@@ -175,6 +175,8 @@ else
    while ($row = mysqli_fetch_array($result))
       {
       extract($row);
+      $exif = `../../../Image-ExifTool/exiftool -d '%Y-%m-%d %H:%M:%S' -p '\$EXIF:Model, \$Composite:LensID at \$EXIF:FocalLength, \$EXIF:ExposureProgram mode, \$MakerNotes:ShootingMode, ISO \$EXIF:ISO, f/\$EXIF:FNumber, \${EXIF:ExposureTime}s, \$EXIF:ExposureCompensation EV, \$EXIF:MeteringMode metered, \$MakerNotes:WhiteBalance white-balanced, \$MakerNotes:PictureControlName picture control, \$MakerNotes:ActiveD-Lighting Active D-Lighting, \$MakerNotes:MultiExposureShots extra exposures with gain \$MakerNotes:MultiExposureAutoGain, taken \$EXIF:CreateDate' div/$div_spec/$frame_num-3.jpg`;
+      if ($exif) $tech_details = $exif; 
       echo "<tr>";
       echo "<td><ul>";
       echo "<li><a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num&search_id=$search_id&result_num=$result_num&num_results=$num_rows><b>div/$div_spec/$frame_num</b></a>";
@@ -187,7 +189,7 @@ else
          echo "</td>";
          }
       echo "</tr>";
-      $div_spec = $frame_num = $caption = $tech_details = "";
+      $div_spec = $frame_num = $caption = $tech_details = $exif = "";
       }
    echo "</table>";
    }
