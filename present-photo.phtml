@@ -30,6 +30,7 @@ require_once("f_mymainphotopageurl.phtml");
 require_once("f_myphotolibhosturl.phtml");
 require_once("f_purgestalesearches.phtml");
 require_once('f_putstdrecaptchablock.phtml');
+require_once('f_standardexifoutput.phtml');
 //
 // Connect to the database.
 //
@@ -73,7 +74,7 @@ else
    $record_found = 1;
    }
 extract(mysqli_fetch_array($result_set));
-$exif = `../../../Image-ExifTool/exiftool -d '%Y-%m-%d %H:%M:%S' -p '\$EXIF:Model, \$Composite:LensID at \$EXIF:FocalLength, \$EXIF:ExposureProgram mode, \$MakerNotes:ShootingMode, ISO \$EXIF:ISO, f/\$EXIF:FNumber, \${EXIF:ExposureTime}s, \$EXIF:ExposureCompensation EV, \$EXIF:MeteringMode metered, \$MakerNotes:WhiteBalance white-balanced, \$MakerNotes:PictureControlName picture control, \$MakerNotes:ActiveD-Lighting Active D-Lighting, \$MakerNotes:MultiExposureShots extra exposures with gain \$MakerNotes:MultiExposureAutoGain, taken \$EXIF:CreateDate' div/$div_spec/$frame_num-3.jpg`;
+$exif = StandardExifOutput($div_spec,$frame_num);
 if ($exif) $tech_details = $exif; 
 $photo_size = GetImageSize("div/$div_spec/$frame_num-3.jpg");
 $comment_result_set = $db_link->query("select nickname, email_address, text from photo_comment where div_spec=\"$div_spec\" and frame_num=\"$frame_num\"");

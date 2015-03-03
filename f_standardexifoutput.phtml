@@ -1,0 +1,14 @@
+<?
+//
+// $Id: f_myhomepageurl.phtml 739 2002-08-26 23:42:42Z kevinanlipscomb $
+//
+function StandardExifOutput
+   (
+   $div_spec,
+   $frame_num
+   )
+   {
+   return `../../../Image-ExifTool/exiftool -fast -dateFormat '%Y-%m-%d %H:%M:%S' -printFormat '\$EXIF:Model, \$Composite:LensID at \$EXIF:FocalLength, \$EXIF:ExposureProgram mode, \$MakerNotes:ShootingMode, ISO \$EXIF:ISO, f/\$EXIF:FNumber, \${EXIF:ExposureTime}s, \$EXIF:ExposureCompensation EV, \$EXIF:MeteringMode metered, \$MakerNotes:WhiteBalance white-balanced, \$MakerNotes:PictureControlName picture control, \$MakerNotes:ActiveD-Lighting Active D-Lighting, taken \$EXIF:CreateDate' div/$div_spec/$frame_num-3.jpg`
+   .      `../../../Image-ExifTool/exiftool -fast -if '\$MakerNotes:MultiExposureShots ne "0"' -printFormat '(\$MakerNotes:MultiExposureShots exposures combined in camera with gain \$MakerNotes:MultiExposureAutoGain)' div/$div_spec/$frame_num-3.jpg`;
+   }
+?>
