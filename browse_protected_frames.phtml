@@ -45,7 +45,7 @@ extract(mysqli_fetch_array($db_link->query("select min(id) as first_id_in_div, m
          -
          <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a>
          -
-         <a href="<? echo MyPhotoLibHostUrl(); ?>/browse_protected_divs.phtml?token=$token">Your Protected Digital Image Volumes</a>
+         <a href="<? echo MyPhotoLibHostUrl(); ?>/browse_protected_divs.phtml?token=<? echo $token; ?>">Your Protected Digital Image Volumes</a>
       </H6>
       <H1 ALIGN="CENTER">Frames on PDIV <? echo $token; ?>/<? echo $div_spec; ?></H1>
       <hr>
