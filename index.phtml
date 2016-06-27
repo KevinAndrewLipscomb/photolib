@@ -27,8 +27,34 @@ require_once("f_bodyopen.phtml");
          <table align=center cellspacing=7 width="100%"><tr>
          <td valign=top width="80%">
             <p align="center"><? PutLibPhotoRandom(); ?></p>
-            <b>Browsing options:</b>
+            <p><b>Browsing options:</b></p>
             <table cellpadding=4>
+            <tr><td valign=top><li>&nbsp;</td><td valign=top><strong><a href=browse_divs.phtml>Look through raw Digital Image Volumes</a></strong><br/><br/></td></tr>
+            <tr>
+               <td valign=top><li>&nbsp;</td>
+               <td valign=top>
+               <form action=search_result.phtml method=post>
+                  Search for text in captions, keywords, etc (or try <a href=search.phtml>advanced options here</a>).<br>
+                  <input name=basic_criteria type=text>
+                  <input name=search type=submit value="Search">
+                  <small><input name=hide_thumbnails type=checkbox value=1>Hide thumbnails in results</small>
+               </form>
+               </td>
+            </tr>
+            <tr>
+               <td valign=top><li>&nbsp;</td>
+               <td valign=top>
+               <form action=new-photos.phtml method=post>
+                  Check for photographs that are new or have been updated since your last visit.&nbsp Enter the string you've chosen to identify yourself to this site.<br>
+                  <input name=visitor type=text value="<? echo $raw_visitor_id_cookie; ?>">
+                  <input type=submit value="See what's new">
+                  <small>
+                     <input name=remember_visitor type=checkbox checked value=1>Remember me&nbsp&nbsp
+                     <a href=user-tracking.phtml>(Read details)</a>
+                  </small>
+               </form>
+               </td>
+            </tr>
             <tr>
                <td valign=top><li>&nbsp;</td>
                <td valign=top>
@@ -58,31 +84,6 @@ require_once("f_bodyopen.phtml");
             <tr>
                <td valign=top><li>&nbsp;</td>
                <td valign=top>
-               <form action=new-photos.phtml method=post>
-                  Check for photographs that are new or have been updated since your last visit.&nbsp Enter the string you've chosen to identify yourself to this site.<br>
-                  <input name=visitor type=text value="<? echo $raw_visitor_id_cookie; ?>">
-                  <input type=submit value="See what's new">
-                  <small>
-                     <input name=remember_visitor type=checkbox checked value=1>Remember me&nbsp&nbsp
-                     <a href=user-tracking.phtml>(Read details)</a>
-                  </small>
-               </form>
-               </td>
-            </tr>
-            <tr>
-               <td valign=top><li>&nbsp;</td>
-               <td valign=top>
-               <form action=search_result.phtml method=post>
-                  Search for text in captions, keywords, etc (or try <a href=search.phtml>advanced options here</a>).<br>
-                  <input name=basic_criteria type=text>
-                  <input name=search type=submit value="Search">
-                  <small><input name=hide_thumbnails type=checkbox value=1>Hide thumbnails in results</small>
-               </form>
-               </td>
-            </tr>
-            <tr>
-               <td valign=top><li>&nbsp;</td>
-               <td valign=top>
                By era:<br>
                <a href=era.phtml?era=1&subtitle=Junior%20High%20School>Jr.&nbsp;High&nbsp;School</a>
                &nbsp|&nbsp
@@ -98,7 +99,6 @@ require_once("f_bodyopen.phtml");
                <br><br>
                </td>
             </tr>
-            <tr><td valign=top><li>&nbsp;</td><td valign=top><a href=browse_divs.phtml>Look through raw Digital Image Volumes</a></td></tr>
             </table>
          </td>
          </tr></table>
