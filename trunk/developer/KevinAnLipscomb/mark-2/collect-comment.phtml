@@ -27,10 +27,14 @@ require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once('f_putstdrecaptchablock.phtml');
+require_once('f_putstdrecaptchaheadscriptreference.phtml');
 require_once("f_bodyopen.phtml");
 ?>
 <html>
-<head><title>Anecdote/comment entry form [div/<? echo $div_spec ?>/<? echo $frame_num ?>]</title></head>
+<head>
+  <title>Anecdote/comment entry form [div/<? echo $div_spec ?>/<? echo $frame_num ?>]</title>
+<? PutStdReCaptchaHeadScriptReference(); ?>
+</head>
 <? BodyOpen(); ?>
 <table border="0" cellpadding="0" cellspacing="0" width="80%" align="center">
    <tr>

@@ -1,18 +1,24 @@
 <?php
-require_once('../../foundation/recaptchalib.php');
+//
 require_once('../../foundation/f_recaptchaprivatekey.phtml');
+require('../../foundation/recaptcha-master/src/autoload.php');
+//
 function ConfirmReCaptchaAnswerOrDie()
   {
-  $resp = recaptcha_check_answer
-    (
-    ReCaptchaPrivateKey(),
-    $_SERVER["REMOTE_ADDR"],
-    $_POST["recaptcha_challenge_field"],
-    $_POST["recaptcha_response_field"]
-    );
-  if (!$resp->is_valid)
+  $recaptcha = new \ReCaptcha\ReCaptcha(ReCaptchaPrivateKey());
+  $resp = $recaptcha->verify($_POST['g-recaptcha-response'],$_SERVER['REMOTE_ADDR']);
+  if ($resp->isSuccess())
     {
-    die ("The reCAPTCHA wasn't entered correctly. Go back and try it again.  (reCAPTCHA said: " . $resp->error . ")");
+    // verified!
+    // if Domain Name Validation turned off don't forget to check hostname field
+    // if($resp->getHostName() === $_SERVER['SERVER_NAME']) {  }
+    }
+  else
+    {
+    echo "<pre>";
+    var_dump($resp);
+    echo "</pre>";
+    die ("The reCAPTCHA wasn't entered correctly.  Debug info is shown above.  Go back and try it again.");
     }
   }
 ?>

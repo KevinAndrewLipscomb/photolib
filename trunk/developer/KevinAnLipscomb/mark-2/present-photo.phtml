@@ -34,6 +34,7 @@ require_once("f_mymainphotopageurl.phtml");
 require_once("f_myphotolibhosturl.phtml");
 require_once("f_purgestalesearches.phtml");
 require_once('f_putstdrecaptchablock.phtml');
+require_once('f_putstdrecaptchaheadscriptreference.phtml');
 require_once('f_standardexifoutput.phtml');
 //
 // Connect to the database.
@@ -93,6 +94,7 @@ if ($search_id)
 <html>
    <head>
       <title>Photo Exhibit [div/<? echo $div_spec ?>/<? echo $frame_num ?>]</title>
+      <? PutStdReCaptchaHeadScriptReference(); ?>
    </head>
    <? BodyOpen(); ?>
       <H6 align="center">
