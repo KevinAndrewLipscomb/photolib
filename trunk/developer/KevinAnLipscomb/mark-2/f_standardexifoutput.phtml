@@ -8,11 +8,28 @@ function StandardExifOutput
    $frame_num
    )
    {
-   return preg_replace
-      (
-      "/0 exposures combined in camera with gain (On|Off), /",
-      "",
-      `../../../Image-ExifTool/exiftool -fast -dateFormat '%Y-%m-%d %H:%M:%S' -printFormat '\$EXIF:Model, \$Composite:LensID at \$EXIF:FocalLength, \$EXIF:ExposureProgram mode, \$MakerNotes:ShootingMode, ISO \$EXIF:ISO, f/\$EXIF:FNumber, \${EXIF:ExposureTime}s, \$EXIF:ExposureCompensation EV, \$EXIF:MeteringMode metered, \$MakerNotes:WhiteBalance white-balanced, \$MakerNotes:PictureControlName picture control, \$MakerNotes:ActiveD-Lighting Active D-Lighting, \$MakerNotes:MultiExposureShots exposures combined in camera with gain \$MakerNotes:MultiExposureAutoGain, taken \$EXIF:CreateDate' div/$div_spec/$frame_num-3.jpg`
-      );
+   return
+     preg_replace // Delete mention of filter effect if mention of white balance is still present.  NOTE THAT THE ORDER OF THIS CALL AND THE vvvvv NEXT ONE vvvvv IS CRITICAL.
+       (
+         "/(white-balanced, .+ picture control,) filter effect .+,/"
+       ,
+         "$1"
+       ,
+         preg_replace // Delete mention of white balance when photo is monochrome.  NOTE THAT THE ORDER OF THIS CALL AND THE ^^^^^ PRIOR ONE ^^^^^ IS CRITICAL.
+           (
+             "/, [^,]+ white-balanced, Monochrome picture control/"
+           ,
+             ", Monochrome picture control"
+           ,
+             preg_replace // Delete long-winded indication that the photo is not a multiple exposure.
+               (
+                 "/0 exposures combined in camera with gain (On|Off), /"
+               ,
+                 ""
+               ,
+                 `../../../Image-ExifTool/exiftool -fast -dateFormat '%Y-%m-%d %H:%M:%S' -printFormat '\$EXIF:Model, \$Composite:LensID at \$EXIF:FocalLength, \$EXIF:ExposureProgram mode, \$MakerNotes:ShootingMode, ISO \$EXIF:ISO, f/\$EXIF:FNumber, \${EXIF:ExposureTime}s, \$EXIF:ExposureCompensation EV, \$EXIF:MeteringMode metered, \$MakerNotes:WhiteBalance white-balanced, \$MakerNotes:PictureControlName picture control, filter effect \$MakerNotes:FilterEffect, Active D-Lighting \$MakerNotes:ActiveD-Lighting, \$MakerNotes:MultiExposureShots exposures combined in camera with gain \$MakerNotes:MultiExposureAutoGain, taken \$EXIF:CreateDate' div/$div_spec/$frame_num-3.jpg`
+               )
+           )
+       );
    }
 ?>
