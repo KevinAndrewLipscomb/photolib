@@ -6,7 +6,7 @@ grant select
  , alter
  , drop
   on kalipso_d.*
-  to 'ki-kalipso-d'@'localhost' identified by '~ki-kalipso-d-password~'
+  to 'ki-kalipso-d'@'::1' identified by '~ki-kalipso-d-password~'
 ;
 grant select
  , insert
@@ -16,4 +16,4 @@ grant select
  , alter
  , drop
   on kalipso_d.*
-  to 'ki-kalipso-d'@'70.84.138.98' identified by '~ki-kalipso-d-password~'
+  to 'ki-kalipso-d'@'51.79.5.240' identified by '~ki-kalipso-d-password~'
