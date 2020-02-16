@@ -114,7 +114,7 @@ if ($search_id)
                echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>";
                if ($id > 1)
                   {
-                  extract(mysqli_fetch_array($db_link->query("select div_spec as prior_frame_div_spec, frame_num as prior_frame_frame_num from photo_detail where id = $id - 1")));
+                  extract(@mysqli_fetch_array($db_link->query("select div_spec as prior_frame_div_spec, frame_num as prior_frame_frame_num from photo_detail where id = $id - 1")));
                   echo "<a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$prior_frame_div_spec&frame_num=$prior_frame_frame_num><br/>Prior<br/>div/frame<br/>&nbsp;</a>";
                   }
                else
@@ -123,7 +123,7 @@ if ($search_id)
                   }
                if ($result_num > 1)
                   {
-                  extract(mysqli_fetch_array($db_link->query("select div_spec as prior_frame_div_spec, frame_num as prior_frame_frame_num from search_result_$search_id where result_num = $result_num - 1")));
+                  extract(@mysqli_fetch_array($db_link->query("select div_spec as prior_frame_div_spec, frame_num as prior_frame_frame_num from search_result_$search_id where result_num = $result_num - 1")));
                   echo "<p><a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$prior_frame_div_spec&frame_num=$prior_frame_frame_num&search_id=$search_id&result_num=" . ($result_num - 1) . "&num_results=$num_results><br/>Prior<br/>search<br/>result<br/>&nbsp;</a></p>";
                   }
                else
@@ -150,7 +150,7 @@ if ($search_id)
                extract(mysqli_fetch_array($db_link->query("select max(id) as max_id from photo_detail")));
                if ($id < $max_id)
                   {
-                  extract(mysqli_fetch_array($db_link->query("select div_spec as next_frame_div_spec, frame_num as next_frame_frame_num from photo_detail where id = $id + 1")));
+                  extract(@mysqli_fetch_array($db_link->query("select div_spec as next_frame_div_spec, frame_num as next_frame_frame_num from photo_detail where id = $id + 1")));
                   echo "<a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$next_frame_div_spec&frame_num=$next_frame_frame_num><br/>Next<br/>div/frame<br/>&nbsp;</a>";
                   }
                else
@@ -159,7 +159,7 @@ if ($search_id)
                   }
                if ($result_num < $num_results)
                   {
-                  extract(mysqli_fetch_array($db_link->query("select div_spec as next_frame_div_spec, frame_num as next_frame_frame_num from search_result_$search_id where result_num = $result_num + 1")));
+                  extract(@mysqli_fetch_array($db_link->query("select div_spec as next_frame_div_spec, frame_num as next_frame_frame_num from search_result_$search_id where result_num = $result_num + 1")));
                   echo "<p><a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$next_frame_div_spec&frame_num=$next_frame_frame_num&search_id=$search_id&result_num=" . ($result_num + 1) . "&num_results=$num_results><br/>Next<br/>search<br/>result<br/>&nbsp;</a></p>";
                   }
                ?>
@@ -200,7 +200,7 @@ if ($search_id)
                echo "<li>This and <a href=\"index.phtml\">other photographs</a> copyright $copyright_year <a href=\"" . MyHomePageUrl() . "\">Kevin Andrew Lipscomb</a>";
                echo "<li>To improve searchability, the following keywords are also associated with this photograph.&nbsp; Click on a word to perform a search on it.&nbsp; If you can think of other applicable words that aren't already in the caption or the technical details, please enter them in the field below.<br><br>\n";
                echo "<i>\n";
-               $keyword_array = split(" ",$keywords);
+               $keyword_array = explode(" ",$keywords);
                foreach($keyword_array as $keyword)
                   {
                   echo "<a href=search_result.phtml?basic_criteria=$keyword>$keyword</a>\n";
