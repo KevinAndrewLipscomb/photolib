@@ -1,0 +1,30 @@
+﻿<Project Sdk="Peachpie.NET.Sdk/0.9.961">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net461</TargetFramework>
+    <AssemblyName>photolib</AssemblyName>
+    <ShortOpenTag>true</ShortOpenTag>
+    <OutDir>bin</OutDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="*.php;*.phtml" />
+    <Compile Include="../foundation/**/*.php;../foundation/**/*.phtml" Exclude="../foundation/recaptcha-master/tests/**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="**" Exclude="obj/**;bin/**;PublishProfiles/**;@(Compile);$(MsBuildThisFile)">
+      <PackagePath>contentFiles/any/netcoreapp2.0/wwwroot/</PackagePath>
+      <PackageCopyToOutput>true</PackageCopyToOutput>
+      <CopyToOutputDirectory>true</CopyToOutputDirectory>
+      <CopyToPublishDirectory>true</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Peachpie.RequestHandler" Version="0.9.961" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ki">
+      <HintPath>lib\ki\ki.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>
