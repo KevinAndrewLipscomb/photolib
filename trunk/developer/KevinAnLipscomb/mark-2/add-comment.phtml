@@ -16,13 +16,14 @@ if (!ini_get('register_globals'))
     }
   }
 //
-// Validate parameters
+// Make parameters safe and validate them
 //
-if (sscanf($div_spec,"%1d%1d%1d%1d-%1d%s",$d11,$d12,$d13,$d14,$d15,$d16) != 6)
-   {
-   echo "Improperly-formatted request";
-   exit;
-   }
+$div_spec = kix\k::Safe($div_spec,kix\k::safe_hint_type.HYPHENATED_ALPHANUM);
+$email_address = kix\k::Safe($email_address,kix\k::safe_hint_type.EMAIL_ADDRESS);
+$frame_num = kix\k::Safe($frame_num,kix\k::safe_hint_type.HYPHENATED_UNDERSCORED_ALPHANUM);
+$nickname = kix\k::Safe($nickname,kix\k::safe_hint_type.HUMAN_NAME);
+$text = kix\k::Safe($text,kix\k::safe_hint_type.PUNCTUATED);
+//
 require_once('f_confirmrecaptchaanswerordie.phtml');
 require_once('f_connectselectdbinstance.phtml');
 require_once("f_myhomepageurl.phtml");
@@ -50,14 +51,14 @@ require_once("f_myphotolibhosturl.phtml");
          //
          // Create and execute the SQL statement to increment the hit count.
          //
-         $text = addslashes($text);
          $sql = "insert into photo_comment set div_spec='$div_spec', frame_num='$frame_num', nickname='$nickname', email_address='$email_address', text='$text'";
          $db_link->query($sql) or die("Sorry, the database query did not succeed.");
-         mail
+         kix\k::SmtpMailSend
             (
-            "kevin.lipscomb@kvrs.org",
-            "New photograph anecdote or comment",
-            stripslashes
+            "photolib@frompaper2web.com", //from
+            "kevin.lipscomb@kvrs.org", //to
+            "New photograph anecdote or comment", //subject
+            stripslashes //message_string
                (
                "The \'Kevin Andrew Lipscomb - Photography - add-comment.phtml\' script has processed the following"
                   .  " operation:\n\n"

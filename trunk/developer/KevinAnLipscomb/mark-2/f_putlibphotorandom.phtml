@@ -11,10 +11,12 @@ function PutLibPhotoRandom($alignment = "")
    // Connect to the database.
    //
    $conn = ConnectSelectDbInstanceUNPUBLISHED($db_link);
+   $be_d_or_x_instance = in_array(substr(mysqli_fetch_array($db_link->query("select database() as db"))["db"],-2),array("_d","_x"));
    //
    // Create the SQL statement
    //
    $sql = "select div_spec,frame_num from photo_detail order by rand() limit 1";
+   //
    //
    $done = FALSE;
    while (!$done)
@@ -48,6 +50,10 @@ function PutLibPhotoRandom($alignment = "")
             echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>";
             echo "<img border=\"2\" src=\"$image_source_spec\" align=\"$alignment\" $size[3]>";
             echo "</a>";
+            $done = TRUE;
+            }
+         else if ($be_d_or_x_instance)
+            {
             $done = TRUE;
             }
          else

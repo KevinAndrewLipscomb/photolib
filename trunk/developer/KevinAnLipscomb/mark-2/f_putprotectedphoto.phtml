@@ -16,6 +16,10 @@ function PutProtectedPhoto
    $num_results = ""
    )
    {
+   $div_spec = kix\k::Safe($div_spec,kix\k::safe_hint_type.HYPHENATED_ALPHANUM);
+   $frame_num = kix\k::Safe($frame_num,kix\k::safe_hint_type.HYPHENATED_UNDERSCORED_ALPHANUM);
+   $token = kix\k::Safe(token,kix\k::safe_hint_type.HEX);
+   //
    $image_source_spec = "protected/$token/$div_spec/$frame_num-i.jpg";
    echo "<a href=" . MyPhotoLibHostUrl() . "/present-protected-photo.phtml?token=$token&div_spec=$div_spec&frame_num=$frame_num&search_id=$search_id&result_num=$result_num&num_results=$num_results>";
    $size = @GetImageSize("$image_source_spec");
