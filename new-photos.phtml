@@ -20,7 +20,7 @@ if (!ini_get('register_globals'))
 //
 // Make parameters safe and validate them
 //
-$visitor = kix\k::Safe($visitor,kix\k::safe_hint_type.HEX);
+if (isset($visitor)) $visitor = kix\k::Safe($visitor,kix\k::PhpValueOf_safe_hint_type("HEX"));
 //
 require_once("f_connectselectdbinstanceunpublished.phtml");
 require_once("f_myhomepageurl.phtml");

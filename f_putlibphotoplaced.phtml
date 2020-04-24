@@ -7,6 +7,7 @@ require_once("f_myphotolibhosturl.phtml");
 //
 function PutLibPhotoPlaced($placement)
    {
+   if (isset($placement)) $placement = kix\k::Safe($placement,kix\k::PhpValueOf_safe_hint_type("HYPHENATED_ALPHA_WORDS"));
    //
    // Connect to the database.
    //

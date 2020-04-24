@@ -16,7 +16,7 @@ if (!ini_get('register_globals'))
 //
 // Make parameters safe and validate them
 //
-$era = kix\k::Safe($era,kix\k::safe_hint_type.NUM);
+if (isset($era)) $era = kix\k::Safe($era,kix\k::PhpValueOf_safe_hint_type("NUM"));
 //
 require_once("f_connectselectdbinstanceunpublished.phtml");
 require_once("f_myhomepageurl.phtml");
