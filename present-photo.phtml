@@ -16,7 +16,13 @@ if (!ini_get('register_globals'))
     }
   }
 //
-// Validate parameters
+// Make parameters safe and validate them
+//
+$div_spec = kix\k::Safe($div_spec,kix\k::safe_hint_type.HYPHENATED_ALPHANUM);
+$frame_num = kix\k::Safe($frame_num,kix\k::safe_hint_type.HYPHENATED_UNDERSCORED_ALPHANUM);
+$id = kix\k::Safe($id,kix\k::safe_hint_type.NUM);
+$result_num = kix\k::Safe($result_num,kix\k::safe_hint_type.NUM);
+$search_id = kix\k::Safe($search_id,kix\k::safe_hint_type.NUM);
 //
 if (
       (preg_match('/^[[:digit:]]{4}-[[:digit:]]{2,3}(-[[:alnum:]\-]+)?$/i',$div_spec) != 1)
@@ -27,6 +33,7 @@ if (
    echo "Improperly-formatted request";
    exit;
    }
+//
 require_once("f_bodyopen.phtml");
 require_once("f_connectselectdbinstanceunpublished.phtml");
 require_once("f_myhomepageurl.phtml");

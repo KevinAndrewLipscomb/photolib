@@ -16,6 +16,12 @@ if (!ini_get('register_globals'))
     extract($superglobal, EXTR_SKIP);
     }
   }
+//
+//
+// Make parameters safe and validate them
+//
+$visitor = kix\k::Safe($visitor,kix\k::safe_hint_type.HEX);
+//
 require_once("f_connectselectdbinstanceunpublished.phtml");
 require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");

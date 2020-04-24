@@ -16,13 +16,18 @@ if (!ini_get('register_globals'))
     }
   }
 //
-// Validate parameters
+// Make parameters safe and validate them
+//
+$div_spec = kix\k::Safe($div_spec,kix\k::safe_hint_type.HYPHENATED_ALPHANUM);
+$frame_num = kix\k::Safe($frame_num,kix\k::safe_hint_type.HYPHENATED_UNDERSCORED_ALPHANUM);
+$new_keywords = kix\k::Safe($new_keywords,kix\k::safe_hint_type.PUNCTUATED);
 //
 if (sscanf($div_spec,"%1d%1d%1d%1d-%1d%s",$d11,$d12,$d13,$d14,$d15,$d16) != 6)
    {
    echo "Improperly-formatted request";
    exit;
    }
+//
 require_once('f_confirmrecaptchaanswerordie.phtml');
 require_once('f_connectselectdbinstanceunpublished.phtml');
 require_once("f_myhomepageurl.phtml");
@@ -52,11 +57,12 @@ require_once("f_myphotolibhosturl.phtml");
          //
          $sql = stripslashes("update photo_detail set keywords = concat_ws(\' \',keywords,\'$new_keywords\') where div_spec = \'$div_spec\' and frame_num = \'$frame_num\'");
          $db_link->query($sql) or die("Sorry, the database query did not succeed.");
-         mail
+         kix\k::SmtpMailSend
             (
-            "kevin.lipscomb@kvrs.org",
-            "New photograph keywords",
-            stripslashes
+            "photolib@frompaper2web.com", //from
+            "kevin.lipscomb@kvrs.org", //to
+            "New photograph keywords", //subject
+            stripslashes //message_string
                (
                "The \'Kevin Andrew Lipscomb - Photography - add-keywords.phtml\' script has processed the following"
                   .  " operation:\n\n"
