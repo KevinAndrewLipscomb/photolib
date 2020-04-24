@@ -2,16 +2,13 @@
 //
 // $Id$
 //
-require_once("f_connectselectdbinstanceunpublished.phtml");
-require_once("f_myphotolibhosturl.phtml");
-//
 function PutLibPhotoRandom($alignment = "")
    {
    //
    // Connect to the database.
    //
    $conn = ConnectSelectDbInstanceUNPUBLISHED($db_link);
-   $be_d_or_x_instance = in_array(substr(mysqli_fetch_array($db_link->query("select database() as db"))["db"],-2),array("_d","_x"));
+   $photodb_prefix = (($be_d_instance = substr($db_link->query("select database()")->fetch_row()[0],-2) == "_d") ? RemotePhotodbPrefix() : kix\k::EMPTY);
    //
    // Create the SQL statement
    //
@@ -43,16 +40,16 @@ function PutLibPhotoRandom($alignment = "")
             //
             // This sets up the $div_spec and $frame_num variables.
             //
-         $image_source_spec = "div/$div_spec/$frame_num-i.jpg";
-         $size = @GetImageSize("$image_source_spec");
-         if ($size)
+         $image_source_spec = $photodb_prefix . "div/$div_spec/$frame_num-i.jpg";
+         $size = @GetImageSize($image_source_spec); // Should always work outside of development instance
+         if ($size || curl_init($image_source_spec)) // curl_init() should suffice in deveopment instance, but dynamic image layout will be evident
             {
             echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>";
             echo "<img border=\"2\" src=\"$image_source_spec\" align=\"$alignment\" $size[3]>";
             echo "</a>";
             $done = TRUE;
             }
-         else if ($be_d_or_x_instance)
+         else if ($be_d_instance)
             {
             $done = TRUE;
             }
