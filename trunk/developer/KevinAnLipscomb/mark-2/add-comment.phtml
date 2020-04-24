@@ -18,11 +18,11 @@ if (!ini_get('register_globals'))
 //
 // Make parameters safe and validate them
 //
-$div_spec = kix\k::Safe($div_spec,kix\k::safe_hint_type.HYPHENATED_ALPHANUM);
-$email_address = kix\k::Safe($email_address,kix\k::safe_hint_type.EMAIL_ADDRESS);
-$frame_num = kix\k::Safe($frame_num,kix\k::safe_hint_type.HYPHENATED_UNDERSCORED_ALPHANUM);
-$nickname = kix\k::Safe($nickname,kix\k::safe_hint_type.HUMAN_NAME);
-$text = kix\k::Safe($text,kix\k::safe_hint_type.PUNCTUATED);
+if (isset($div_spec)) $div_spec = kix\k::Safe($div_spec,kix\k::PhpValueOf_safe_hint_type("HYPHENATED_ALPHANUM"));
+if (isset($email_address)) $email_address = kix\k::Safe($email_address,kix\k::PhpValueOf_safe_hint_type("EMAIL_ADDRESS"));
+if (isset($frame_num)) $frame_num = kix\k::Safe($frame_num,kix\k::PhpValueOf_safe_hint_type("HYPHENATED_UNDERSCORED_ALPHANUM"));
+if (isset($nickname)) $nickname = kix\k::Safe($nickname,kix\k::PhpValueOf_safe_hint_type("HUMAN_NAME"));
+if (isset($text)) $text = kix\k::Safe($text,kix\k::PhpValueOf_safe_hint_type("PUNCTUATED"));
 //
 require_once('f_confirmrecaptchaanswerordie.phtml');
 require_once('f_connectselectdbinstance.phtml');

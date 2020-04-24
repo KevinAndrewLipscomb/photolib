@@ -9,6 +9,9 @@ require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_putlibphotorandom.phtml");
 require_once("f_bodyopen.phtml");
+//
+ConnectSelectDbInstanceUNPUBLISHED($db_link);
+$photodb_prefix = (($be_d_instance = substr($db_link->query("select database()")->fetch_row()[0],-2) == "_d") ? RemotePhotodbPrefix() : kix\k::EMPTY);
 BodyOpen();
 ?>
 
@@ -84,7 +87,7 @@ BodyOpen();
 <table align=center width="80%">
    <tr><td align=center><b>Seattle Filmworks / Filmworks.com scan</b></td><td align=center><b>Kodak PhotoCD scan</b></td></tr>
    <tr>
-      <td align=center><a href=non-db/1998-001/018-3.jpg><img border="2" src="non-db/1998-001/018-i.jpg" align="" width="192" height="128"></a></td>
+      <td align=center><a href=<? echo $photodb_prefix; ?>non-db/1998-001/018-3.jpg><img border="2" src="<? echo $photodb_prefix; ?>non-db/1998-001/018-i.jpg" align="" width="192" height="128"></a></td>
       <td align=center><? PutLibPhoto("2001-005","019"); ?></td>
    </tr>
 </table>

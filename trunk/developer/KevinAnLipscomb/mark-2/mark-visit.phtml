@@ -18,8 +18,8 @@ if (!ini_get('register_globals'))
 //
 // Make parameters safe and validate them
 //
-$time = kix\k::Safe($time,kix\k::safe_hint_type.NUM);
-$visitor = kix\k::Safe($visitor,kix\k::safe_hint_type.HEX);
+if (isset($time)) $time = kix\k::Safe($time,kix\k::PhpValueOf_safe_hint_type("NUM"));
+if (isset($visitor)) $visitor = kix\k::Safe($visitor,kix\k::PhpValueOf_safe_hint_type("HEX"));
 //
 require_once("f_connectselectdbinstanceunpublished.phtml");
 require_once("f_myhomepageurl.phtml");

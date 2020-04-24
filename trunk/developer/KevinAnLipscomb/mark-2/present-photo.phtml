@@ -18,12 +18,15 @@ if (!ini_get('register_globals'))
 //
 // Make parameters safe and validate them
 //
-$div_spec = kix\k::Safe($div_spec,kix\k::safe_hint_type.HYPHENATED_ALPHANUM);
-$frame_num = kix\k::Safe($frame_num,kix\k::safe_hint_type.HYPHENATED_UNDERSCORED_ALPHANUM);
-$id = kix\k::Safe($id,kix\k::safe_hint_type.NUM);
-$result_num = kix\k::Safe($result_num,kix\k::safe_hint_type.NUM);
-$search_id = kix\k::Safe($search_id,kix\k::safe_hint_type.NUM);
+if (isset($div_spec)) $div_spec = kix\k::Safe($div_spec,kix\k::PhpValueOf_safe_hint_type("HYPHENATED_ALPHANUM"));
+if (isset($frame_num)) $frame_num = kix\k::Safe($frame_num,kix\k::PhpValueOf_safe_hint_type("HYPHENATED_UNDERSCORED_ALPHANUM"));
+if (isset($id)) $id = kix\k::Safe($id,kix\k::PhpValueOf_safe_hint_type("NUM"));
+if (isset($result_num)) $result_num = kix\k::Safe($result_num,kix\k::PhpValueOf_safe_hint_type("NUM"));
+if (isset($search_id)) $search_id = kix\k::Safe($search_id,kix\k::PhpValueOf_safe_hint_type("NUM"));
 //
+$aaa = preg_match('/^[[:digit:]]{4}-[[:digit:]]{2,3}(-[[:alnum:]\-]+)?$/i',$div_spec);
+$bbb = preg_match('/^[[:alnum:]][[:alnum:]\-_]*$/i',$frame_num);
+die("Stopped.");
 if (
       (preg_match('/^[[:digit:]]{4}-[[:digit:]]{2,3}(-[[:alnum:]\-]+)?$/i',$div_spec) != 1)
    ||
