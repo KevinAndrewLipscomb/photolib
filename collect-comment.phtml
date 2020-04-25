@@ -29,11 +29,16 @@ require_once("f_putlibphoto.phtml");
 require_once('f_putstdrecaptchablock.phtml');
 require_once('f_putstdrecaptchaheadscriptreference.phtml');
 require_once("f_bodyopen.phtml");
+//
+// Connect to the database.
+//
+ConnectSelectDbInstanceUNPUBLISHED($db_link);
+$photodb_prefix = (($be_d_instance = substr($db_link->query("select database()")->fetch_row()[0],-2) == "_d") ? RemotePhotodbPrefix() : kix\k::EMPTY);
 ?>
 <html>
 <head>
   <title>Anecdote/comment entry form [div/<? echo $div_spec ?>/<? echo $frame_num ?>]</title>
-<? PutStdReCaptchaHeadScriptReference(); ?>
+<? if (!$be_d_instance) PutStdReCaptchaHeadScriptReference(); ?>
 </head>
 <? BodyOpen(); ?>
 <table border="0" cellpadding="0" cellspacing="0" width="80%" align="center">
@@ -50,7 +55,7 @@ require_once("f_bodyopen.phtml");
          echo "<p>Your anecdote or comment:<br><textarea name=text rows=10 cols=65 wrap=soft></textarea></p>\n";
          echo "<p>Your name:<br><input name=nickname type=text size=40></p>\n";
          echo "<p>Your email address:<br><input name=email_address type=text size=40></p>";
-         PutStdReCaptchaGetBlock();
+         if (!$be_d_instance) PutStdReCaptchaGetBlock();
          echo "<input name=div_spec value=$div_spec type=hidden>\n";
          echo "<input name=frame_num value=$frame_num type=hidden>\n";
          echo "<p><input type=submit value=Submit></p>\n";
