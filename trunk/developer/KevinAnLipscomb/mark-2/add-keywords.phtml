@@ -46,12 +46,14 @@ require_once("f_myphotolibhosturl.phtml");
          <H1 ALIGN="CENTER">Keyword addition</H1>
          <hr>
          <?
-         PutLibPhoto($div_spec,$frame_num,"left");
-         ConfirmReCaptchaAnswerOrDie();
          //
          // Connect to the database.
          //
          ConnectSelectDbInstanceUNPUBLISHED($db_link);
+         $photodb_prefix = (($be_d_instance = substr($db_link->query("select database()")->fetch_row()[0],-2) == "_d") ? RemotePhotodbPrefix() : kix\k::EMPTY);
+         //
+         PutLibPhoto($div_spec,$frame_num,"left");
+         if (!$be_d_instance) ConfirmReCaptchaAnswerOrDie();
          //
          // Create and execute the SQL statement to increment the hit count.
          //
