@@ -8,7 +8,7 @@ function PutLibPhotoRandom($alignment = "")
    // Connect to the database.
    //
    $conn = ConnectSelectDbInstanceUNPUBLISHED($db_link);
-   $photodb_prefix = (($be_d_instance = substr($db_link->query("select database()")->fetch_row()[0],-2) == "_d") ? RemotePhotodbPrefix() : kix\k::EMPTY);
+   $instance = Instance($db_link);
    //
    // Create the SQL statement
    //
@@ -40,7 +40,7 @@ function PutLibPhotoRandom($alignment = "")
             //
             // This sets up the $div_spec and $frame_num variables.
             //
-         $image_source_spec = $photodb_prefix . "div/$div_spec/$frame_num-i.jpg";
+         $image_source_spec = "$instance[photodb_prefix]div/$div_spec/$frame_num-i.jpg";
          $size = @GetImageSize($image_source_spec); // Should always work outside of development instance
          if ($size || curl_init($image_source_spec)) // curl_init() should suffice in deveopment instance, but dynamic image layout will be evident
             {
@@ -49,7 +49,7 @@ function PutLibPhotoRandom($alignment = "")
             echo "</a>";
             $done = TRUE;
             }
-         else if ($be_d_instance)
+         else if ($instance[be_d])
             {
             $done = TRUE;
             }
