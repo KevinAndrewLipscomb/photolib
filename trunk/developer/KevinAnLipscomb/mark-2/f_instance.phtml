@@ -1,0 +1,11 @@
+<?
+//
+// $Id: f_body.phtml 85 2001-08-12 22:28:49Z kevinanlipscomb $
+//
+function Instance($db_link)
+   {
+   $the_instance = array();
+   $the_instance[photodb_prefix] = (($the_instance[be_d] = substr($db_link->query("select database()")->fetch_row()[0],-2) == "_d") ? RemotePhotodbPrefix() : kix\k::EMPTY);
+   return $the_instance;
+   }
+?>

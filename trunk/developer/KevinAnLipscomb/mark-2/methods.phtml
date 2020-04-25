@@ -11,7 +11,7 @@ require_once("f_putlibphotorandom.phtml");
 require_once("f_bodyopen.phtml");
 //
 ConnectSelectDbInstanceUNPUBLISHED($db_link);
-$photodb_prefix = (($be_d_instance = substr($db_link->query("select database()")->fetch_row()[0],-2) == "_d") ? RemotePhotodbPrefix() : kix\k::EMPTY);
+$instance = Instance($db_link);
 BodyOpen();
 ?>
 
