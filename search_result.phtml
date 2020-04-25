@@ -58,7 +58,7 @@ else
    $where_clause = "";
    if ($div_spec_criteria != "")
       {
-      $where_clause = $where_clause . "div_spec $div_spec_criteria ";
+      $where_clause = $where_clause . "div_spec " . kix\k::Safe($div_spec_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
       }
    if ($frame_num_criteria != "")
       {
@@ -66,7 +66,7 @@ else
          {
          $where_clause = $where_clause . "and ";
          }
-      $where_clause = $where_clause . "frame_num $frame_num_criteria ";
+      $where_clause = $where_clause . "frame_num " . kix\k::Safe($frame_num_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
       }
    if ($be_avail_as_huge_criteria != "")
       {
@@ -74,7 +74,7 @@ else
          {
          $where_clause = $where_clause . "and ";
          }
-      $where_clause = $where_clause . "be_avail_as_huge $be_avail_as_huge_criteria ";
+      $where_clause = $where_clause . "be_avail_as_huge " . kix\k::Safe($be_avail_as_huge_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
       }
    if ($caption_criteria != "")
       {
@@ -82,7 +82,7 @@ else
          {
          $where_clause = $where_clause . "and ";
          }
-      $where_clause = $where_clause . "caption $caption_criteria ";
+      $where_clause = $where_clause . "caption " . kix\k::Safe($caption_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
       }
    if ($tech_details_criteria != "")
       {
@@ -90,7 +90,7 @@ else
          {
          $where_clause = $where_clause . "and ";
          }
-      $where_clause = $where_clause . "tech_details $tech_details_criteria ";
+      $where_clause = $where_clause . "tech_details " . kix\k::Safe($tech_details_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
       }
    if ($era_criteria != "")
       {
@@ -98,7 +98,7 @@ else
          {
          $where_clause = $where_clause . "and ";
          }
-      $where_clause = $where_clause . "era $era_criteria ";
+      $where_clause = $where_clause . "era " . kix\k::Safe($era_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
       }
    if ($copyright_year_criteria != "")
       {
@@ -106,7 +106,7 @@ else
          {
          $where_clause = $where_clause . "and ";
          }
-      $where_clause = $where_clause . "copyright_year $copyright_year_criteria ";
+      $where_clause = $where_clause . "copyright_year " . kix\k::Safe($copyright_year_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
       }
    if ($hits_criteria != "")
       {
@@ -114,7 +114,7 @@ else
          {
          $where_clause = $where_clause . "and ";
          }
-      $where_clause = $where_clause . "hits $hits_criteria ";
+      $where_clause = $where_clause . "hits " . kix\k::Safe($hits_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
       }
    if ($keywords_criteria != "")
       {
@@ -122,7 +122,7 @@ else
          {
          $where_clause = $where_clause . "and ";
          }
-      $where_clause = $where_clause . "keywords $keywords_criteria ";
+      $where_clause = $where_clause . "keywords " . kix\k::Safe($keywords_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
       }
    if ($placement_criteria != "")
       {
@@ -130,7 +130,7 @@ else
          {
          $where_clause = $where_clause . "and ";
          }
-      $where_clause = $where_clause . "placement $placement_criteria ";
+      $where_clause = $where_clause . "placement " . kix\k::Safe($placement_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
       }
    }
 //

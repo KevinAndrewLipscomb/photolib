@@ -18,15 +18,15 @@ if (!ini_get('register_globals'))
 //
 // Validate parameters
 //
-if (
-      (preg_match('/^[[:digit:]]{4}-[[:digit:]]{2,3}(-[[:alnum:]\-]+)?$/i',$div_spec) != 1)
-   ||
-      (preg_match('/^[[:alnum:]][[:alnum:]\-_]*$/i',$frame_num) != 1)
-   )
-   {
-   echo "Improperly-formatted request";
-   exit;
-   }
+//if (
+//      (preg_match('/^[[:digit:]]{4}-[[:digit:]]{2,3}(-[[:alnum:]\-]+)?$/i',$div_spec) != 1)
+//   ||
+//      (preg_match('/^[[:alnum:]][[:alnum:]\-_]*$/i',$frame_num) != 1)
+//   )
+//   {
+//   echo "Improperly-formatted request";
+//   exit;
+//   }
 require_once("f_bodyopen.phtml");
 require_once("f_connectselectdbinstanceunpublished.phtml");
 require_once("f_myhomepageurl.phtml");
@@ -38,7 +38,8 @@ require_once('f_putstdrecaptchaheadscriptreference.phtml');
 //
 // Connect to the database.
 //
-//ConnectSelectDbInstanceUNPUBLISHED($db_link);
+ConnectSelectDbInstanceUNPUBLISHED($db_link);
+$photodb_prefix = (($be_d_instance = substr($db_link->query("select database()")->fetch_row()[0],-2) == "_d") ? RemotePhotodbPrefix() : kix\k::EMPTY);
 //
 // Increment the hit count.
 //
@@ -132,7 +133,7 @@ $photo_size = GetImageSize("protected/$token/$div_spec/$frame_num-3.jpg");
             </td>
             <td align="center" width="784">
                <?
-               echo "<img border=8 align=top src=protected/$token/$div_spec/$frame_num-3.jpg $photo_size[3]>";
+               echo "<img border=8 align=top src=" . $photodb_prefix . "protected/$token/$div_spec/$frame_num-3.jpg $photo_size[3]>";
                ?>
             </td>
             <td height="33" valign="top">
@@ -171,7 +172,7 @@ $photo_size = GetImageSize("protected/$token/$div_spec/$frame_num-3.jpg");
                echo "<small><ul>";
                if (!$record_found or ($be_avail_as_huge == "Y"))
                   {
-                  echo "<li>Also available online as a <a href=\"protected/$token/$div_spec/$frame_num-4.jpg\">1.5 megapixel JPEG</a> (recommended for desktop wallpaper, screen-saver, or 5x7 inch <a href=methods.phtml#Printing>dye sub prints</a>).";
+                  echo "<li>Also available online as a <a href=\"" . $photodb_prefix . "protected/$token/$div_spec/$frame_num-4.jpg\">1.5 megapixel JPEG</a> (recommended for desktop wallpaper, screen-saver, or 5x7 inch <a href=methods.phtml#Printing>dye sub prints</a>).";
                   echo "<li><a href=\"mailto:kevin.lipscomb@kvrs.org\">Email me</a> about larger prints or digital resolutions up to 6 megapixels.";
                   }
 //               if ($record_found)
