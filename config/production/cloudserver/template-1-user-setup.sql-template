@@ -1,0 +1,10 @@
+create user if not exists 'ki-kalipso'@'127.0.0.1' identified by '~ki-kalipso-password~';
+grant select
+ , insert
+ , update
+ , delete
+ , create
+ , alter
+ , drop
+  on kalipso.*
+  to 'ki-kalipso'@'127.0.0.1'
