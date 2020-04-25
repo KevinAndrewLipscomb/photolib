@@ -25,12 +25,17 @@ if (isset($nickname)) $nickname = kix\k::Safe($nickname,kix\k::PhpValueOf_safe_h
 if (isset($text)) $text = kix\k::Safe($text,kix\k::PhpValueOf_safe_hint_type("PUNCTUATED"));
 //
 require_once('f_confirmrecaptchaanswerordie.phtml');
-require_once('f_connectselectdbinstance.phtml');
+require_once("f_connectselectdbinstanceunpublished.phtml");
 require_once("f_myhomepageurl.phtml");
 require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
 require_once("f_myphotolibhosturl.phtml");
+//
+// Connect to the database.
+//
+ConnectSelectDbInstanceUNPUBLISHED($db_link);
+$photodb_prefix = (($be_d_instance = substr($db_link->query("select database()")->fetch_row()[0],-2) == "_d") ? RemotePhotodbPrefix() : kix\k::EMPTY);
 ?>
 <html>
 <head><title>Anecdote/comment addition [div/<? echo $div_spec ?>/<? echo $frame_num ?>]</title></head>
@@ -43,11 +48,7 @@ require_once("f_myphotolibhosturl.phtml");
          <hr>
          <?
          PutLibPhoto($div_spec,$frame_num,"left");
-         ConfirmReCaptchaAnswerOrDie();
-         //
-         // Connect to the database.
-         //
-         ConnectSelectDbInstanceUNPUBLISHED($db_link);
+         if (!$be_d_instance) ConfirmReCaptchaAnswerOrDie();
          //
          // Create and execute the SQL statement to increment the hit count.
          //
