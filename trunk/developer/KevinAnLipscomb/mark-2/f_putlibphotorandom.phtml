@@ -2,13 +2,13 @@
 //
 // $Id$
 //
-function PutLibPhotoRandom($alignment = "")
+function PutLibPhotoRandom
+   (
+   $ini,
+   $db_link,
+   $alignment = ""
+   )
    {
-   //
-   // Connect to the database.
-   //
-   $conn = ConnectSelectDbInstanceUNPUBLISHED($db_link);
-   $instance = Instance($db_link);
    //
    // Create the SQL statement
    //
@@ -40,16 +40,16 @@ function PutLibPhotoRandom($alignment = "")
             //
             // This sets up the $div_spec and $frame_num variables.
             //
-         $image_source_spec = "$instance[photodb_prefix]div/$div_spec/$frame_num-i.jpg";
+         $image_source_spec = $ini[server][photodb_prefix] . "div/$div_spec/$frame_num-i.jpg";
          $size = @GetImageSize($image_source_spec); // Should always work outside of development instance
          if ($size || curl_init($image_source_spec)) // curl_init() should suffice in deveopment instance, but dynamic image layout will be evident
             {
-            echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>";
+            echo "<a href=" . $ini[server][root_url] . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>";
             echo "<img border=\"2\" src=\"$image_source_spec\" align=\"$alignment\" $size[3]>";
             echo "</a>";
             $done = TRUE;
             }
-         else if ($instance[be_d])
+         else if ($ini[app][be_d])
             {
             $done = TRUE;
             }

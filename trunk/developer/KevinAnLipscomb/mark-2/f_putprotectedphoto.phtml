@@ -2,12 +2,12 @@
 //
 // $Id: f_putlibphoto.phtml 3396 2010-11-27 17:39:45Z KevinAnLipscomb $
 //
-require_once("f_connectselectdbinstanceunpublished.phtml");
-require_once("f_myphotolibhosturl.phtml");
 //
 function PutProtectedPhoto
    (
    $token,
+   $ini,
+   $db_link,
    $div_spec,
    $frame_num,
    $alignment = "",
@@ -21,12 +21,11 @@ function PutProtectedPhoto
    if (isset($token)) $token = kix\k::Safe(token,kix\k::PhpValueOf_safe_hint_type("HEX"));
    //
    $image_source_spec = "protected/$token/$div_spec/$frame_num-i.jpg";
-   echo "<a href=" . MyPhotoLibHostUrl() . "/present-protected-photo.phtml?token=$token&div_spec=$div_spec&frame_num=$frame_num&search_id=$search_id&result_num=$result_num&num_results=$num_results>";
+   echo "<a href=$ini[server][root_url]/present-protected-photo.phtml?token=$token&div_spec=$div_spec&frame_num=$frame_num&search_id=$search_id&result_num=$result_num&num_results=$num_results>";
    $size = @GetImageSize("$image_source_spec");
    echo "<img border=\"2\" src=\"$image_source_spec\" align=\"$alignment\" $size[3]>";
    echo "</a>";
    //
-   ConnectSelectDbInstanceUNPUBLISHED($db_link);
    $result_set = $db_link->query("select TRUE from photo_detail where div_spec = \"$div_spec\" and frame_num = \"$frame_num\"");
    $rows = mysqli_num_rows($result_set);
    if ((!$result_set) || ($rows != 1))

@@ -1,8 +1,8 @@
 <?
-require_once("f_myhomepageurl.phtml");
-require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
+//
+ParseIniAndConnectSelectDbInstance($ini,$db_link);
 ?>
 
 <html>
@@ -16,10 +16,10 @@ require_once("f_bodyopen.phtml");
 
 <table border="0" cellpadding="0" cellspacing="0" width="80%">
   <tr>
-    <td width="100%"><h5 align="center"><a href="<? echo MyHomePageUrl(); ?>">Kevin Andrew Lipscomb</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></h5>
+    <td width="100%"><h5 align="center"><a href="<? echo $ini[app][my_home_page_url]; ?>">Kevin Andrew Lipscomb</a> - <a href="<? echo $ini[server][main_page_url]; ?>">Photography</a></h5>
     <h1 align="center">Expeditions</h1>
       <p>
-      <? PutLibPhoto("2001-003","030","left"); ?>
+      <? PutLibPhoto($ini,$db_link,"2001-003","030","left"); ?>
       <a href="indian-river-park.phtml">Indian River Park, Chesapeake, Virginia</a>
       </p>
 </center>

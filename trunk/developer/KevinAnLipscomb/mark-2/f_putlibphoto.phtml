@@ -4,6 +4,8 @@
 //
 function PutLibPhoto
    (
+   $ini,
+   $db_link,
    $div_spec,
    $frame_num,
    $alignment = "",
@@ -15,11 +17,8 @@ function PutLibPhoto
    if (isset($div_spec)) $div_spec = kix\k::Safe($div_spec,kix\k::PhpValueOf_safe_hint_type("HYPHENATED_ALPHANUM"));
    if (isset($frame_num)) $frame_num = kix\k::Safe($frame_num,kix\k::PhpValueOf_safe_hint_type("HYPHENATED_UNDERSCORED_ALPHANUM"));
    //
-   ConnectSelectDbInstanceUNPUBLISHED($db_link);
-   $instance = Instance($db_link);
-   //
-   $image_source_spec = "$instance[photodb_prefix]div/$div_spec/$frame_num-i.jpg";
-   echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num&search_id=$search_id&result_num=$result_num&num_results=$num_results>";
+   $image_source_spec = $ini[server][photodb_prefix] . "div/$div_spec/$frame_num-i.jpg";
+   echo "<a href=" . $ini[server][root_url] . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num&search_id=$search_id&result_num=$result_num&num_results=$num_results>";
    $size = @GetImageSize("$image_source_spec");
    echo "<img border=\"2\" src=\"$image_source_spec\" align=\"$alignment\" $size[3]>";
    echo "</a>";

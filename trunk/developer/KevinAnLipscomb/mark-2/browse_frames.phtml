@@ -29,26 +29,20 @@ if (sscanf($div_spec,"%1d%1d%1d%1d-%1d%s",$d11,$d12,$d13,$d14,$d15,$d16) != 6)
    }
 //
 require_once("f_bodyopen.phtml");
-require_once("f_connectselectdbinstanceunpublished.phtml");
-require_once("f_myhomepageurl.phtml");
-require_once("f_mymainphotopageurl.phtml");
-require_once("f_myphotolibhosturl.phtml");
 require_once("f_putlibphoto.phtml");
 //
-// Connect to the database.
-//
-ConnectSelectDbInstanceUNPUBLISHED($db_link);
+ParseIniAndConnectSelectDbInstance($ini,$db_link);
 extract(mysqli_fetch_array($db_link->query("select min(id) as first_id_in_div, max(id) as last_id_in_div from photo_detail where div_spec = \"$div_spec\"")));
 ?>
 <html>
    <head><title>Frames on DIV <? echo $div_spec; ?></title></head>
    <? BodyOpen(); ?>
       <H6 ALIGN="CENTER">
-         <a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a>
+         <a href="<? echo $ini[app][my_home_page_url]; ?>">Kevin Andrew Lipscomb</a>
          -
-         <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a>
+         <a href="<? echo $ini[server][main_page_url]; ?>">Photography</a>
          -
-         <a href="<? echo MyPhotoLibHostUrl(); ?>/browse_divs.phtml">Digital Image Volumes</a>
+         <a href="<? echo $ini[server][root_url]; ?>/browse_divs.phtml">Digital Image Volumes</a>
       </H6>
       <H1 ALIGN="CENTER">Frames on DIV <? echo $div_spec; ?></H1>
       <hr>
@@ -61,7 +55,7 @@ extract(mysqli_fetch_array($db_link->query("select min(id) as first_id_in_div, m
                if ($first_id_in_div > 1)
                   {
                   extract(mysqli_fetch_array($db_link->query("select div_spec as prior_frame_div_spec from photo_detail where id = $first_id_in_div - 1")));
-                  echo "<a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . MyPhotoLibHostUrl() . "/browse_frames.phtml?div_spec=$prior_frame_div_spec><br/>Prior<br/>DIV<br/>&nbsp;</a>";
+                  echo "<a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . $ini[server][root_url] . "/browse_frames.phtml?div_spec=$prior_frame_div_spec><br/>Prior<br/>DIV<br/>&nbsp;</a>";
                   }
                ?>
                </tt>
@@ -74,7 +68,7 @@ extract(mysqli_fetch_array($db_link->query("select min(id) as first_id_in_div, m
                      {
                      if (strstr($filename,"-i.jpg"))
                         {
-                          PutLibPhoto($div_spec,substr($filename,0,(strlen($filename) - 6)));
+                          PutLibPhoto($ini,$db_link,$div_spec,substr($filename,0,(strlen($filename) - 6)));
                         echo " ";
                         }
                      }
@@ -90,7 +84,7 @@ extract(mysqli_fetch_array($db_link->query("select min(id) as first_id_in_div, m
                if ($last_id_in_div < $max_id)
                   {
                   extract(mysqli_fetch_array($db_link->query("select div_spec as prior_frame_div_spec from photo_detail where id = $last_id_in_div + 1")));
-                  echo "<a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . MyPhotoLibHostUrl() . "/browse_frames.phtml?div_spec=$prior_frame_div_spec><br/>Next<br/>DIV<br/>&nbsp;</a>";
+                  echo "<a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . $ini[server][root_url] . "/browse_frames.phtml?div_spec=$prior_frame_div_spec><br/>Next<br/>DIV<br/>&nbsp;</a>";
                   }
                ?>
                </tt>

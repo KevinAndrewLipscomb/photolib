@@ -25,17 +25,12 @@ if (isset($nickname)) $nickname = kix\k::Safe($nickname,kix\k::PhpValueOf_safe_h
 if (isset($text)) $text = kix\k::Safe($text,kix\k::PhpValueOf_safe_hint_type("PUNCTUATED"));
 //
 require_once('f_confirmrecaptchaanswerordie.phtml');
-require_once("f_connectselectdbinstanceunpublished.phtml");
-require_once("f_myhomepageurl.phtml");
-require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
-require_once("f_myphotolibhosturl.phtml");
 //
 // Connect to the database.
 //
-ConnectSelectDbInstanceUNPUBLISHED($db_link);
-$instance = Instance($db_link);
+ParseIniAndConnectSelectDbInstance($ini,$db_link);
 ?>
 <html>
 <head><title>Anecdote/comment addition [div/<? echo $div_spec ?>/<? echo $frame_num ?>]</title></head>
@@ -43,12 +38,12 @@ $instance = Instance($db_link);
 <table border="0" cellpadding="0" cellspacing="0" width="80%" align="center">
    <tr>
       <td>
-         <H6 ALIGN="CENTER"><a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></H6>
+         <H6 ALIGN="CENTER"><a href="<? echo $ini[app][my_home_page_url]; ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo $ini[server][main_page_url]; ?>">Photography</a></H6>
          <H1 ALIGN="CENTER">Anecdote/comment addition</H1>
          <hr>
          <?
-         PutLibPhoto($div_spec,$frame_num,"left");
-         if (!$instance[be_d]) ConfirmReCaptchaAnswerOrDie();
+         PutLibPhoto($ini,$db_link,$div_spec,$frame_num,"left");
+         if (!$ini[app][be_d]) ConfirmReCaptchaAnswerOrDie();
          //
          // Create and execute the SQL statement to increment the hit count.
          //
@@ -65,7 +60,7 @@ $instance = Instance($db_link);
                   .  " operation:\n\n"
                   .  $sql
                   .  "\n\n"
-                  .  "See <" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>."
+                  .  "See <" . $ini[server][root_url] . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>."
                )
             );
          ?>

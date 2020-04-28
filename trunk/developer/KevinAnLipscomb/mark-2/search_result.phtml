@@ -23,23 +23,19 @@ if (isset($basic_criteria)) $basic_criteria = kix\k::Safe($basic_criteria,kix\k:
 if (isset($search_id)) $search_id = kix\k::Safe($search_id,kix\k::PhpValueOf_safe_hint_type("NUM"));
 //
 require_once("f_bodyopen.phtml");
-require_once("f_connectselectdbinstanceunpublished.phtml");
-require_once("f_myhomepageurl.phtml");
-require_once("f_mymainphotopageurl.phtml");
-require_once("f_myphotolibhosturl.phtml");
 require_once("f_purgestalesearches.phtml");
 require_once("f_putlibphoto.phtml");
+//
+ParseIniAndConnectSelectDbInstance($ini,$db_link);
 ?>
 <html>
 <head><title>Search result</title></head>
 <? BodyOpen(); ?>
 <table align=center width="80%"><tr><td>
-<H6 ALIGN="CENTER"><a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></H6>
+<H6 ALIGN="CENTER"><a href="<? echo $ini[app][my_home_page_url]; ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo $ini[server][main_page_url]; ?>">Photography</a></H6>
 <H1 ALIGN="CENTER">Search result</H1>
 <hr>
 <?
-ConnectSelectDbInstanceUNPUBLISHED($db_link);
-//
 $microtime_elements = explode(" ",microtime()); // returns "0.{msec} {sec}"
 $search_id = str_replace("0.","",$microtime_elements[1] . $microtime_elements[0]);  // returns {sec}{msec}
 $db_link->query("drop table if exists search_result_$search_id") or die("Failure dropping search_result_$search_id table");
@@ -58,7 +54,7 @@ else
    $where_clause = "";
    if ($div_spec_criteria != "")
       {
-      $where_clause = $where_clause . "div_spec " . kix\k::Safe($div_spec_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
+      $where_clause = $where_clause . "div_spec " . kix\k::Safe($div_spec_criteria,kix\k::PhpValueOf_safe_hint_type("PUNCTUATED")) . kix\k::SPACE;
       }
    if ($frame_num_criteria != "")
       {
@@ -66,7 +62,7 @@ else
          {
          $where_clause = $where_clause . "and ";
          }
-      $where_clause = $where_clause . "frame_num " . kix\k::Safe($frame_num_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
+      $where_clause = $where_clause . "frame_num " . kix\k::Safe($frame_num_criteria,kix\k::PhpValueOf_safe_hint_type("PUNCTUATED")) . kix\k::SPACE;
       }
    if ($be_avail_as_huge_criteria != "")
       {
@@ -74,7 +70,7 @@ else
          {
          $where_clause = $where_clause . "and ";
          }
-      $where_clause = $where_clause . "be_avail_as_huge " . kix\k::Safe($be_avail_as_huge_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
+      $where_clause = $where_clause . "be_avail_as_huge " . kix\k::Safe($be_avail_as_huge_criteria,kix\k::PhpValueOf_safe_hint_type("PUNCTUATED")) . kix\k::SPACE;
       }
    if ($caption_criteria != "")
       {
@@ -82,7 +78,7 @@ else
          {
          $where_clause = $where_clause . "and ";
          }
-      $where_clause = $where_clause . "caption " . kix\k::Safe($caption_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
+      $where_clause = $where_clause . "caption " . kix\k::Safe($caption_criteria,kix\k::PhpValueOf_safe_hint_type("PUNCTUATED")) . kix\k::SPACE;
       }
    if ($tech_details_criteria != "")
       {
@@ -90,7 +86,7 @@ else
          {
          $where_clause = $where_clause . "and ";
          }
-      $where_clause = $where_clause . "tech_details " . kix\k::Safe($tech_details_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
+      $where_clause = $where_clause . "tech_details " . kix\k::Safe($tech_details_criteria,kix\k::PhpValueOf_safe_hint_type("PUNCTUATED")) . kix\k::SPACE;
       }
    if ($era_criteria != "")
       {
@@ -98,7 +94,7 @@ else
          {
          $where_clause = $where_clause . "and ";
          }
-      $where_clause = $where_clause . "era " . kix\k::Safe($era_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
+      $where_clause = $where_clause . "era " . kix\k::Safe($era_criteria,kix\k::PhpValueOf_safe_hint_type("PUNCTUATED")) . kix\k::SPACE;
       }
    if ($copyright_year_criteria != "")
       {
@@ -106,7 +102,7 @@ else
          {
          $where_clause = $where_clause . "and ";
          }
-      $where_clause = $where_clause . "copyright_year " . kix\k::Safe($copyright_year_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
+      $where_clause = $where_clause . "copyright_year " . kix\k::Safe($copyright_year_criteria,kix\k::PhpValueOf_safe_hint_type("PUNCTUATED")) . kix\k::SPACE;
       }
    if ($hits_criteria != "")
       {
@@ -114,7 +110,7 @@ else
          {
          $where_clause = $where_clause . "and ";
          }
-      $where_clause = $where_clause . "hits " . kix\k::Safe($hits_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
+      $where_clause = $where_clause . "hits " . kix\k::Safe($hits_criteria,kix\k::PhpValueOf_safe_hint_type("PUNCTUATED")) . kix\k::SPACE;
       }
    if ($keywords_criteria != "")
       {
@@ -122,7 +118,7 @@ else
          {
          $where_clause = $where_clause . "and ";
          }
-      $where_clause = $where_clause . "keywords " . kix\k::Safe($keywords_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
+      $where_clause = $where_clause . "keywords " . kix\k::Safe($keywords_criteria,kix\k::PhpValueOf_safe_hint_type("PUNCTUATED")) . kix\k::SPACE;
       }
    if ($placement_criteria != "")
       {
@@ -130,7 +126,7 @@ else
          {
          $where_clause = $where_clause . "and ";
          }
-      $where_clause = $where_clause . "placement " . kix\k::Safe($placement_criteria,kix\k::PhpValueOf_safe_hint_type("KI_SORT_EXPRESSION")) . kix\k::SPACE;
+      $where_clause = $where_clause . "placement " . kix\k::Safe($placement_criteria,kix\k::PhpValueOf_safe_hint_type("PUNCTUATED")) . kix\k::SPACE;
       }
    }
 //
@@ -183,13 +179,13 @@ else
       extract($row);
       echo "<tr>";
       echo "<td><ul>";
-      echo "<li><a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num&search_id=$search_id&result_num=$result_num&num_results=$num_rows><b>div/$div_spec/$frame_num</b></a>";
+      echo "<li><a href=" . $ini[server][root_url] . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num&search_id=$search_id&result_num=$result_num&num_results=$num_rows><b>div/$div_spec/$frame_num</b></a>";
       echo "<br><small>$caption</small><br><br>";
       echo "</ul></td>";
       if (!$hide_thumbnails)
          {
          echo "<td>";
-         PutLibPhoto($div_spec,$frame_num,"",$search_id,$result_num,$num_rows);
+         PutLibPhoto($ini,$db_link,$div_spec,$frame_num,"",$search_id,$result_num,$num_rows);
          echo "</td>";
          }
       echo "</tr>";

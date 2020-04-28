@@ -22,12 +22,10 @@ if (!ini_get('register_globals'))
 //
 if (isset($visitor)) $visitor = kix\k::Safe($visitor,kix\k::PhpValueOf_safe_hint_type("HEX"));
 //
-require_once("f_connectselectdbinstanceunpublished.phtml");
-require_once("f_myhomepageurl.phtml");
-require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
-require_once("f_myphotolibhosturl.phtml");
+//
+ParseIniAndConnectSelectDbInstance($ini,$db_link);
 //
 if ($remember_visitor)
    {
@@ -50,7 +48,7 @@ else
 <head><title>New Photographs</title></head>
 <? BodyOpen(); ?>
 <table align=center width="80%"><tr><td>
-<H6 ALIGN="CENTER"><a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></H6>
+<H6 ALIGN="CENTER"><a href="<? echo $ini[app][my_home_page_url]; ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo $ini[server][main_page_url]; ?>">Photography</a></H6>
 <H1 ALIGN="CENTER">New Photographs</H1>
 <hr>
 <p><b>The following Digital Image Volumes have been added or updated since your last visit:</b></p>
@@ -58,22 +56,8 @@ else
 //
 // Get the time of the user's last visit.
 //
-ConnectSelectDbInstanceUNPUBLISHED($db_link);
-//
-// My "User Tracking" page promises the visitor that I quickly hash their
-// Site ID String.  I intended to use mhash() (below), but my web server
-// hasn't implemented it quite yet:
-//
-//    $visitor = bin2hex(mhash(MHASH_SHA1,$visitor));
-//
-// Instead, use the MySQL MD5 function.
-//
-$hash_result = $db_link->query("select md5(\"$visitor\") as hash_string");
-$hash_row = mysqli_fetch_object($hash_result);
-$visitor = $hash_row->hash_string;
-//
-$sql = "select time from visit where visitor = \"$visitor\"";
-$result = $db_link->query($sql);
+$visitor = hash('sha256',$visitor);
+$result = $db_link->query("select time from visit where visitor = '$visitor'");
 $num_rows = mysqli_num_rows($result);
 if ($num_rows == 0)
    {
@@ -104,7 +88,7 @@ while ($subdir_entry = $div_dir->read())
    {
    if (!strstr($subdir_entry,"."))
       {
-      $list_item = "<li><a href=" . MyPhotoLibHostUrl() . "/browse_frames.phtml?div_spec=$subdir_entry>$subdir_entry</a>";
+      $list_item = "<li><a href=" . $ini[server][root_url] . "/browse_frames.phtml?div_spec=$subdir_entry>$subdir_entry</a>";
       if (filemtime("div/$subdir_entry") > $time)
          {
          echo "$list_item\n";

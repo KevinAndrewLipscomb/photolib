@@ -35,19 +35,12 @@ if (isset($search_id)) $search_id = kix\k::Safe($search_id,kix\k::PhpValueOf_saf
 //   }
 //
 require_once("f_bodyopen.phtml");
-require_once("f_connectselectdbinstanceunpublished.phtml");
-require_once("f_myhomepageurl.phtml");
-require_once("f_mymainphotopageurl.phtml");
-require_once("f_myphotolibhosturl.phtml");
 require_once("f_purgestalesearches.phtml");
 require_once('f_putstdrecaptchablock.phtml');
 require_once('f_putstdrecaptchaheadscriptreference.phtml');
 require_once('f_standardexifoutput.phtml');
 //
-// Connect to the database.
-//
-ConnectSelectDbInstanceUNPUBLISHED($db_link);
-$instance = Instance($db_link);
+ParseIniAndConnectSelectDbInstance($ini,$db_link);
 //
 // Increment the hit count.
 //
@@ -106,13 +99,13 @@ if ($search_id)
    </head>
    <? BodyOpen(); ?>
       <H6 align="center">
-         <a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a>
+         <a href="<? echo $ini[app][my_home_page_url]; ?>">Kevin Andrew Lipscomb</a>
          -
-         <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a>
+         <a href="<? echo $ini[server][main_page_url]; ?>">Photography</a>
          -
-         <a href="<? echo MyPhotoLibHostUrl(); ?>/browse_divs.phtml">Digital Image Volumes</a>
+         <a href="<? echo $ini[server][root_url]; ?>/browse_divs.phtml">Digital Image Volumes</a>
          -
-         <a href="<? echo MyPhotoLibHostUrl(); ?>/browse_frames.phtml?div_spec=<? echo $div_spec ?>"><? echo $div_spec ?></a>
+         <a href="<? echo $ini[server][root_url]; ?>/browse_frames.phtml?div_spec=<? echo $div_spec ?>"><? echo $div_spec ?></a>
       </H6>
       <table border="0" cellpadding="10" cellspacing="0" width="100%" align="center">
          <tr>
@@ -123,7 +116,7 @@ if ($search_id)
                if ($id > 1)
                   {
                   extract(@mysqli_fetch_array($db_link->query("select div_spec as prior_frame_div_spec, frame_num as prior_frame_frame_num from photo_detail where id = $id - 1")));
-                  echo "<a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$prior_frame_div_spec&frame_num=$prior_frame_frame_num><br/>Prior<br/>div/frame<br/>&nbsp;</a>";
+                  echo "<a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . $ini[server][root_url] . "/present-photo.phtml?div_spec=$prior_frame_div_spec&frame_num=$prior_frame_frame_num><br/>Prior<br/>div/frame<br/>&nbsp;</a>";
                   }
                else
                   {
@@ -132,7 +125,7 @@ if ($search_id)
                if ($result_num > 1)
                   {
                   extract(@mysqli_fetch_array($db_link->query("select div_spec as prior_frame_div_spec, frame_num as prior_frame_frame_num from search_result_$search_id where result_num = $result_num - 1")));
-                  echo "<p><a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$prior_frame_div_spec&frame_num=$prior_frame_frame_num&search_id=$search_id&result_num=" . ($result_num - 1) . "&num_results=$num_results><br/>Prior<br/>search<br/>result<br/>&nbsp;</a></p>";
+                  echo "<p><a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . $ini[server][root_url] . "/present-photo.phtml?div_spec=$prior_frame_div_spec&frame_num=$prior_frame_frame_num&search_id=$search_id&result_num=" . ($result_num - 1) . "&num_results=$num_results><br/>Prior<br/>search<br/>result<br/>&nbsp;</a></p>";
                   }
                else
                   {
@@ -148,7 +141,7 @@ if ($search_id)
             </td>
             <td align="center" width="784">
                <?
-               echo "<img border=8 align=top src=" . "$instance[photodb_prefix]div/$div_spec/$frame_num-3.jpg $photo_size[3]>";
+               echo "<img border=8 align=top src=" . $ini[server][photodb_prefix] . "div/$div_spec/$frame_num-3.jpg $photo_size[3]>";
                ?>
             </td>
             <td height="33" valign="top">
@@ -159,7 +152,7 @@ if ($search_id)
                if ($id < $max_id)
                   {
                   extract(@mysqli_fetch_array($db_link->query("select div_spec as next_frame_div_spec, frame_num as next_frame_frame_num from photo_detail where id = $id + 1")));
-                  echo "<a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$next_frame_div_spec&frame_num=$next_frame_frame_num><br/>Next<br/>div/frame<br/>&nbsp;</a>";
+                  echo "<a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . $ini[server][root_url] . "/present-photo.phtml?div_spec=$next_frame_div_spec&frame_num=$next_frame_frame_num><br/>Next<br/>div/frame<br/>&nbsp;</a>";
                   }
                else
                   {
@@ -168,7 +161,7 @@ if ($search_id)
                if ($result_num < $num_results)
                   {
                   extract(@mysqli_fetch_array($db_link->query("select div_spec as next_frame_div_spec, frame_num as next_frame_frame_num from search_result_$search_id where result_num = $result_num + 1")));
-                  echo "<p><a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$next_frame_div_spec&frame_num=$next_frame_frame_num&search_id=$search_id&result_num=" . ($result_num + 1) . "&num_results=$num_results><br/>Next<br/>search<br/>result<br/>&nbsp;</a></p>";
+                  echo "<p><a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . $ini[server][root_url] . "/present-photo.phtml?div_spec=$next_frame_div_spec&frame_num=$next_frame_frame_num&search_id=$search_id&result_num=" . ($result_num + 1) . "&num_results=$num_results><br/>Next<br/>search<br/>result<br/>&nbsp;</a></p>";
                   }
                ?>
                </tt>
@@ -187,7 +180,7 @@ if ($search_id)
                echo "<small><ul>";
                if (!$record_found or ($be_avail_as_huge == "Y"))
                   {
-                  echo "<li>Also available online as a <a href=\"" . "$instance[photodb_prefix]div/$div_spec/$frame_num-4.jpg\">1.5 megapixel JPEG</a> (recommended for desktop wallpaper, screen-saver, or 5x7 inch <a href=methods.phtml#Printing>dye sub prints</a>).";
+                  echo "<li>Also available online as a <a href=\"" . $ini[server][photodb_prefix] . "div/$div_spec/$frame_num-4.jpg\">1.5 megapixel JPEG</a> (recommended for desktop wallpaper, screen-saver, or 5x7 inch <a href=methods.phtml#Printing>dye sub prints</a>).";
                   echo "<li><a href=\"mailto:kevin.lipscomb@kvrs.org\">Email me</a> about larger prints or digital resolutions up to 6 megapixels.";
                   }
                if ($record_found)
@@ -205,7 +198,7 @@ if ($search_id)
                   {
                   echo "<li>No database record for this photograph existed, so a generic record has now been inserted.&nbsp; Please consider adding some keywords (below).";
                   }
-               echo "<li>This and <a href=\"index.phtml\">other photographs</a> copyright $copyright_year <a href=\"" . MyHomePageUrl() . "\">Kevin Andrew Lipscomb</a>";
+               echo "<li>This and <a href=\"index.phtml\">other photographs</a> copyright $copyright_year <a href=\"" . $ini[app][my_home_page_url] . "\">Kevin Andrew Lipscomb</a>";
                echo "<li>To improve searchability, the following keywords are also associated with this photograph.&nbsp; Click on a word to perform a search on it.&nbsp; If you can think of other applicable words that aren't already in the caption or the technical details, please enter them in the field below.<br><br>\n";
                echo "<i>\n";
                $keyword_array = explode(" ",$keywords);
@@ -219,7 +212,7 @@ if ($search_id)
                echo       "<tr>\n";
                echo          "<td valign=top>New keyword(s): <input name=new_keywords type=text></td>\n";
                echo          "<td valign=top>\n";
-               if (!$instance[be_d]) PutStdReCaptchaGetBlock();
+               if (!$ini[app][be_d]) PutStdReCaptchaGetBlock();
                echo          "</td>\n";
                echo          "<td valign=top><input type=submit value=\"Submit\"></td>\n";
                echo       "</tr>\n";

@@ -26,11 +26,10 @@ if ($token == "")
    exit;
    }
 //
-require_once("f_myhomepageurl.phtml");
-require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
-require_once("f_myphotolibhosturl.phtml");
+//
+ParseIniAndConnectSelectDbInstance($ini,$db_link);
 ?>
 <html>
    <head><title>Digital Image Volumes</title></head>
@@ -38,7 +37,7 @@ require_once("f_myphotolibhosturl.phtml");
       <table align=center width="80%">
          <tr>
             <td>
-               <H6 ALIGN="CENTER"><a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></H6>
+               <H6 ALIGN="CENTER"><a href="<? echo $ini[app][my_home_page_url]; ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo $ini[server][main_page_url]; ?>">Photography</a></H6>
                <H1 ALIGN="CENTER">Your Protected Digital Image Volumes</H1>
                <hr>
                <?
@@ -54,7 +53,7 @@ require_once("f_myphotolibhosturl.phtml");
                rsort($subdir_array);
                foreach ($subdir_array as $subdir)
                   {
-                  echo "<li><a href=" . MyPhotoLibHostUrl() . "/browse_protected_frames.phtml?token=$token&div_spec=$subdir>$subdir</a>";
+                  echo "<li><a href=$ini[server][root_url]/browse_protected_frames.phtml?token=$token&div_spec=$subdir>$subdir</a>";
                   }
                echo "</ul>";
                $d->close();

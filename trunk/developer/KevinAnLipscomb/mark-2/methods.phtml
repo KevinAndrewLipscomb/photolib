@@ -4,23 +4,20 @@
 </HEAD>
 
 <?
-require_once("f_myhomepageurl.phtml");
-require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_putlibphotorandom.phtml");
 require_once("f_bodyopen.phtml");
 //
-ConnectSelectDbInstanceUNPUBLISHED($db_link);
-$instance = Instance($db_link);
+ParseIniAndConnectSelectDbInstance($ini,$db_link);
 BodyOpen();
 ?>
 
 <CENTER><TABLE CELLSPACING=0 BORDER=0 CELLPADDING=7 WIDTH="80%">
 <TR><TD VALIGN="TOP">
-<H6 ALIGN="CENTER"><a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></H6>
+<H6 ALIGN="CENTER"><a href="<? echo $ini[app][my_home_page_url]; ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo $ini[server][main_page_url]; ?>">Photography</a></H6>
 <H1 ALIGN="CENTER">Methods</H1>
 <hr>
-<h3><? PutLibPhotoRandom("right"); ?>Contents:</h3>
+<h3><? PutLibPhotoRandom($ini,$db_link,"right"); ?>Contents:</h3>
 <ul>
   <li><a href="#FilmVersusDigital">Film versus Digital</a>
   <li><a href="#FilmPreferences">Film Preferences</a>
@@ -56,7 +53,7 @@ BodyOpen();
 <li>Provia F digitizes better than Velvia.
 </ul>
 
-<P><? PutLibPhotoRandom("right"); ?>I have also factored in price.  This is what I've derived:</P>
+<P><? PutLibPhotoRandom($ini,$db_link,"right"); ?>I have also factored in price.  This is what I've derived:</P>
 
 <ul>
 <LI>Fuji RDPIII100 (Provia F)
@@ -87,8 +84,8 @@ BodyOpen();
 <table align=center width="80%">
    <tr><td align=center><b>Seattle Filmworks / Filmworks.com scan</b></td><td align=center><b>Kodak PhotoCD scan</b></td></tr>
    <tr>
-      <td align=center><a href=<? echo $instance[photodb_prefix]; ?>non-db/1998-001/018-3.jpg><img border="2" src="<? echo $instance[photodb_prefix]; ?>non-db/1998-001/018-i.jpg" align="" width="192" height="128"></a></td>
-      <td align=center><? PutLibPhoto("2001-005","019"); ?></td>
+      <td align=center><a href=<? echo $ini[server][photodb_prefix]; ?>non-db/1998-001/018-3.jpg><img border="2" src="<? echo $ini[server][photodb_prefix]; ?>non-db/1998-001/018-i.jpg" align="" width="192" height="128"></a></td>
+      <td align=center><? PutLibPhoto($ini,$db_link,"2001-005","019"); ?></td>
    </tr>
 </table>
 <p>SFW's scanning system has a low <i>dynamic range</i>, or ability to differentiate brightness levels, so the image on the left is very contrasty.&nbsp; Kodak's scanning system (called the Picture Imaging Workstation or PIW) has a higher dynamic range (3.2), so the contrast of the PhotoCD image is much truer to life.&nbsp; Also, the maximum resolution of an SFW digital image is <a href=non-db/1998-001/018-3.jpg>384 kilopixels</a>.&nbsp; The maximum resolution of a Kodak PhotoCD image is 6 megapixels, although the largest I supply online is <a href=div/2001-005/019-4.jpg>1.5 megapixels</a>.</p>
@@ -96,7 +93,7 @@ BodyOpen();
 </ul>
 <h3><a name="DigitalEditing"></a>Digital editing</h3>
 <ul>
-<p><? PutLibPhotoRandom("right"); ?>The de facto tool of choice for most digital imaging needs in the commercial world is Adobe Photoshop.&nbsp; I've shied away from PhotoShop, however, because:</p>
+<p><? PutLibPhotoRandom($ini,$db_link,"right"); ?>The de facto tool of choice for most digital imaging needs in the commercial world is Adobe Photoshop.&nbsp; I've shied away from PhotoShop, however, because:</p>
 <ul>
 <li>It's geared primarily toward graphic artists rather than photographers.
 <li>It's too damn expensive.
@@ -140,7 +137,7 @@ BodyOpen();
 </ul>
 <h3><a name="PreparingImagesForTheWeb"></a>Preparing images for the web</h3>
 <ul>
-<p><? PutLibPhotoRandom("right"); ?>This section deals with resizing, sharpening, and format conversion.&nbsp; You can perform all of these operations from within PWP, but in the long run it's simpler and faster to use a script-driven command-line utility instead (especially since you can get the scripts free on web pages like this one).</p>
+<p><? PutLibPhotoRandom($ini,$db_link,"right"); ?>This section deals with resizing, sharpening, and format conversion.&nbsp; You can perform all of these operations from within PWP, but in the long run it's simpler and faster to use a script-driven command-line utility instead (especially since you can get the scripts free on web pages like this one).</p>
 <p>First, the objectives:</p>
 <ol>
 <li>Along the lines of <a href=http://www.arsdigita.com/books/panda/images>Philip Greenspun's recommendations</a>, I want to provide a thumbnail image.&nbsp; Greenspun bases his thumbnails on the smallest of the five resolutions available on a PhotoCD (which Kodak refers to as Base/16).&nbsp; For 35mm images, Base/16 amounts to 24 kilopixels.&nbsp; That seemed reasonable to me until I noticed that my eye was much more drawn to his medium-format thumbnails, which are between 36 and 64 kilopixels.&nbsp; I eventually settled on using 54 kilopixels, which would be Base/8 (if PhotoCD imagepacs were to include such a resolution, which they don't).&nbsp; It doesn't matter, because I derive my "Base/8" 35mm thumbnails from the 6 megapixel TIFF files (PhotoCD Base*16 resolution) that I create during the digital editing phase.
@@ -166,7 +163,7 @@ system to run Bash scripts.</p>
 </ul>
 <h3><a name="PresentingImagesViaADatabaseBackedWebSite"></a>Presenting images via a database-backed web site</h3>
 <ul>
-<p><? PutLibPhotoRandom("right"); ?>Just as Philip Greenspun does, I present the medium-sized version of each of my photographs on a page that includes several other elements:</p>
+<p><? PutLibPhotoRandom($ini,$db_link,"right"); ?>Just as Philip Greenspun does, I present the medium-sized version of each of my photographs on a page that includes several other elements:</p>
 <ul>
 <li>A caption
 <li>Technical details
@@ -205,26 +202,26 @@ system to run Bash scripts.</p>
 <li>The raw storage space that they provide (a little, like 5 megabytes, or a lot, like 125 megabytes)
 </ul>
 <p>I scoped out the corner of this continuum that exists at the region described by <a href=http://www.php.net>PHP</a>, <a href=http://www.mysql.com>MySQL</a>, and a lot (125 Mb) of storage space, and the winner was:&nbsp; <b><a href=http://www.phpwebhosting.com>PHPWebHosting.com</a></b>.&nbsp; They now get about US$10 of my money per month.</p>
-<p><? PutLibPhotoRandom("right"); ?><a href=http://www.php.net>PHP</a> originally stood for Personal Home Page, but now stands for PHP Hypertext Preprocessor.&nbsp; It's a far simpler language than Perl.  It has extremely convenient provisions for performing database queries.&nbsp; PHP and MySQL functionality both reside on the server -- there's nothing to install, build, or configure on your end.&nbsp; You just need to be able to FTP your JPEGs and your web pages to the server end.</p>
+<p><? PutLibPhotoRandom($ini,$db_link,"right"); ?><a href=http://www.php.net>PHP</a> originally stood for Personal Home Page, but now stands for PHP Hypertext Preprocessor.&nbsp; It's a far simpler language than Perl.  It has extremely convenient provisions for performing database queries.&nbsp; PHP and MySQL functionality both reside on the server -- there's nothing to install, build, or configure on your end.&nbsp; You just need to be able to FTP your JPEGs and your web pages to the server end.</p>
 <p>It didn't take long for me to develop web pages that contained standard HTML along with embedded PHP statements that performed MySQL queries.&nbsp; That's what each of the '.phtml' files on this site are.&nbsp;</p>
-<p>You can also define functions in PHP.&nbsp; Functions are encapsulations of algorithms that you would otherwise find yourself repeating from web page to web page.&nbsp; On my site, I make heavy use of two functions that I wrote.&nbsp; The first is <i>PutLibPhoto()</i>.&nbsp; Say I want to drop frame number 008 from Digital Image Volume 2001-003 into a web page named 'article-2.phtml', and I want the photograph to be aligned along the right margin.&nbsp; I do this by embedding this PHP code at the beginning of article-2.phtml...</p>
+<p>You can also define functions in PHP.&nbsp; Functions are encapsulations of algorithms that you would otherwise find yourself repeating from web page to web page.&nbsp; On my site, I make heavy use of two functions that I wrote.&nbsp; The first is <i>PutLibPhoto($ini,$db_link,)</i>.&nbsp; Say I want to drop frame number 008 from Digital Image Volume 2001-003 into a web page named 'article-2.phtml', and I want the photograph to be aligned along the right margin.&nbsp; I do this by embedding this PHP code at the beginning of article-2.phtml...</p>
 <pre>   &lt;? require(&quot;f_putlibphoto.phtml&quot;); ?&gt;</pre>
 <p>...and this PHP statement wherever I want to put the photograph:</p>
-<pre>   &lt;? PutLibPhoto(&quot;2001-003&quot;,&quot;008&quot;,&quot;right&quot;); ?&gt;</pre>
+<pre>   &lt;? PutLibPhoto($ini,$db_link,&quot;2001-003&quot;,&quot;008&quot;,&quot;right&quot;); ?&gt;</pre>
 <p>When someone browses to article-2.phtml, the server sees from its 'phtml' extension that it contains PHP code, so the server invokes its PHP interpreter.&nbsp; The PHP interpreter reads in the function (that's what the 'require' statement does), then calls the function whenever it encounters the function call.&nbsp The function generates the following HTML:</p>
 <pre>
-   &lt;a href=<? echo MyPhotoLibHostUrl(); ?>/present-photo.phtml?div_spec=2001-003&amp;frame_num=008&gt;
+   &lt;a href=<? echo $ini[server][root_url]; ?>/present-photo.phtml?div_spec=2001-003&amp;frame_num=008&gt;
    &lt;img border=2 src=div/2001-003/008-i.jpg align=right width=288 height=192&gt;
    &lt;/a&gt;
 </pre>
 <p>The above tags place the thumbnail image in the page and surround it with a hyperlink to the script that generates the associated medium-sized presentation page for that photograph.&nbsp; If you view the source of the page you are reading right now, you will see that it is peppered with such tag sequences.&nbsp; They were all generated by PHP function calls.</p>
-<p>Here's the source to function PutLibPhoto():</p>
+<p>Here's the source to function PutLibPhoto($ini,$db_link,):</p>
 <pre>
    &lt;?
-   function PutLibPhoto($div_spec,$frame_num,$alignment = &quot;&quot;)
+   function PutLibPhoto($ini,$db_link,$div_spec,$frame_num,$alignment = &quot;&quot;)
       {
       $image_source_spec = &quot;div/$div_spec/$frame_num-i.jpg&quot;;
-      echo &quot;&lt;a href=<? echo MyPhotoLibHostUrl(); ?>/present-photo.phtml?div_spec=
+      echo &quot;&lt;a href=<? echo $ini[server][root_url]; ?>/present-photo.phtml?div_spec=
          $div_spec&amp;frame_num=$frame_num&gt;&quot;;
       $size = GetImageSize(&quot;$image_source_spec&quot;);
       echo &quot;&lt;img border=2 src=$image_source_spec align=$alignment $size[3]&gt;&quot;;
@@ -232,10 +229,10 @@ system to run Bash scripts.</p>
       }
    ?&gt;
 </pre>
-<p>I mentioned that I made heavy use of <i>two</i> PHP functions.  The second one is <i>PutLibPhotoRandom()</i>:</p>
+<p>I mentioned that I made heavy use of <i>two</i> PHP functions.  The second one is <i>PutLibPhotoRandom($ini,$db_link,)</i>:</p>
 <pre>
    &lt;?
-   function PutLibPhotoRandom($alignment = &quot;&quot;)
+   function PutLibPhotoRandom($ini,$db_link,$alignment = &quot;&quot;)
       {
       //
       // Connect to the database.
@@ -268,7 +265,7 @@ system to run Bash scripts.</p>
          // in the row returned by mysqli_fetch_row().
          //
          $image_source_spec = &quot;div/$field_array[0]/$field_array[1]-i.jpg&quot;;
-         echo &quot;&lt;a href=<? echo MyPhotoLibHostUrl(); ?>/present-photo.phtml?div_spec=
+         echo &quot;&lt;a href=<? echo $ini[server][root_url]; ?>/present-photo.phtml?div_spec=
             $field_array[0]&amp;frame_num=$field_array[1]&gt;&quot;;
          $size = GetImageSize(&quot;$image_source_spec&quot;);
          echo &quot;&lt;img border=2 src=$image_source_spec align=$alignment $size[3]&gt;&quot;;
@@ -277,8 +274,8 @@ system to run Bash scripts.</p>
       }
    ?&gt;
 </pre>
-<p>Here's the result of a call to PutLibPhotoRandom().&nbsp; It will probably be different each time you reload this page.&nbsp; I can't tell you which of my photographs will appear here, because the script chooses them at random.&nbsp; Get it?</p>
-<p align=center><? PutLibPhotoRandom(); ?>
+<p>Here's the result of a call to PutLibPhotoRandom($ini,$db_link,).&nbsp; It will probably be different each time you reload this page.&nbsp; I can't tell you which of my photographs will appear here, because the script chooses them at random.&nbsp; Get it?</p>
+<p align=center><? PutLibPhotoRandom($ini,$db_link,); ?>
 <p>If you hover your cursor over any of the thumbnails on this site, you'll see a reference to a PHP script called <i>present-photo.phtml</i> in your browser's status bar.&nbsp; The reference includes a list of parameters (the part after the question mark) that identifies the particular photograph that you're pointing to.&nbsp The <i>present-photo.phtml</i> script generates the "medium-sized presentation pages" that I've been talking about.&nbsp; I can change the medium-sized presentation of all photographs on this site just by changing this one script.&nbsp; Here's its source code:</p>
 <pre>
    &lt;?
@@ -404,7 +401,7 @@ system to run Bash scripts.</p>
 </ul>
 <h3><a name="Printing"></a>Printing</h3>
 <ul>
-<p><? PutLibPhotoRandom("right"); ?>I am no longer the guy to give advice when it comes to conventional (darkroom) printing.&nbsp; In the early 80's, I did my own black & white darkroom work, but no longer.&nbsp; Then again, who does?&nbsp; I'm not a fountain of knowledge about digital printing, either, but here goes...</p>
+<p><? PutLibPhotoRandom($ini,$db_link,"right"); ?>I am no longer the guy to give advice when it comes to conventional (darkroom) printing.&nbsp; In the early 80's, I did my own black & white darkroom work, but no longer.&nbsp; Then again, who does?&nbsp; I'm not a fountain of knowledge about digital printing, either, but here goes...</p>
 <p>Halftone (ie, dot-matrix, ink jet, laser) printers are not "continuous tone" rendering devices like your monitor is.&nbsp; They can not vary the intensity of the dots they print.&nbsp; Dye sublimation printers <i>are</i> continuous tone rendering devices (they <i>can</i> vary the intensity of the pixels they print, like your monitor), and their output can rival that of conventional darkrooms.&nbsp; "Dye sub" prints were once considered to have poor archival qualities, but Kodak in particular claims to have licked that problem.</p>
 <p>Consumer dye sub printers are just starting to scoot in under the US$1000 mark, but that's still plenty expensive to most folks.&nbsp; Until you can afford a dye sub printer of your own, consider using one of the <a href=http://www.kodak.com/global/en/consumer/consDigital/pictureMaker/index.shtml>Kodak Picture Maker</a> kiosks at your local photo store, Kmart, or Wal-Mart.&nbsp; That's what I do, to the tune of about US$10 per 8"x12" sheet of photo paper.&nbsp; The system has a flatbed scanner, a CD drive, a floppy drive, a slide scanner, and a digital media card reader as its input devices; it has a <a href=http://www.kodak.com/global/en/professional/products/printers/dyeSub/thermalPrinters.shtml>Kodak 86xx dye sub printer</a> as its output device; and it has consumer-oriented photo editing software.&nbsp; It understands JPEG, Kodak PhotoCD, and Flash Pix CD formats.</p>
 <p>Follow the steps above to transform your photographs into high-resolution JPEG files.&nbsp; Then copy your JPEGs onto floppy or compact disks and carry those disks to the Kodak Picture Maker.&nbsp; When proceeding in this manner, avoid using the Picture Maker's digital editing features -- such changes are better done during the <a href=#DigitalEditing>"master edit" phase<a> described above</a>.</p>
@@ -415,7 +412,7 @@ system to run Bash scripts.</p>
 </ul>
 <h3><a name="Framing"></a>Framing</h3>
 <ul>
-<p><? PutLibPhotoRandom("right"); ?>First, read <a href=http://www.photo.net/photo/framing>Phil Greenspun's <i>Framing Suggestions</i></a>.</p>
+<p><? PutLibPhotoRandom($ini,$db_link,"right"); ?>First, read <a href=http://www.photo.net/photo/framing>Phil Greenspun's <i>Framing Suggestions</i></a>.</p>
 <p>My habit, which I've found to be economic and consistent, is to order OneStep Frame Kits from <a href=http://www.lightimpressionsdirect.com>Light Impressions</a>.&nbsp; Each kit includes everything you need but the print itself, and all of the materials are of archival quality.&nbsp For an 11x14 inch Formal Florentine Black frame kit (to display an 8x10 inch print), I shell out US$29.95.&nbsp; The catalog number is 10306.</p>
 </ul>
 <h3><a name="Storage"></a>Storage</h3>
@@ -431,7 +428,7 @@ system to run Bash scripts.</p>
    <li>FoldLock Sleeves for Film and Negatives, 50/package, catalog # 5650, US$4.45
    </ul>
 <p>When you have film scanned at processing time, you (had better) always receive the results of such scans on some form of digital media (CD, floppy disk, email attachments, etc).&nbsp; I use the term Digital Image Volume (DIV) to refer to such media.&nbsp; In such cases, I store the processed film, the DIV, and the index prints in the same hanging file.</p>
-<p><? PutLibPhoto("2001-006","012","right"); ?>To track the particular rolls of film that I shoot, I try to include a "take card" image on each roll.&nbsp; My home-made take card is a small dry-erase board with an 18% gray card on the back.&nbsp; I used a Sharpie permanent marker to draw a template on the take card with the following fields:</p>
+<p><? PutLibPhoto($ini,$db_link,"2001-006","012","right"); ?>To track the particular rolls of film that I shoot, I try to include a "take card" image on each roll.&nbsp; My home-made take card is a small dry-erase board with an 18% gray card on the back.&nbsp; I used a Sharpie permanent marker to draw a template on the take card with the following fields:</p>
    <ul>
    <li>Roll number
    <li>Initial load date
@@ -441,7 +438,7 @@ system to run Bash scripts.</p>
    </ul>
 <p>I fill the fields in with an erasable marker, then I take a picture of the card.&nbsp; This way, I can positively associate a particular exposure note with a particular frame on a particular roll of film.&nbsp; If I have that roll scanned at processing time, then the image of the take card positively associates the roll with a particular Digital Image Volume.&nbsp When I load an image on my web site, I can track back to the roll, frame, and exposure note that correspond to that image.&nbsp; I enter the exposure note in the caption and technical detail fields in my database table, and voila -- people browsing my images get fully annotated descriptions.</p>
 </ul>
-<p align=center><a href=http://greenspun.com/com/kalphotography/methods.phtml><i>Add or view comments</i></a></p>
+
 </TD>
 </TR>
 </TABLE>
