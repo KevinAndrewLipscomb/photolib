@@ -32,7 +32,8 @@ require_once("f_purgestalesearches.phtml");
 require_once('f_putstdrecaptchablock.phtml');
 require_once('f_putstdrecaptchaheadscriptreference.phtml');
 //
-ParseIniAndConnectSelectDbInstance($ini,$db_link);
+$ini = AppSettings();
+$db_link = DbLink($ini);
 //
 // Increment the hit count.
 //

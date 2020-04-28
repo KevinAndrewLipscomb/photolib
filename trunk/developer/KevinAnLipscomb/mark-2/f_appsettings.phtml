@@ -1,0 +1,12 @@
+<?
+//
+// $Id: f_connectselectdb.phtml 578 2002-03-11 19:53:12Z kevinanlipscomb $
+//
+function AppSettings()
+   {
+   $saved_error_level = error_reporting(E_ALL);
+   $ini = parse_ini_file('unpublished.ini',TRUE) + parse_ini_file('app.ini',TRUE);
+   error_reporting($saved_error_level);
+   return $ini;
+   }
+?>
