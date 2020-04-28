@@ -20,7 +20,8 @@ if (isset($era)) $era = kix\k::Safe($era,kix\k::PhpValueOf_safe_hint_type("NUM")
 //
 require_once("f_bodyopen.phtml");
 //
-ParseIniAndConnectSelectDbInstance($ini,$db_link);
+$ini = AppSettings();
+$db_link = DbLink($ini);
 ?>
 
 <html>

@@ -40,7 +40,8 @@ require_once('f_putstdrecaptchablock.phtml');
 require_once('f_putstdrecaptchaheadscriptreference.phtml');
 require_once('f_standardexifoutput.phtml');
 //
-ParseIniAndConnectSelectDbInstance($ini,$db_link);
+$ini = AppSettings();
+$db_link = DbLink($ini);
 //
 // Increment the hit count.
 //

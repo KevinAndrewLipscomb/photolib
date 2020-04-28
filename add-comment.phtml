@@ -30,7 +30,8 @@ require_once("f_bodyopen.phtml");
 //
 // Connect to the database.
 //
-ParseIniAndConnectSelectDbInstance($ini,$db_link);
+$ini = AppSettings();
+$db_link = DbLink($ini);
 ?>
 <html>
 <head><title>Anecdote/comment addition [div/<? echo $div_spec ?>/<? echo $frame_num ?>]</title></head>

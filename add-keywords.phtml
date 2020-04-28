@@ -32,7 +32,8 @@ require_once('f_confirmrecaptchaanswerordie.phtml');
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
 //
-ParseIniAndConnectSelectDbInstance($ini,$db_link);
+$ini = AppSettings();
+$db_link = DbLink($ini);
 ?>
 <html>
 <head><title>Keyword addition [div/<? echo $div_spec ?>/<? echo $frame_num ?>]</title></head>

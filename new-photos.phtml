@@ -25,7 +25,8 @@ if (isset($visitor)) $visitor = kix\k::Safe($visitor,kix\k::PhpValueOf_safe_hint
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
 //
-ParseIniAndConnectSelectDbInstance($ini,$db_link);
+$ini = AppSettings();
+$db_link = DbLink($ini);
 //
 if ($remember_visitor)
    {

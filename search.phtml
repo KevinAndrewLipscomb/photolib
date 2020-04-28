@@ -19,7 +19,8 @@ if (!ini_get('register_globals'))
 require_once("f_putlibphotorandom.phtml");
 require_once("f_bodyopen.phtml");
 //
-ParseIniAndConnectSelectDbInstance($ini,$db_link);
+$ini = AppSettings();
+$db_link = DbLink($ini);
 ?>
 <html>
 <head><title>Search template</title></head>
