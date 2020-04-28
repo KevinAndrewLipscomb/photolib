@@ -18,11 +18,9 @@ if (!ini_get('register_globals'))
 //
 if (isset($era)) $era = kix\k::Safe($era,kix\k::PhpValueOf_safe_hint_type("NUM"));
 //
-require_once("f_connectselectdbinstanceunpublished.phtml");
-require_once("f_myhomepageurl.phtml");
-require_once("f_mymainphotopageurl.phtml");
 require_once("f_bodyopen.phtml");
-require_once("f_myphotolibhosturl.phtml");
+//
+ParseIniAndConnectSelectDbInstance($ini,$db_link);
 ?>
 
 <html>
@@ -35,23 +33,11 @@ require_once("f_myphotolibhosturl.phtml");
 <center>
 <table border="0" cellpadding="0" cellspacing="0" width="80%">
   <tr>
-    <td width="100%"><h5 align="center"><a href="<? echo MyHomePageUrl(); ?>">Kevin Andrew Lipscomb</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></h5>
+    <td width="100%"><h5 align="center"><a href="<? echo $ini[app][my_home_page_url]; ?>">Kevin Andrew Lipscomb</a> - <a href="<? echo $ini[server][main_page_url]; ?>">Photography</a></h5>
       <h1 align="center"><? echo "$subtitle"; ?></h1>
       <p align="center">
       <?
-      //
-      // Connect to the database.
-      //
-      $conn = ConnectSelectDbInstanceUNPUBLISHED($db_link);
-      $instance = Instance($db_link);
-      //
-      // Create the SQL statement
-      //
-      $sql = "select div_spec,frame_num from photo_detail where era = $era order by rand()";
-      //
-      // Execute the statement
-      //
-      $result_set = $db_link->query($sql);
+      $result_set = $db_link->query("select div_spec,frame_num from photo_detail where era = '$era' order by rand()");
       //
       // Check how many rows were returned
       //
@@ -69,8 +55,8 @@ require_once("f_myphotolibhosturl.phtml");
                //
                // This sets up the $div_spec and $frame_num variables.
                //
-            $image_source_spec = "$instance[photodb_prefix]div/$div_spec/$frame_num-i.jpg";
-            echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>\n";
+            $image_source_spec = $ini[server][photodb_prefix] . "div/$div_spec/$frame_num-i.jpg";
+            echo "<a href=" . $ini[server][root_url] . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>\n";
             $size = @GetImageSize("$image_source_spec");
             echo "   <img border=\"2\" src=\"$image_source_spec\" $size[3]>\n";
             echo "</a>\n";

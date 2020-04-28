@@ -2,17 +2,14 @@
 //
 // $Id$
 //
-require_once("f_connectselectdbinstanceunpublished.phtml");
-require_once("f_myphotolibhosturl.phtml");
-//
-function PutLibPhotoPlaced($placement)
+function PutLibPhotoPlaced
+   (
+   $ini,
+   $db_link,
+   $placement
+   )
    {
    if (isset($placement)) $placement = kix\k::Safe($placement,kix\k::PhpValueOf_safe_hint_type("HYPHENATED_ALPHA_WORDS"));
-   //
-   // Connect to the database.
-   //
-   $conn = ConnectSelectDbInstanceUNPUBLISHED($db_link);
-   $instance = Instance($db_link);
    //
    // Create the SQL statement
    //
@@ -38,8 +35,8 @@ function PutLibPhotoPlaced($placement)
             //
             // This sets up the $div_spec and $frame_num variables.
             //
-         $image_source_spec = "$instance[photodb_prefix]div/$div_spec/$frame_num-i.jpg";
-         echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>\n";
+         $image_source_spec = $ini[server][photodb_prefix] . "div/$div_spec/$frame_num-i.jpg";
+         echo "<a href=" . $ini[server][root_url] . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>\n";
          $size = @GetImageSize("$image_source_spec");
          echo "   <img border=\"2\" src=\"$image_source_spec\" $size[3]>\n";
          echo "</a>\n";

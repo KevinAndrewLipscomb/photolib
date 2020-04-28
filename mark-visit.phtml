@@ -21,21 +21,19 @@ if (!ini_get('register_globals'))
 if (isset($time)) $time = kix\k::Safe($time,kix\k::PhpValueOf_safe_hint_type("NUM"));
 if (isset($visitor)) $visitor = kix\k::Safe($visitor,kix\k::PhpValueOf_safe_hint_type("HEX"));
 //
-require_once("f_connectselectdbinstanceunpublished.phtml");
-require_once("f_myhomepageurl.phtml");
-require_once("f_mymainphotopageurl.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
+//
+ParseIniAndConnectSelectDbInstance($ini,$db_link);
 ?>
 <html>
 <head><title>Mark Visit</title></head>
 <? BodyOpen(); ?>
 <table align=center width="80%"><tr><td>
-<H6 ALIGN="CENTER"><a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a></H6>
+<H6 ALIGN="CENTER"><a href="<? echo $ini[app][my_home_page_url]; ?>">KEVIN ANDREW LIPSCOMB</a> - <a href="<? echo $ini[server][main_page_url]; ?>">Photography</a></H6>
 <H1 ALIGN="CENTER">Mark Visit</H1>
 <hr>
 <?
-ConnectSelectDbInstanceUNPUBLISHED($db_link);
 $time = time();
 $sql = "replace visit (visitor,time) values (\"$visitor\",$time)";
 $db_link->query($sql) or die("Sorry, the database update failed.");

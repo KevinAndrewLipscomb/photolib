@@ -1,0 +1,7 @@
+;<? die(); ?>
+
+[db]
+database = "kalipso_d"
+pwd = "~ki-kalipso-d-password~"
+server = "127.0.0.1"
+uid = "ki-kalipso-d"

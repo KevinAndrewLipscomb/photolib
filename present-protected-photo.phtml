@@ -28,18 +28,11 @@ if (!ini_get('register_globals'))
 //   exit;
 //   }
 require_once("f_bodyopen.phtml");
-require_once("f_connectselectdbinstanceunpublished.phtml");
-require_once("f_myhomepageurl.phtml");
-require_once("f_mymainphotopageurl.phtml");
-require_once("f_myphotolibhosturl.phtml");
 require_once("f_purgestalesearches.phtml");
 require_once('f_putstdrecaptchablock.phtml');
 require_once('f_putstdrecaptchaheadscriptreference.phtml');
 //
-// Connect to the database.
-//
-ConnectSelectDbInstanceUNPUBLISHED($db_link);
-$instance = Instance($db_link);
+ParseIniAndConnectSelectDbInstance($ini,$db_link);
 //
 // Increment the hit count.
 //
@@ -96,13 +89,13 @@ $photo_size = GetImageSize("protected/$token/$div_spec/$frame_num-3.jpg");
    </head>
    <? BodyOpen(); ?>
       <H6 align="center">
-         <a href="<? echo MyHomePageUrl(); ?>">KEVIN ANDREW LIPSCOMB</a>
+         <a href="<? echo $ini[app][my_home_page_url]; ?>">KEVIN ANDREW LIPSCOMB</a>
          -
-         <a href="<? echo MyMainPhotoPageUrl(); ?>">Photography</a>
+         <a href="<? echo $ini[server][main_page_url]; ?>">Photography</a>
          -
-         <a href="<? echo MyPhotoLibHostUrl(); ?>/browse_protected_divs.phtml?token=<? echo $token ?>">Your Protected Digital Image Volumes</a>
+         <a href="<? echo $ini[server][root_url]; ?>/browse_protected_divs.phtml?token=<? echo $token ?>">Your Protected Digital Image Volumes</a>
          -
-         <a href="<? echo MyPhotoLibHostUrl(); ?>/browse_protected_frames.phtml?token=<? echo $token ?>&div_spec=<? echo $div_spec ?>"><? echo $token ?>/<? echo $div_spec ?></a>
+         <a href="<? echo $ini[server][root_url]; ?>/browse_protected_frames.phtml?token=<? echo $token ?>&div_spec=<? echo $div_spec ?>"><? echo $token ?>/<? echo $div_spec ?></a>
       </H6>
       <table border="0" cellpadding="10" cellspacing="0" width="100%" align="center">
          <tr>
@@ -113,7 +106,7 @@ $photo_size = GetImageSize("protected/$token/$div_spec/$frame_num-3.jpg");
                //if ($id > 1)
                //   {
                //   extract(mysqli_fetch_array($db_link->query("select div_spec as prior_frame_div_spec, frame_num as prior_frame_frame_num from photo_detail where id = $id - 1")));
-               //   echo "<a href=" . MyPhotoLibHostUrl() . "/present-protected-photo.phtml?div_spec=$prior_frame_div_spec&frame_num=$prior_frame_frame_num>Prior<br>div/frame</a>";
+               //   echo "<a href=$ini[server][root_url]/present-protected-photo.phtml?div_spec=$prior_frame_div_spec&frame_num=$prior_frame_frame_num>Prior<br>div/frame</a>";
                //   }
                //else
                //   {
@@ -122,7 +115,7 @@ $photo_size = GetImageSize("protected/$token/$div_spec/$frame_num-3.jpg");
                //if ($result_num > 1)
                //   {
                //   extract(mysqli_fetch_array($db_link->query("select div_spec as prior_frame_div_spec, frame_num as prior_frame_frame_num from search_result_$search_id where result_num = $result_num - 1")));
-               //   echo "<p><a href=" . MyPhotoLibHostUrl() . "/present-protected-photo.phtml?div_spec=$prior_frame_div_spec&frame_num=$prior_frame_frame_num&search_id=$search_id&result_num=" . ($result_num - 1) . "&num_results=$num_results>Prior<br>search<br>result</a></p>";
+               //   echo "<p><a href=$ini[server][root_url]/present-protected-photo.phtml?div_spec=$prior_frame_div_spec&frame_num=$prior_frame_frame_num&search_id=$search_id&result_num=" . ($result_num - 1) . "&num_results=$num_results>Prior<br>search<br>result</a></p>";
                //   }
                //else
                //   {
@@ -133,7 +126,7 @@ $photo_size = GetImageSize("protected/$token/$div_spec/$frame_num-3.jpg");
             </td>
             <td align="center" width="784">
                <?
-               echo "<img border=8 align=top src=" . "$instance[photodb_prefix]protected/$token/$div_spec/$frame_num-3.jpg $photo_size[3]>";
+               echo "<img border=8 align=top src=" . $ini[server][photodb_prefix] . "protected/$token/$div_spec/$frame_num-3.jpg $photo_size[3]>";
                ?>
             </td>
             <td height="33" valign="top">
@@ -144,7 +137,7 @@ $photo_size = GetImageSize("protected/$token/$div_spec/$frame_num-3.jpg");
                //if ($id < $max_id)
                //   {
                //   extract(mysqli_fetch_array($db_link->query("select div_spec as next_frame_div_spec, frame_num as next_frame_frame_num from photo_detail where id = $id + 1")));
-               //   echo "<a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$next_frame_div_spec&frame_num=$next_frame_frame_num>Next<br>div/frame</a>";
+               //   echo "<a href=" . $ini[server][root_url] . "/present-photo.phtml?div_spec=$next_frame_div_spec&frame_num=$next_frame_frame_num>Next<br>div/frame</a>";
                //   }
                //else
                //   {
@@ -153,7 +146,7 @@ $photo_size = GetImageSize("protected/$token/$div_spec/$frame_num-3.jpg");
                //if ($result_num < $num_results)
                //   {
                //   extract(mysqli_fetch_array($db_link->query("select div_spec as next_frame_div_spec, frame_num as next_frame_frame_num from search_result_$search_id where result_num = $result_num + 1")));
-               //   echo "<p><a href=" . MyPhotoLibHostUrl() . "/present-photo.phtml?div_spec=$next_frame_div_spec&frame_num=$next_frame_frame_num&search_id=$search_id&result_num=" . ($result_num + 1) . "&num_results=$num_results>Next<br>search<br>result</a></p>";
+               //   echo "<p><a href=" . $ini[server][root_url] . "/present-photo.phtml?div_spec=$next_frame_div_spec&frame_num=$next_frame_frame_num&search_id=$search_id&result_num=" . ($result_num + 1) . "&num_results=$num_results>Next<br>search<br>result</a></p>";
                //   }
                ?>
                </tt>
@@ -172,7 +165,7 @@ $photo_size = GetImageSize("protected/$token/$div_spec/$frame_num-3.jpg");
                echo "<small><ul>";
                if (!$record_found or ($be_avail_as_huge == "Y"))
                   {
-                  echo "<li>Also available online as a <a href=\"" . "$instance[photodb_prefix]protected/$token/$div_spec/$frame_num-4.jpg\">1.5 megapixel JPEG</a> (recommended for desktop wallpaper, screen-saver, or 5x7 inch <a href=methods.phtml#Printing>dye sub prints</a>).";
+                  echo "<li>Also available online as a <a href=\"" . $ini[server][photodb_prefix] . "protected/$token/$div_spec/$frame_num-4.jpg\">1.5 megapixel JPEG</a> (recommended for desktop wallpaper, screen-saver, or 5x7 inch <a href=methods.phtml#Printing>dye sub prints</a>).";
                   echo "<li><a href=\"mailto:kevin.lipscomb@kvrs.org\">Email me</a> about larger prints or digital resolutions up to 6 megapixels.";
                   }
 //               if ($record_found)
@@ -190,7 +183,7 @@ $photo_size = GetImageSize("protected/$token/$div_spec/$frame_num-3.jpg");
 //                  {
 //                  echo "<li>No database record for this photograph existed, so a generic record has now been inserted.&nbsp; Please consider adding some keywords (below).";
 //                  }
-               echo "<li>This and <a href=\"index.phtml\">other photographs</a> copyright $copyright_year <a href=\"" . MyHomePageUrl() . "\">Kevin Andrew Lipscomb</a>";
+               echo "<li>This and <a href=\"index.phtml\">other photographs</a> copyright $copyright_year <a href=\"" . $ini[app][my_home_page_url] . "\">Kevin Andrew Lipscomb</a>";
                echo "</ul></small>\n";
                ?>
             </td>
