@@ -19,7 +19,7 @@ $db_link = DbLink($ini);
                <hr>
                <?
                echo "<ul>";
-               $d = dir("div");
+               $d = dir("../photo/div");
                while ($entry = $d->read())
                   {
                   if (!strstr($entry,"."))
