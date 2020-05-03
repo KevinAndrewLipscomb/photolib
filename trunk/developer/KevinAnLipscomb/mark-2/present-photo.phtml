@@ -83,7 +83,7 @@ else
 extract(mysqli_fetch_array($result_set));
 $exif = StandardExifOutput($div_spec,$frame_num);
 if ($exif) $tech_details = $exif; 
-$photo_size = GetImageSize("div/$div_spec/$frame_num-3.jpg");
+$photo_size = GetImageSize("../photo/div/$div_spec/$frame_num-3.jpg");
 $comment_result_set = $db_link->query("select nickname, email_address, text from photo_comment where div_spec=\"$div_spec\" and frame_num=\"$frame_num\"");
 $num_comments = mysqli_num_rows($comment_result_set);
 //
