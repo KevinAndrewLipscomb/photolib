@@ -63,7 +63,7 @@ extract(mysqli_fetch_array($db_link->query("select min(id) as first_id_in_div, m
             <td width="80%">
                <center>
                   <?
-                  $d = dir("protected/$token/$div_spec");
+                  $d = dir("../photo/protected/$token/$div_spec");
                   while ($filename = $d->read())
                      {
                      if (strstr($filename,"-i.jpg"))

@@ -43,7 +43,7 @@ $db_link = DbLink($ini);
                <hr>
                <?
                echo "<ul>";
-               $d = dir("protected/$token");
+               $d = dir("../photo/protected/$token");
                while ($entry = $d->read())
                   {
                   if (!strstr($entry,"."))
