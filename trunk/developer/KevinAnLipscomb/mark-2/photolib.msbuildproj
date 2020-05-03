@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Peachpie.RequestHandler" Version="0.9.961" />
-    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ki">
