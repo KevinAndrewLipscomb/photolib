@@ -21,7 +21,8 @@ function PutLibPhotoRandom
       //
       // Execute the statement
       //
-      $result_set = $db_link->query($sql);
+      $result_set = $db_link->query($sql)
+         or die(mysqli_error($db_link));
       //
       // Check how many rows were returned
       //
