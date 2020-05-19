@@ -1,4 +1,4 @@
-﻿<Project Sdk="Peachpie.NET.Sdk/0.9.961">
+﻿<Project Sdk="Peachpie.NET.Sdk/0.9.981">
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>net461</TargetFramework>
@@ -23,7 +23,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Peachpie.RequestHandler" Version="0.9.961" />
+    <PackageReference Include="Peachpie.RequestHandler" Version="0.9.981" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ki">
@@ -33,5 +33,8 @@
     <Reference Include="System.Buffers">
       <HintPath>bin\System.Buffers.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Peachpie.App" Version="0.9.981" />
   </ItemGroup>
 </Project>
