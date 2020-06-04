@@ -90,6 +90,7 @@ $num_comments = mysqli_num_rows($comment_result_set);
 if ($search_id)
    {
    $db_link->query("update search_manifest set time_of_last_reference = now() where id = '$search_id'") or die("Failure updating search manifest");
+   $search_id_found = ($db_link->affected_rows > 0);
    PurgeStaleSearches($db_link);
    }
 ?>
@@ -123,7 +124,7 @@ if ($search_id)
                   {
                   echo "<p><br></p>";
                   }
-               if ($result_num > 1)
+               if ($search_id_found && ($result_num > 1))
                   {
                   extract(@mysqli_fetch_array($db_link->query("select div_spec as prior_frame_div_spec, frame_num as prior_frame_frame_num from search_result_$search_id where result_num = $result_num - 1")));
                   echo "<p><a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . $ini[server][root_url] . "/present-photo.phtml?div_spec=$prior_frame_div_spec&frame_num=$prior_frame_frame_num&search_id=$search_id&result_num=" . ($result_num - 1) . "&num_results=$num_results><br/>Prior<br/>search<br/>result<br/>&nbsp;</a></p>";
@@ -159,7 +160,7 @@ if ($search_id)
                   {
                   echo "<p><br></p>";
                   }
-               if ($result_num < $num_results)
+               if ($search_id_cound && ($result_num < $num_results))
                   {
                   extract(@mysqli_fetch_array($db_link->query("select div_spec as next_frame_div_spec, frame_num as next_frame_frame_num from search_result_$search_id where result_num = $result_num + 1")));
                   echo "<p><a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . $ini[server][root_url] . "/present-photo.phtml?div_spec=$next_frame_div_spec&frame_num=$next_frame_frame_num&search_id=$search_id&result_num=" . ($result_num + 1) . "&num_results=$num_results><br/>Next<br/>search<br/>result<br/>&nbsp;</a></p>";
