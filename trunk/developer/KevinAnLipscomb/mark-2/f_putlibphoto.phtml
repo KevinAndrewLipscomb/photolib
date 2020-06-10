@@ -33,6 +33,9 @@ function PutLibPhoto
       $db_link->query("alter table photo_detail drop column id");
       $db_link->query
          (
+         //
+         // Will still fail if the given div_spec or frame_num exceed allowed lengths.
+         //
          "insert into photo_detail"
          . " set div_spec=\"$div_spec\""
          .   " , frame_num=\"$frame_num\""
