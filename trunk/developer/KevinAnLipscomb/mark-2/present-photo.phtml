@@ -54,10 +54,10 @@ $result_set = $db_link->query("select id, be_avail_as_huge, caption, tech_detail
 // Check how many rows were returned
 //
 $rows = mysqli_num_rows($result_set);
-if ((!$result_set) || ($rows != 1))
+if ($result_set && ($rows == 0) && curl_init($ini[server][photodb_prefix] . "div/$div_spec/$frame_num-i.jpg"))
    {
    //
-   // No connection or no rows returned.
+   // No row returned, but file exists.
    //
    $record_found = 0;
    $db_link->query("alter table photo_detail drop column id");
