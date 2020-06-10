@@ -63,6 +63,9 @@ if ((!$result_set) || ($rows != 1))
    $db_link->query("alter table photo_detail drop column id");
    $db_link->query
       (
+      //
+      // Will still fail if the given div_spec or frame_num exceed allowed lengths.
+      //
       "insert into photo_detail"
       . " set div_spec=\"$div_spec\""
       .   " , frame_num=\"$frame_num\""
@@ -80,7 +83,8 @@ else
    {
    $record_found = 1;
    }
-extract(mysqli_fetch_array($result_set));
+$fields = mysqli_fetch_array($result_set);
+if ($fields) extract($fields);
 $exif = StandardExifOutput($div_spec,$frame_num);
 if ($exif) $tech_details = $exif; 
 $photo_size = GetImageSize("../photo/div/$div_spec/$frame_num-3.jpg");
