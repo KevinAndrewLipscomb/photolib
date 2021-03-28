@@ -19,13 +19,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="packages\**" />
-    <Content Remove="packages\**" />
-    <EmbeddedResource Remove="packages\**" />
-    <None Remove="packages\**" />
+    <Compile Remove="..\foundation\recaptcha-master\examples\example-captcha.php" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="..\foundation\recaptcha-master\examples\example-captcha.php" />
+    <PackageReference Include="Peachpie.RequestHandler" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ki">
@@ -35,5 +32,8 @@
     <Reference Include="System.Buffers">
       <HintPath>bin\System.Buffers.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Peachpie.App" Version="1.0.0" />
   </ItemGroup>
 </Project>
