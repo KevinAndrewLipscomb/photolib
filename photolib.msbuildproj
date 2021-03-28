@@ -22,7 +22,17 @@
     <Compile Remove="..\foundation\recaptcha-master\examples\example-captcha.php" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Peachpie.CodeAnalysis" Version="1.0.0" />
+    <PackageReference Include="Peachpie.Library" Version="1.0.0" />
+    <PackageReference Include="Peachpie.Library.MySql" Version="1.0.0" />
+    <PackageReference Include="Peachpie.Library.Network" Version="1.0.0" />
+    <PackageReference Include="Peachpie.Library.PDO" Version="1.0.0" />
+    <PackageReference Include="Peachpie.Library.PDO.Firebird" Version="1.0.0" />
+    <PackageReference Include="Peachpie.Library.PDO.MySQL" Version="1.0.0" />
+    <PackageReference Include="Peachpie.Library.Scripting" Version="1.0.0" />
+    <PackageReference Include="Peachpie.Library.XmlDom" Version="1.0.0" />
     <PackageReference Include="Peachpie.RequestHandler" Version="1.0.0" />
+    <PackageReference Include="Peachpie.Runtime" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ki">
