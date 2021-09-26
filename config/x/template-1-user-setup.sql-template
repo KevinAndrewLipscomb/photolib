@@ -7,13 +7,3 @@ grant select
  , drop
   on kalipso_x.*
   to 'ki-kalipso-x'@'127.0.0.1' identified by '~ki-kalipso-x-password~'
-;
-grant select
- , insert
- , update
- , delete
- , create
- , alter
- , drop
-  on kalipso_x.*
-  to 'ki-kalipso-x'@'51.79.5.240' identified by '~ki-kalipso-x-password~'
