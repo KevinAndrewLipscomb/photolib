@@ -37,8 +37,8 @@ function PutLibPhoto
          // Will still fail if the given div_spec or frame_num exceed allowed lengths.
          //
          "insert into photo_detail"
-         . " set div_spec=\"$div_spec\""
-         .   " , frame_num=\"$frame_num\""
+         . " set div_spec='$div_spec'"
+         .   " , frame_num='$frame_num'"
          .   " , be_avail_as_huge='Y'"
          .   " , caption=\"Photograph DIV-$div_spec/$frame_num\""
          .   " , tech_details='No technical details recorded'"
