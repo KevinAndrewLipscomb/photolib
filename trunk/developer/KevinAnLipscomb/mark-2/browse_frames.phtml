@@ -64,16 +64,30 @@ extract(mysqli_fetch_array($db_link->query("select min(id) as first_id_in_div, m
             <td width="80%">
                <center>
                   <?
-                  $d = dir("../photo/div/$div_spec");
-                  while ($filename = $d->read())
-                     {
-                     if (strstr($filename,"-i.jpg"))
-                        {
-                          PutLibPhoto($ini,$db_link,$div_spec,substr($filename,0,(strlen($filename) - 6)));
-                        echo " ";
-                        }
-                     }
-                  $d->close();
+                  if (is_dir("../photo/div/$div_spec"))
+                    {
+                    $d = dir("../photo/div/$div_spec");
+                    while ($filename = $d->read())
+                       {
+                       if (strstr($filename,"-i.jpg"))
+                          {
+                            PutLibPhoto($ini,$db_link,$div_spec,substr($filename,0,(strlen($filename) - 6)));
+                          echo " ";
+                          }
+                       }
+                    $d->close();
+                    }
+                  else
+                    {
+                    echo "<center>Non-existant DIV.&nbsp; Bad record scrubbed.&nbsp; Please continue.</center>";
+                    $db_link->query("delete from photo_detail where div_spec = '$div_spec'");
+                    if ($db_link->affected_rows > 0)
+                      {
+                      $db_link->query("alter table photo_detail drop column id");
+                      $db_link->query("alter table photo_detail order by div_spec,frame_num");
+                      $db_link->query("alter table photo_detail add column id serial first");
+                      }
+                    }
                   ?>
                </center>
             </td>
@@ -84,8 +98,8 @@ extract(mysqli_fetch_array($db_link->query("select min(id) as first_id_in_div, m
                extract(mysqli_fetch_array($db_link->query("select max(id) as max_id from photo_detail")));
                if ($last_id_in_div < $max_id)
                   {
-                  extract(mysqli_fetch_array($db_link->query("select div_spec as prior_frame_div_spec from photo_detail where id = $last_id_in_div + 1")));
-                  echo "<a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . $ini[server][root_url] . "/browse_frames.phtml?div_spec=$prior_frame_div_spec><br/>Next<br/>DIV<br/>&nbsp;</a>";
+                  extract(mysqli_fetch_array($db_link->query("select div_spec as next_frame_div_spec from photo_detail where id = $last_id_in_div + 1")));
+                  echo "<a style=\"font-size:larger; display:block; height:100%; width:100%;\" href=" . $ini[server][root_url] . "/browse_frames.phtml?div_spec=$next_frame_div_spec><br/>Next<br/>DIV<br/>&nbsp;</a>";
                   }
                ?>
                </tt>
