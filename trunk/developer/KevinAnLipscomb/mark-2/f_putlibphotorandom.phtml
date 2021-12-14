@@ -9,7 +9,7 @@ function PutLibPhotoRandom
    $alignment = ""
    )
    {
-   require_once('../foundation/f_beremotefileexistant.phtml');
+   require_once('f_beremotefileexistant.phtml');
    //
    // Create the SQL statement
    //
@@ -54,7 +54,7 @@ function PutLibPhotoRandom
          else if ($ini[app][be_d])
             {
             $done = TRUE;
-            echo "No such frame.");
+            echo "No such frame.";
             }
          else
             {

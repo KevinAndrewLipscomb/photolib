@@ -1,0 +1,20 @@
+<?
+//
+// $Id$
+//
+function BeRemoteFileExistant($url)
+   {
+   $saved_error_level = error_reporting(E_ALL);
+   //
+   $handle = @curl_init($url);
+   @curl_setopt($handle, CURLOPT_HEADER, TRUE);
+   @curl_setopt($handle, CURLOPT_NOBODY, TRUE);
+   @curl_setopt($handle, CURLOPT_FOLLOWLOCATION, FALSE);
+   @curl_setopt($handle, CURLOPT_RETURNTRANSFER, TRUE);
+   $status = array();
+   preg_match('/HTTP\/.* ([0-9]+) .*/', @curl_exec($handle), $status);
+   //
+   error_reporting($saved_error_level);
+   return ($status[1] == 200);
+   }
+?>
