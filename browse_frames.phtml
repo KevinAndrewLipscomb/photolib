@@ -79,7 +79,6 @@ extract(mysqli_fetch_array($db_link->query("select min(id) as first_id_in_div, m
                     }
                   else
                     {
-                    echo "<center>Non-existant DIV.&nbsp; Bad record scrubbed.&nbsp; Please continue.</center>";
                     $db_link->query("delete from photo_detail where div_spec = '$div_spec'");
                     if ($db_link->affected_rows > 0)
                       {
@@ -87,6 +86,7 @@ extract(mysqli_fetch_array($db_link->query("select min(id) as first_id_in_div, m
                       $db_link->query("alter table photo_detail order by div_spec,frame_num");
                       $db_link->query("alter table photo_detail add column id serial first");
                       }
+                    echo "<center>No such DIV.&nbsp; Bad record scrubbed.&nbsp; Please continue.</center>";
                     }
                   ?>
                </center>

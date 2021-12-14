@@ -9,6 +9,7 @@ function PutLibPhotoRandom
    $alignment = ""
    )
    {
+   require_once('../foundation/f_beremotefileexistant.phtml');
    //
    // Create the SQL statement
    //
@@ -42,8 +43,8 @@ function PutLibPhotoRandom
             // This sets up the $div_spec and $frame_num variables.
             //
          $image_source_spec = $ini[server][photodb_prefix] . "div/$div_spec/$frame_num-i.jpg";
-         $size = @GetImageSize($image_source_spec); // Should always work outside of development instance
-         if ($size || curl_init($image_source_spec)) // curl_init() should suffice in deveopment instance, but dynamic image layout will be evident
+         $size = GetImageSize($image_source_spec); // Should always work outside of development instance
+         if ($size || BeRemoteFileExistant($image_source_spec)) // BeRemoteFileExistant() should suffice in deveopment instance, but dynamic image layout will be evident
             {
             echo "<a href=" . $ini[server][root_url] . "/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num>";
             echo "<img border=\"2\" src=\"$image_source_spec\" align=\"$alignment\" $size[3]>";
@@ -53,6 +54,7 @@ function PutLibPhotoRandom
          else if ($ini[app][be_d])
             {
             $done = TRUE;
+            echo "No such frame.");
             }
          else
             {
