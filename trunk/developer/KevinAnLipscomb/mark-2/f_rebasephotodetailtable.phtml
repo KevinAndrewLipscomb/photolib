@@ -1,0 +1,11 @@
+<?
+//
+// $Id$
+//
+function RebasePhotoDetailTable($db_link)
+  {
+  $db_link->query("alter table photo_detail drop column id");
+  $db_link->query("alter table photo_detail order by div_spec,frame_num");
+  $db_link->query("alter table photo_detail add column id serial first");
+  }
+?>
