@@ -14,6 +14,8 @@ function PutLibPhoto
    $num_results = ""
    )
    {
+   require_once("f_rebasephotodetailtable.phtml");
+   //
    if (isset($div_spec)) $div_spec = kix\k::Safe($div_spec,kix\k::PhpValueOf_safe_hint_type("HYPHENATED_ALPHANUM"));
    if (isset($frame_num)) $frame_num = kix\k::Safe($frame_num,kix\k::PhpValueOf_safe_hint_type("HYPHENATED_UNDERSCORED_ALPHANUM"));
    //
@@ -25,12 +27,11 @@ function PutLibPhoto
    //
    $result_set = $db_link->query("select TRUE from photo_detail where div_spec = \"$div_spec\" and frame_num = \"$frame_num\"");
    $rows = mysqli_num_rows($result_set);
-   if ($result_set && ($rows == 0) && curl_init($ini[server][photodb_prefix] . "div/$div_spec/$frame_num-i.jpg"))
+   if ($result_set && ($rows == 0) && BeRemoteFileExistant($ini[server][photodb_prefix] . "div/$div_spec/$frame_num-i.jpg"))
       {
       //
       // No row returned, but file exists.
       //
-      $db_link->query("alter table photo_detail drop column id");
       $db_link->query
          (
          //
@@ -45,8 +46,7 @@ function PutLibPhoto
          .   " , hits=1"
          .   " , era=6"
          );
-      $db_link->query("alter table photo_detail order by div_spec,frame_num");
-      $db_link->query("alter table photo_detail add column id serial first");
+      RebasePhotoDetailTable($db_link);
       }
    }
 ?>

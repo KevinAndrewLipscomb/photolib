@@ -54,7 +54,7 @@ $result_set = $db_link->query("select id, be_avail_as_huge, caption, tech_detail
 // Check how many rows were returned
 //
 $rows = mysqli_num_rows($result_set);
-if ($result_set && ($rows == 0) && fopen($ini[server][photodb_prefix] . "div/$div_spec/$frame_num-i.jpg",'r'))
+if ($result_set && ($rows == 0) && BeRemoteFileExistant($ini[server][photodb_prefix] . "div/$div_spec/$frame_num-i.jpg"))
    {
    //
    // No row returned, but file exists.
