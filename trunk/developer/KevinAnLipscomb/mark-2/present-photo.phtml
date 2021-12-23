@@ -217,7 +217,7 @@ if ($search_id)
                echo       "<tr>\n";
                echo          "<td valign=top>New keyword(s): <input name=new_keywords type=text></td>\n";
                echo          "<td valign=top>\n";
-               if (!$ini[app][be_d]) PutStdReCaptchaGetBlock();
+               PutStdReCaptchaGetBlock();
                echo          "</td>\n";
                echo          "<td valign=top><input type=submit value=\"Submit\"></td>\n";
                echo       "</tr>\n";
