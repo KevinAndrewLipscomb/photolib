@@ -46,7 +46,7 @@ $db_link = DbLink($ini);
          <hr>
          <?
          PutLibPhoto($ini,$db_link,$div_spec,$frame_num,"left");
-         if (!$ini[app][be_d]) ConfirmReCaptchaAnswerOrDie();
+         if (!$ini[app][be_d]) ConfirmReCaptchaAnswerOrDie($ini);
          //
          // Create and execute the SQL statement to increment the hit count.
          //
