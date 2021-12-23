@@ -1,7 +1,5 @@
 <?php
 //
-require_once("../foundation/recaptcha-master/src/ReCaptcha/ReCaptcha.php");
-//
 function ConfirmReCaptchaAnswerOrDie($ini)
   {
   $recaptcha = new ReCaptcha\ReCaptcha($ini[recaptcha][private_key]);
