@@ -38,6 +38,7 @@ require_once("f_bodyopen.phtml");
 require_once("f_purgestalesearches.phtml");
 require_once('f_putstdrecaptchablock.phtml');
 require_once('f_putstdrecaptchaheadscriptreference.phtml');
+require_once('f_rebasephotodetailtable.phtml');
 require_once('f_standardexifoutput.phtml');
 //
 $ini = AppSettings();
@@ -60,7 +61,6 @@ if ($result_set && ($rows == 0) && BeRemoteFileExistant($ini[server][photodb_pre
    // No row returned, but file exists.
    //
    $record_found = 0;
-   $db_link->query("alter table photo_detail drop column id");
    $db_link->query
       (
       //
@@ -75,8 +75,7 @@ if ($result_set && ($rows == 0) && BeRemoteFileExistant($ini[server][photodb_pre
       .   " , hits=1"
       .   " , era=6"
       );
-   $db_link->query("alter table photo_detail order by div_spec,frame_num");
-   $db_link->query("alter table photo_detail add column id serial first");
+   RebasePhotoDetailTable($db_link);
    $result_set = $db_link->query("select id, be_avail_as_huge, caption, tech_details, copyright_year, hits, keywords from photo_detail where div_spec = \"$div_spec\" and frame_num = \"$frame_num\"");
    }
 else
