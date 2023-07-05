@@ -1,5 +1,5 @@
 REM
-REM $Id$
+REM $Id: work.bat 7066 2020-04-22 23:44:50Z kevinanlipscomb $
 REM
 cd "C:\Inetpub\wwwroot\photolib"
 start /max explorer /e,/select,C:\Inetpub\wwwroot\photolib\.svn
