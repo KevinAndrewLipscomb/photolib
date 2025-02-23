@@ -6,29 +6,35 @@
     <ShortOpenTag>true</ShortOpenTag>
     <OutDir>bin</OutDir>
   </PropertyGroup>
-  <ItemGroup>
+  <ItemGroup Label="Compile">
     <Compile Include="*.php;*.phtml" />
-    <Compile Include="../foundation/**/*.php;../foundation/**/*.phtml" Exclude="../foundation/recaptcha-master/tests/**" />
+    <Compile Update="..\foundation\class-wp-cli-command.php" Link="linked\KiPhpFoundation\class-wp-cli-command.php" />
+    <Compile Update="..\foundation\f_appsettings.phtml" Link="linked\KiPhpFoundation\f_appsettings.phtml" />
+    <Compile Update="..\foundation\f_bodyopen.phtml" Link="linked\KiPhpFoundation\f_bodyopen.phtml" />
+    <Compile Update="..\foundation\f_dbkalipsolink.phtml" Link="linked\KiPhpFoundation\f_dbkalipsolink.phtml" />
+    <Compile Update="..\foundation\f_dblink.phtml" Link="linked\KiPhpFoundation\f_dblink.phtml" />
+    <Compile Update="..\foundation\f_putlibphotorandomplaced.phtml" Link="linked\KiPhpFoundation\f_putlibphotorandomplaced.phtml" />
+    <Compile Update="..\foundation\std_style_class.php" Link="linked\KiPhpFoundation\std_style_class.php" />
+    <Compile Update="..\foundation\whats-new.phtml" Link="linked\KiPhpFoundation\whats-new.phtml" />
+    <Compile Remove="..\foundation\recaptcha-master\examples\example-captcha.php" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Label="Content">
     <Content Include="**" Exclude="obj/**;bin/**;PublishProfiles/**;@(Compile);$(MsBuildThisFile)">
       <PackageCopyToOutput>true</PackageCopyToOutput>
       <CopyToOutputDirectory>true</CopyToOutputDirectory>
       <CopyToPublishDirectory>true</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="..\foundation\recaptcha-master\examples\example-captcha.php" />
-  </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Label="PackageReference">
     <PackageReference Include="Peachpie.RequestHandler" Version="1.0.*" />
     <PackageReference Include="System.Buffers" Version="4.5.1" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="ki">
-      <HintPath>lib\ki\ki.dll</HintPath>
-      <Private>true</Private>
-    </Reference>
+  <ItemGroup Label="ProjectReference">
+    <ProjectReference Include="..\OscarTRACK-shared-ki\ki.csproj" />
+  </ItemGroup>
+  <ItemGroup Label="Folder">
+    <Folder Include="linked\" />
+    <Folder Include="linked\KiPhpFoundation\" />
   </ItemGroup>
 </Project>
