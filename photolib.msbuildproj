@@ -6,30 +6,57 @@
     <ShortOpenTag>true</ShortOpenTag>
     <OutDir>bin</OutDir>
   </PropertyGroup>
-  <ItemGroup>
+  <ItemGroup Label="Compile">
     <Compile Include="*.php;*.phtml" />
-    <Compile Include="../foundation/**/*.php;../foundation/**/*.phtml" Exclude="../foundation/recaptcha-master/tests/**" />
+    <Compile Include="..\foundation\class-wp-cli-command.php" Link="linked\KiPhpFoundation\class-wp-cli-command.php" />
+    <Compile Include="..\foundation\f_appsettings.phtml" Link="linked\KiPhpFoundation\f_appsettings.phtml" />
+    <Compile Include="..\foundation\f_bodyopen.phtml" Link="linked\KiPhpFoundation\f_bodyopen.phtml" />
+    <Compile Include="..\foundation\f_dbkalipsolink.phtml" Link="linked\KiPhpFoundation\f_dbkalipsolink.phtml" />
+    <Compile Include="..\foundation\f_dblink.phtml" Link="linked\KiPhpFoundation\f_dblink.phtml" />
+    <Compile Include="..\foundation\f_putlibphotorandomplaced.phtml" Link="linked\KiPhpFoundation\f_putlibphotorandomplaced.phtml" />
+    <Compile Include="..\foundation\recaptcha-master\src\autoload.php" Link="linked\KiPhpFoundation\recaptcha-master\src\autoload.php" />
+    <Compile Include="..\foundation\recaptcha-master\src\ReCaptcha\ReCaptcha.php" Link="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\ReCaptcha.php" />
+    <Compile Include="..\foundation\recaptcha-master\src\ReCaptcha\RequestMethod.php" Link="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\RequestMethod.php" />
+    <Compile Include="..\foundation\recaptcha-master\src\ReCaptcha\RequestMethod\Curl.php" Link="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\RequestMethod\Curl.php" />
+    <Compile Include="..\foundation\recaptcha-master\src\ReCaptcha\RequestMethod\CurlPost.php" Link="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\RequestMethod\CurlPost.php" />
+    <Compile Include="..\foundation\recaptcha-master\src\ReCaptcha\RequestMethod\Post.php" Link="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\RequestMethod\Post.php" />
+    <Compile Include="..\foundation\recaptcha-master\src\ReCaptcha\RequestMethod\Socket.php" Link="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\RequestMethod\Socket.php" />
+    <Compile Include="..\foundation\recaptcha-master\src\ReCaptcha\RequestMethod\SocketPost.php" Link="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\RequestMethod\SocketPost.php" />
+    <Compile Include="..\foundation\recaptcha-master\src\ReCaptcha\RequestParameters.php" Link="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\RequestParameters.php" />
+    <Compile Include="..\foundation\recaptcha-master\src\ReCaptcha\Response.php" Link="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\Response.php" />
+    <Compile Include="..\foundation\std_style_class.php" Link="linked\KiPhpFoundation\std_style_class.php" />
+    <Compile Include="..\foundation\whats-new.phtml" Link="linked\KiPhpFoundation\whats-new.phtml" />
+    <Compile Remove=".git\**" />
+    <Compile Remove=".vs\**" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Label="Content">
     <Content Include="**" Exclude="obj/**;bin/**;PublishProfiles/**;@(Compile);$(MsBuildThisFile)">
       <PackageCopyToOutput>true</PackageCopyToOutput>
       <CopyToOutputDirectory>true</CopyToOutputDirectory>
       <CopyToPublishDirectory>true</CopyToPublishDirectory>
     </Content>
+    <Content Remove=".git\**" />
+    <Content Remove=".vs\**" />
+    <Content Remove="config\Sensitive\1-user-setup.DEV.sql" />
+    <Content Remove="config\Sensitive\1-user-setup.sql" />
+    <Content Remove="config\Sensitive\unpublished.ini" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="..\foundation\recaptcha-master\examples\example-captcha.php" />
+  <ItemGroup Label="None">
+    <None Remove=".git\**" />
+    <None Remove=".vs\**" />
+    <None Remove="config\Sensitive\1-user-setup.DEV.sql" />
+    <None Remove="config\Sensitive\1-user-setup.sql" />
+    <None Remove="config\Sensitive\unpublished.ini" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Peachpie.App" Version="1.0.*" />
+  <ItemGroup Label="PackageReference">
     <PackageReference Include="Peachpie.RequestHandler" Version="1.0.*" />
     <PackageReference Include="System.Buffers" Version="4.5.1" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
   </ItemGroup>
+  <ItemGroup Label="ProjectReference">
+    <ProjectReference Include="..\OscarTRACK-shared-ki\ki.csproj" />
+  </ItemGroup>
   <ItemGroup>
-    <Reference Include="ki">
-      <HintPath>lib\ki\ki.dll</HintPath>
-      <Private>true</Private>
-    </Reference>
+    <Folder Include="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\RequestMethod\" />
   </ItemGroup>
 </Project>
