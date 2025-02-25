@@ -53,10 +53,10 @@
     <PackageReference Include="System.Buffers" Version="4.5.1" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
   </ItemGroup>
-  <ItemGroup Label="ProjectReference">
-    <ProjectReference Include="..\OscarTRACK-shared-ki\ki.csproj" />
-  </ItemGroup>
   <ItemGroup>
     <Folder Include="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\RequestMethod\" />
+  </ItemGroup>
+  <ItemGroup Label="ProjectReference">
+    <ProjectReference Include="..\ki\ki.csproj" />
   </ItemGroup>
 </Project>
