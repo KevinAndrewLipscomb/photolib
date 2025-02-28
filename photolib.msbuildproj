@@ -28,6 +28,7 @@
     <Compile Include="..\foundation\whats-new.phtml" Link="linked\KiPhpFoundation\whats-new.phtml" />
     <Compile Remove=".git\**" />
     <Compile Remove=".vs\**" />
+    <Compile Remove="packages\**" />
   </ItemGroup>
   <ItemGroup Label="Content">
     <Content Include="**" Exclude="obj/**;bin/**;PublishProfiles/**;@(Compile);$(MsBuildThisFile)">
@@ -37,16 +38,20 @@
     </Content>
     <Content Remove=".git\**" />
     <Content Remove=".vs\**" />
+    <Content Remove="packages\**" />
     <Content Remove="config\Sensitive\1-user-setup.DEV.sql" />
     <Content Remove="config\Sensitive\1-user-setup.sql" />
     <Content Remove="config\Sensitive\unpublished.ini" />
+    <Content Remove="dbscript\00-REFRESH-d.lnk" />
   </ItemGroup>
   <ItemGroup Label="None">
     <None Remove=".git\**" />
     <None Remove=".vs\**" />
+    <None Remove="packages\**" />
     <None Remove="config\Sensitive\1-user-setup.DEV.sql" />
     <None Remove="config\Sensitive\1-user-setup.sql" />
     <None Remove="config\Sensitive\unpublished.ini" />
+    <None Remove="dbscript\00-REFRESH-d.lnk" />
   </ItemGroup>
   <ItemGroup Label="PackageReference">
     <PackageReference Include="Peachpie.RequestHandler" Version="1.0.*" />
