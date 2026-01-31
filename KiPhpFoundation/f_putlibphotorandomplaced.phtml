@@ -1,0 +1,47 @@
+<?
+//
+// $Id: f_putlibphotorandomplaced.phtml 7094 2020-05-03 00:22:53Z kevinanlipscomb $
+//
+function PutLibPhotoRandomPlaced
+   (
+   $ini,
+   $dbkalipso_link,
+   $placement,
+   $limit = "",
+   $align = ""
+   )
+   {
+   if (isset($placement)) $placement = kix\k::Safe($placement,kix\k::PhpValueOf_safe_hint_type("HYPHENATED_ALPHANUM_WORDS"));
+   //
+   $sql = "select div_spec,frame_num from photo_detail where placement like '%$placement%' order by rand()";
+   if ($limit != "") $sql .= " limit $limit";
+   //
+   // Execute the statement
+   //
+   $result_set = $dbkalipso_link->query($sql) or die(mysqli_error($dbkalipso_link));
+   //
+   // Check how many rows were returned
+   //
+   $rows = mysqli_num_rows($result_set);
+   if ((!$result_set) || ($rows == 0))
+      {
+      echo "<br><b>Could not find any such photographs.</b><br>";
+      }
+   else
+      {
+      //
+      while ($field_array = mysqli_fetch_array($result_set))
+         {
+         extract($field_array);
+            //
+            // This sets up the $div_spec and $frame_num variables.
+            //
+         $image_source_spec = $ini[server][photodb_prefix] . "div/$div_spec/$frame_num-i.jpg";
+         echo "<a href=\"" . $ini[server][host_url] . "/photolib/present-photo.phtml?div_spec=$div_spec&frame_num=$frame_num\">\n";
+         $size = @GetImageSize("$image_source_spec");
+         echo "   <img border=\"2\" src=$image_source_spec $size[3] align=$align>\n";
+         echo "</a>\n";
+         }
+      }
+   }
+?>

@@ -24,6 +24,7 @@ if (isset($frame_num)) $frame_num = kix\k::Safe($frame_num,kix\k::PhpValueOf_saf
 if (isset($nickname)) $nickname = kix\k::Safe($nickname,kix\k::PhpValueOf_safe_hint_type("HUMAN_NAME"));
 if (isset($text)) $text = kix\k::Safe($text,kix\k::PhpValueOf_safe_hint_type("PUNCTUATED"));
 //
+require_once("KiPhpFoundation/f_appsettings.phtml");
 require_once('f_confirmrecaptchaanswerordie.phtml');
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");

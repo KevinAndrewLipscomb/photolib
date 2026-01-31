@@ -21,6 +21,7 @@ if (!ini_get('register_globals'))
 if (isset($time)) $time = kix\k::Safe($time,kix\k::PhpValueOf_safe_hint_type("NUM"));
 if (isset($visitor)) $visitor = kix\k::Safe($visitor,kix\k::PhpValueOf_safe_hint_type("HEX"));
 //
+require_once("KiPhpFoundation/f_appsettings.phtml");
 require_once("f_putlibphoto.phtml");
 require_once("f_bodyopen.phtml");
 //

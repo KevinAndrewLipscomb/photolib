@@ -18,6 +18,7 @@ if (!ini_get('register_globals'))
 //
 if (isset($era)) $era = kix\k::Safe($era,kix\k::PhpValueOf_safe_hint_type("NUM"));
 //
+require_once("KiPhpFoundation/f_appsettings.phtml");
 require_once("f_bodyopen.phtml");
 //
 $ini = AppSettings();
