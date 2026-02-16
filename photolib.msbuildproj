@@ -6,19 +6,24 @@
     <ShortOpenTag>true</ShortOpenTag>
     <OutDir>bin</OutDir>
   </PropertyGroup>
-  <ItemGroup Label="Compile">
-    <Compile Include="*.php;*.phtml" />
+  <ItemGroup Label="CompileInclude">
+    <Compile Include="**\*.php;**\*.phtml" />
+  </ItemGroup>
+  <ItemGroup Label="CompileRemove">
     <Compile Remove=".git\**" />
     <Compile Remove=".vs\**" />
-    <Compile Remove="linked\**" />
     <Compile Remove="packages\**" />
+    <Compile Remove="KiPhpFoundation\recaptcha-master\examples\*.php" />
+    <Compile Remove="KiPhpFoundation\recaptcha-master\tests\**\*.php" />
   </ItemGroup>
-  <ItemGroup Label="Content">
+  <ItemGroup Label="ContentInclude">
     <Content Include="**" Exclude="obj/**;bin/**;PublishProfiles/**;@(Compile);$(MsBuildThisFile)">
       <PackageCopyToOutput>true</PackageCopyToOutput>
       <CopyToOutputDirectory>true</CopyToOutputDirectory>
       <CopyToPublishDirectory>true</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup Label="ContentRemove">
     <Content Remove=".git\**" />
     <Content Remove=".vs\**" />
     <Content Remove="packages\**" />
@@ -27,7 +32,7 @@
     <Content Remove="config\Sensitive\unpublished.ini" />
     <Content Remove="dbscript\00-REFRESH-d.lnk" />
   </ItemGroup>
-  <ItemGroup Label="None">
+  <ItemGroup Label="NoneRemove">
     <None Remove=".git\**" />
     <None Remove=".vs\**" />
     <None Remove="packages\**" />
@@ -35,6 +40,8 @@
     <None Remove="config\Sensitive\1-user-setup.sql" />
     <None Remove="config\Sensitive\unpublished.ini" />
     <None Remove="dbscript\00-REFRESH-d.lnk" />
+    <None Remove="KiPhpFoundation\recaptcha-master\examples\*.php" />
+    <None Remove="KiPhpFoundation\recaptcha-master\tests\**\*.php" />
   </ItemGroup>
   <ItemGroup Label="PackageReference">
     <PackageReference Include="Peachpie.RequestHandler" Version="1.0.*" />
