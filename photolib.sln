@@ -8,7 +8,7 @@ Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "photolib", "photolib.msbuil
 		{A20C347B-5154-47B9-A275-36157BF73352} = {A20C347B-5154-47B9-A275-36157BF73352}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ki", "..\OscarTRACK-shared-ki\ki.csproj", "{A20C347B-5154-47B9-A275-36157BF73352}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ki", "..\KiAspdotnetFoundation\ki.csproj", "{A20C347B-5154-47B9-A275-36157BF73352}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

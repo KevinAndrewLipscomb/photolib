@@ -22,6 +22,7 @@ if (!ini_get('register_globals'))
 if (isset($basic_criteria)) $basic_criteria = kix\k::Safe($basic_criteria,kix\k::PhpValueOf_safe_hint_type("HYPHENATED_ALPHANUM_WORDS"));
 if (isset($search_id)) $search_id = kix\k::Safe($search_id,kix\k::PhpValueOf_safe_hint_type("NUM"));
 //
+require_once("KiPhpFoundation/f_appsettings.phtml");
 require_once("f_bodyopen.phtml");
 require_once("f_purgestalesearches.phtml");
 require_once("f_putlibphoto.phtml");

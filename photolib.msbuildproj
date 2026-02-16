@@ -6,36 +6,24 @@
     <ShortOpenTag>true</ShortOpenTag>
     <OutDir>bin</OutDir>
   </PropertyGroup>
-  <ItemGroup Label="Compile">
-    <Compile Include="*.php;*.phtml" />
-    <Compile Include="..\foundation\class-wp-cli-command.php" Link="linked\KiPhpFoundation\class-wp-cli-command.php" />
-    <Compile Include="..\foundation\f_appsettings.phtml" Link="linked\KiPhpFoundation\f_appsettings.phtml" />
-    <Compile Include="..\foundation\f_bodyopen.phtml" Link="linked\KiPhpFoundation\f_bodyopen.phtml" />
-    <Compile Include="..\foundation\f_dbkalipsolink.phtml" Link="linked\KiPhpFoundation\f_dbkalipsolink.phtml" />
-    <Compile Include="..\foundation\f_dblink.phtml" Link="linked\KiPhpFoundation\f_dblink.phtml" />
-    <Compile Include="..\foundation\f_putlibphotorandomplaced.phtml" Link="linked\KiPhpFoundation\f_putlibphotorandomplaced.phtml" />
-    <Compile Include="..\foundation\recaptcha-master\src\autoload.php" Link="linked\KiPhpFoundation\recaptcha-master\src\autoload.php" />
-    <Compile Include="..\foundation\recaptcha-master\src\ReCaptcha\ReCaptcha.php" Link="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\ReCaptcha.php" />
-    <Compile Include="..\foundation\recaptcha-master\src\ReCaptcha\RequestMethod.php" Link="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\RequestMethod.php" />
-    <Compile Include="..\foundation\recaptcha-master\src\ReCaptcha\RequestMethod\Curl.php" Link="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\RequestMethod\Curl.php" />
-    <Compile Include="..\foundation\recaptcha-master\src\ReCaptcha\RequestMethod\CurlPost.php" Link="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\RequestMethod\CurlPost.php" />
-    <Compile Include="..\foundation\recaptcha-master\src\ReCaptcha\RequestMethod\Post.php" Link="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\RequestMethod\Post.php" />
-    <Compile Include="..\foundation\recaptcha-master\src\ReCaptcha\RequestMethod\Socket.php" Link="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\RequestMethod\Socket.php" />
-    <Compile Include="..\foundation\recaptcha-master\src\ReCaptcha\RequestMethod\SocketPost.php" Link="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\RequestMethod\SocketPost.php" />
-    <Compile Include="..\foundation\recaptcha-master\src\ReCaptcha\RequestParameters.php" Link="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\RequestParameters.php" />
-    <Compile Include="..\foundation\recaptcha-master\src\ReCaptcha\Response.php" Link="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\Response.php" />
-    <Compile Include="..\foundation\std_style_class.php" Link="linked\KiPhpFoundation\std_style_class.php" />
-    <Compile Include="..\foundation\whats-new.phtml" Link="linked\KiPhpFoundation\whats-new.phtml" />
+  <ItemGroup Label="CompileInclude">
+    <Compile Include="**\*.php;**\*.phtml" />
+  </ItemGroup>
+  <ItemGroup Label="CompileRemove">
     <Compile Remove=".git\**" />
     <Compile Remove=".vs\**" />
     <Compile Remove="packages\**" />
+    <Compile Remove="KiPhpFoundation\recaptcha-master\examples\*.php" />
+    <Compile Remove="KiPhpFoundation\recaptcha-master\tests\**\*.php" />
   </ItemGroup>
-  <ItemGroup Label="Content">
+  <ItemGroup Label="ContentInclude">
     <Content Include="**" Exclude="obj/**;bin/**;PublishProfiles/**;@(Compile);$(MsBuildThisFile)">
       <PackageCopyToOutput>true</PackageCopyToOutput>
       <CopyToOutputDirectory>true</CopyToOutputDirectory>
       <CopyToPublishDirectory>true</CopyToPublishDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup Label="ContentRemove">
     <Content Remove=".git\**" />
     <Content Remove=".vs\**" />
     <Content Remove="packages\**" />
@@ -44,7 +32,7 @@
     <Content Remove="config\Sensitive\unpublished.ini" />
     <Content Remove="dbscript\00-REFRESH-d.lnk" />
   </ItemGroup>
-  <ItemGroup Label="None">
+  <ItemGroup Label="NoneRemove">
     <None Remove=".git\**" />
     <None Remove=".vs\**" />
     <None Remove="packages\**" />
@@ -52,16 +40,15 @@
     <None Remove="config\Sensitive\1-user-setup.sql" />
     <None Remove="config\Sensitive\unpublished.ini" />
     <None Remove="dbscript\00-REFRESH-d.lnk" />
+    <None Remove="KiPhpFoundation\recaptcha-master\examples\*.php" />
+    <None Remove="KiPhpFoundation\recaptcha-master\tests\**\*.php" />
   </ItemGroup>
   <ItemGroup Label="PackageReference">
     <PackageReference Include="Peachpie.RequestHandler" Version="1.0.*" />
     <PackageReference Include="System.Buffers" Version="4.5.1" />
     <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="linked\KiPhpFoundation\recaptcha-master\src\ReCaptcha\RequestMethod\" />
-  </ItemGroup>
   <ItemGroup Label="ProjectReference">
-    <ProjectReference Include="..\ki\ki.csproj" />
+    <ProjectReference Include="..\KiAspdotnetFoundation\ki.csproj" />
   </ItemGroup>
 </Project>

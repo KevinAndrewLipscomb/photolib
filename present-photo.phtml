@@ -34,6 +34,7 @@ if (isset($search_id)) $search_id = kix\k::Safe($search_id,kix\k::PhpValueOf_saf
 //   exit;
 //   }
 //
+require_once("KiPhpFoundation/f_appsettings.phtml");
 require_once("f_bodyopen.phtml");
 require_once("f_purgestalesearches.phtml");
 require_once('f_putstdrecaptchablock.phtml');
